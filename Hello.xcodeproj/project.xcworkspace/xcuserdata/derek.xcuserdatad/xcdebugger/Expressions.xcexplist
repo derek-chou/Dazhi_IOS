@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController tableView:cellForRowAtIndexPath:]:ProdSearchResultViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "prodDic[@&quot;_car&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[OrderTabBarController viewWillLayoutSubviews]:OrderTabBarController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tabBarController.tabBar.items">
+            </PersistentString>
+            <PersistentString
+               value = "self.tabBarController.tabBar">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[TopicTableViewController tableView:numberOfRowsInSection:]:TopicTableViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController viewDidLoad]:ProdSearchResultViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProductViewController prepareProduct]:ProductViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MessageFrame setMessage:]:MessageFrame.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController tableView:numberOfRowsInSection:]:ProdSearchResultViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProductFooterViewCell layoutSubviews]:ProductFooterViewCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "photoButton.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController tableView:willDisplayCell:forRowAtIndexPath:]:ProdSearchResultViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MsgDetailCell setMessageFrame:]:MsgDetailCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_messageFrame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MainTabBarController viewWillLayoutSubviews]:MainTabBarController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController tableView:viewForFooterInSection:]:ProdSearchResultViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[self.userDic objectForKey:aKey]">
+            </PersistentString>
+            <PersistentString
+               value = "[self.productDic objectForKey:aKey]">
+            </PersistentString>
+            <PersistentString
+               value = "weakCell.photoButton.imageView.image">
+            </PersistentString>
+            <PersistentString
+               value = "dic[@&quot;_link&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController prepareProduct]:ProdSearchResultViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__36-[ProductViewController loadProduct]_block_invoke:ProductViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.productArray">
+            </PersistentString>
+            <PersistentString
+               value = "self.topicID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController scrollViewDidScroll:]:ProdSearchResultViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "scrollView.contentOffset.y">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController addUserData:]:ProdSearchResultViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "dic[@&quot;_job&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProdSearchResultViewController getUserData::]:ProdSearchResultViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[TopicTableViewController tableView:didSelectRowAtIndexPath:]:TopicTableViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProductViewController loadProduct]:ProductViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.topicID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProductViewController numberOfSectionsInTableView:]:ProductViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__41+[Common downloadImage:To:Cell:SavePath:]_block_invoke:Common.m">
+      </ContextState>
+      <ContextState
+         contextName = "__48-[ProdSearchResultViewController prepareProduct]_block_invoke:ProdSearchResultViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[FavoriteTableViewController tableView:cellForRowAtIndexPath:]:FavoriteTableViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MsgDetailViewController addMessageWithContent:time:]:MsgDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MsgDetailViewController tableView:heightForRowAtIndexPath:]:MsgDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
