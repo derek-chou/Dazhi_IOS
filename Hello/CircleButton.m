@@ -29,7 +29,7 @@
   
   [self.circleLayer setStrokeColor:[color CGColor]];
   
-  [self.circleLayer setLineWidth:3.0f];
+  [self.circleLayer setLineWidth:5.0f];
   [self.circleLayer setFillColor:[[UIColor clearColor] CGColor]];
 
   

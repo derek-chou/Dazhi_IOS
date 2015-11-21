@@ -26,8 +26,8 @@
   [self.productImage cancelImageRequestOperation];
   self.productImage.image = nil;
   
-  [self.photoButton.imageView cancelImageRequestOperation];
-  [self.photoButton setImage:[UIImage imageNamed:@"top5_a1"] forState:UIControlStateNormal];
+//  [self.photoButton.imageView cancelImageRequestOperation];
+//  [self.photoButton setImage:[UIImage imageNamed:@"top5_a1"] forState:UIControlStateNormal];
 }
 
 @end

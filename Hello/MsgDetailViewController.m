@@ -20,7 +20,7 @@
   tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
   tableV.allowsSelection = NO;
   tableV.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MessageBackground"]];
-  [tableV.backgroundView setAlpha:0.3f];
+  [tableV.backgroundView setAlpha:0.2f];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -59,7 +59,7 @@
   NSDate *date = [NSDate date];
   fmt.dateFormat = @"yyyy/MM/dd HH:mm:ss";
   NSString *time = [fmt stringFromDate:date];
-  [self addMessageWithContent:content time:time];
+  [self addMessageWithContent:content datetime:time];
   [tableV reloadData];
   
   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count - 1 inSection:0];
@@ -68,12 +68,16 @@
   return YES;
 }
 
-- (void) addMessageWithContent:(NSString*)content time:(NSString*)time {
+- (void) addMessageWithContent:(NSString*)content datetime:(NSString*)datetime {
   static BOOL flag = YES;
   MessageFrame *mf = [MessageFrame new];
   Message *msg = [Message new];
   msg.content = content;
-  msg.time = time;
+  msg.datetime = datetime;
+  NSArray *ary = [datetime componentsSeparatedByString:@" "];
+  msg.date = [ary firstObject];
+  msg.time = [ary lastObject];
+  msg.time = [msg.time substringToIndex:5];
   msg.icon = @"Car";
   msg.type = (flag) ? FROM_ME : FROM_OTHER;
   flag = !flag;

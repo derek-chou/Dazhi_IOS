@@ -13,7 +13,11 @@
 - (void) setDict:(NSDictionary*) dict {
   _dict = dict;
   self.icon = dict[@"icon"];
-  self.time = dict[@"time"];
+  NSString *datetime = dict[@"datetime"];
+  self.datetime = datetime;
+  NSArray *ary = [datetime componentsSeparatedByString:@" "];
+  self.date = [ary firstObject];
+  self.time = [ary lastObject];
   self.content = dict[@"content"];
   self.type = [dict[@"type"] intValue];
 }

@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface User : NSManagedObject
 
-// Insert code here to declare functionality of your managed object subclass
++ (void) addUser:(NSDictionary *)dic;
++ (User *)getUser:(NSString*)type :(NSString*)id;
 
 @end
 

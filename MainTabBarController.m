@@ -22,13 +22,13 @@
   
   _mainTabBar = [[MainTabBar alloc]initWithFrame:self.tabBar.bounds];
   _mainTabBar.delegate = self;
-  _mainTabBar.backgroundColor = [UIColor whiteColor];
+  _mainTabBar.backgroundColor = [UIColor lightTextColor];
   //使tabbar有透明效果
   //_mainTabBar.backgroundColor =  [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.1];
 
   [self.tabBar addSubview:_mainTabBar];
   
-  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"99"
+  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"99+"
                                                  withStringColor:[UIColor whiteColor]
                                                   withInsetColor:[UIColor redColor]
                                                   withBadgeFrame:NO

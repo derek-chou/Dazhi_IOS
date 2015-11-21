@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.m
 //  Hello
 //
-//  Created by Derek Chou on 2015/11/16.
+//  Created by Derek Chou on 2015/11/20.
 //  Copyright © 2015年 Derek Chou. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,15 +13,16 @@
 
 @implementation User (CoreDataProperties)
 
-@dynamic id;
-@dynamic name;
-@dynamic type;
-@dynamic avgScore;
-@dynamic scoreCount;
-@dynamic gender;
 @dynamic age;
+@dynamic avgScore;
+@dynamic gender;
+@dynamic id;
 @dynamic job;
 @dynamic lang;
 @dynamic link;
+@dynamic name;
+@dynamic scoreCount;
+@dynamic type;
+@dynamic level;
 
 @end

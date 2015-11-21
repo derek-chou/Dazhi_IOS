@@ -19,5 +19,6 @@
 + (NSString*)getParameterByType:(NSString*)type AndKey:(NSString*)key;
 
 + (NSString*)getPhotoURLByType:(NSString*)type AndID:(NSString*)id;
++ (UIColor*) getUserLevelColor:(int) level;
 
 @end

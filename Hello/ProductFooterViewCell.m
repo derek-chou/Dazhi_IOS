@@ -25,16 +25,16 @@
 {
   [super layoutSubviews];
   
-  CGRect btFrame = _photoButton.frame;
+  //CGRect btFrame = _photoButton.frame;
   //btFrame.origin.x = 90;
-  btFrame.origin.y -= 200;
-  _photoButton.frame = btFrame;
+  //btFrame.origin.y -= 200;
+  //_photoButton.frame = btFrame;
 }
 
 //確保downlad的圖片不會錯放Cell
 - (void)prepareForReuse {  
-  [self.photoButton.imageView cancelImageRequestOperation];
-  [self.photoButton setImage:[UIImage imageNamed:@"top5_a1"] forState:UIControlStateNormal];
+//  [self.photoButton.imageView cancelImageRequestOperation];
+//  [self.photoButton setImage:[UIImage imageNamed:@"top5_a1"] forState:UIControlStateNormal];
 }
 
 

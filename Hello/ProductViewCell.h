@@ -16,7 +16,7 @@
 @property IBOutlet UILabel *feeLabel;
 @property IBOutlet UIImageView *productImage;
 @property IBOutlet UIButton *favoriteButton;
-@property IBOutlet CircleButton *photoButton;
+//@property IBOutletCircleButton *photoButton;
 @property IBOutlet UIImageView *carImage;
 @property IBOutlet UIImageView *drinkImage;
 @property IBOutlet UIImageView *roomImage;

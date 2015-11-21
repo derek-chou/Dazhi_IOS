@@ -54,9 +54,9 @@
                 //NSString *imgFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), imgFileName];
                 NSData *imgData = UIImagePNGRepresentation(image);
                 if([imgData writeToFile:path atomically:YES])
-                  NSLog(@"圖片存檔成功");
+                  NSLog(@"downloadImage to UIImageView 圖片存檔成功");
                 else
-                  NSLog(@"圖片存檔失敗");
+                  NSLog(@"downloadImage to UIImageView 圖片存檔失敗");
               }
               failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                 NSLog(@"Error: %@", error);
@@ -90,9 +90,9 @@
                
                NSData *imgData = UIImagePNGRepresentation(image);
                if([imgData writeToFile:path atomically:YES])
-                 NSLog(@"圖片存檔成功");
+                 NSLog(@"downloadImage to UIButton 圖片存檔成功");
                else
-                 NSLog(@"圖片存檔失敗");
+                 NSLog(@"downloadImage to UIButton 圖片存檔失敗");
              }
              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                NSLog(@"Error: %@", error);
@@ -132,6 +132,26 @@
     imgURL = [NSString stringWithFormat:@"%@%@%@", @"http://graph.ws.com/", id, @"/picture?type=large"];
   }
   return imgURL;
+}
+
++ (UIColor*) getUserLevelColor:(int) level {
+  UIColor *color;
+  switch (level) {
+    case 1:
+      color = [UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1];
+      break;
+    case 2:
+      color = [UIColor colorWithRed:51.0/255.0 green:204.0/255.0 blue:51.0/255.0 alpha:1];
+      break;
+    case 3:
+      color = [UIColor colorWithRed:201.0/255.0 green:1.0/255.0 blue:255.0/255.0 alpha:1];
+      break;
+      
+    default:
+      color = [UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1];
+      break;
+  }
+  return color;
 }
 
 @end

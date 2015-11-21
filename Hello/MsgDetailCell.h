@@ -11,9 +11,10 @@
 #import "Message.h"
 
 @interface MsgDetailCell : UITableViewCell {
-UIButton  *_timeBtn;
-UIImageView *_iconView;
-UIButton *_contentBtn;
+  UIButton  *_dateBtn;
+  UIImageView *_iconView;
+  UIButton *_contentBtn;
+  UIButton *_timeBtn;
 }
 @property (nonatomic, strong) MessageFrame *messageFrame;
 @end

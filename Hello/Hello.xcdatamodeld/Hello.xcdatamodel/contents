@@ -12,6 +12,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="job" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lang" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scoreCount" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,7 +22,7 @@
     <fetchRequest name="FetchParameter" entity="Parameter" predicateString="type == $TYPE AND key == $KEY"/>
     <fetchRequest name="FetchUser" entity="User" predicateString="type == $TYPE AND id == $ID"/>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="193"/>
         <element name="Parameter" positionX="-54" positionY="54" width="128" height="90"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="210"/>
     </elements>
 </model>

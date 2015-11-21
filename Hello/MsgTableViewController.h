@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MsgTableViewController : UITableViewController
-
+@property NSMutableArray *messageTexts;
+@property NSMutableDictionary *messageGroup;
 @end

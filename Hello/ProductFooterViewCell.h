@@ -22,7 +22,7 @@
 @property IBOutlet UILabel *ageLabel;
 @property IBOutlet UILabel *jobLabel;
 @property IBOutlet UILabel *langLabel;
-@property IBOutlet CircleButton *photoButton;
+//@property IBOutlet CircleButton *photoButton;
 
 //@property IBOutlet UIButton *photoButton;
 

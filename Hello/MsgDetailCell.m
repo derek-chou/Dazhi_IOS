@@ -26,12 +26,12 @@
   if (self) {
     self.backgroundColor = [UIColor clearColor];
     
-    _timeBtn = [UIButton new];
-    [_timeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _timeBtn.titleLabel.font = TIME_FONT;
-    _timeBtn.enabled = NO;
-    [_timeBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [self.contentView addSubview:_timeBtn];
+    _dateBtn = [UIButton new];
+    [_dateBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _dateBtn.titleLabel.font = DATE_FONT;
+    _dateBtn.enabled = NO;
+    [_dateBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.contentView addSubview:_dateBtn];
     
     _iconView = [UIImageView new];
     [self.contentView addSubview:_iconView];
@@ -41,6 +41,13 @@
     _contentBtn.titleLabel.font = CONTENT_FONT;
     _contentBtn.titleLabel.numberOfLines = 0;
     [self.contentView addSubview:_contentBtn];
+    
+    _timeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_timeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    _timeBtn.titleLabel.font = TIME_FONT;
+    _timeBtn.titleLabel.numberOfLines = 1;
+    [self.contentView addSubview:_timeBtn];
+    
   }
   return self;
 }
@@ -49,8 +56,8 @@
   _messageFrame = messageFrame;
   Message *message = _messageFrame.message;
   
-  [_timeBtn setTitle:message.time forState:UIControlStateNormal];
-  _timeBtn.frame = _messageFrame.dateFrame;
+  [_dateBtn setTitle:message.date forState:UIControlStateNormal];
+  _dateBtn.frame = _messageFrame.dateFrame;
   
   _iconView.image = [UIImage imageNamed:message.icon];
   _iconView.frame = _messageFrame.iconFrame;
@@ -58,9 +65,15 @@
   [_contentBtn setTitle:message.content forState:UIControlStateNormal];
   _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(CONTENT_TOP, CONTENT_LEFT, CONTENT_BOTTOM, CONTENT_RIGHT);
   _contentBtn.frame = _messageFrame.contentFrame;
-  
   if (message.type == FROM_ME) {
     _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(CONTENT_TOP, CONTENT_RIGHT, CONTENT_BOTTOM, CONTENT_LEFT);
+  }
+
+  [_timeBtn setTitle:message.time forState:UIControlStateNormal];
+  _timeBtn.contentEdgeInsets = UIEdgeInsetsMake(TIME_TOP, TIME_LEFT, TIME_BOTTOM, TIME_RIGHT);
+  _timeBtn.frame = _messageFrame.timeFrame;
+  if (message.type == FROM_ME) {
+    _timeBtn.contentEdgeInsets = UIEdgeInsetsMake(TIME_TOP, TIME_RIGHT, TIME_BOTTOM, TIME_LEFT);
   }
   
   UIImage *normal, *focused;

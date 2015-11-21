@@ -76,7 +76,7 @@
            if ([self.userDic objectForKey:retKey]) {
              [self.userDic[retKey] addObject:responseObject[0]];
            }
-           [self addUserData:responseObject[0]];
+           [User addUser:responseObject[0]];
            
            [self userDataFinish];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -92,54 +92,14 @@
 }
 
 - (NSDictionary *)getUserData:(NSString*)type :(NSString*)id {
-  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-  if([type isKindOfClass:[NSNull class]])
-    return nil;
-  if([id isKindOfClass:[NSNull class]])
-    return nil;
+  User *user = [User getUser:type :id];
   
-  @try {
-  //判斷資料是否存在
-  NSDictionary *dicCondition = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:type, id, nil] forKeys:[NSArray arrayWithObjects:@"TYPE", @"ID", nil]];
-  NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchUser" substitutionVariables:dicCondition];
-                           
-  NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];
-  if ([fetchResult count] > 0) {
-    //傳回資料的Dictionary
-    User *user = fetchResult[0];
-    
-    NSDictionary *retDic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:user.type, user.id, user.name, user.avgScore, user.scoreCount, user.gender, user.age, user.job, user.lang, user.link, nil] forKeys:[NSArray arrayWithObjects:@"_type", @"_id", @"_name", @"_avg_score", @"_count", @"_gender", @"_age", @"_job", @"_lang", @"_link", nil]];
-    return retDic;
-  }
-  } @catch (NSException * e) {
-    NSLog(@"getUserData Exception: %@", e);
+  if (user == nil) {
     return nil;
-  }
-  return nil;
-}
-
-- (void) addUserData:(NSDictionary *)dic {
-  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-
-  @try {
-    
-    User *user;
-    user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:app.managedObjectContext];
-    user.type = dic[@"_type"];
-    user.id = dic[@"_id"];
-    user.name = (dic[@"_name"] == [NSNull null]) ? @"" : dic[@"_name"];
-    user.avgScore = (dic[@"_avg_score"] == [NSNull null]) ? @"" : dic[@"_avg_score"];
-    user.scoreCount = (dic[@"_count"] == [NSNull null]) ? @"" : dic[@"_count"];
-    user.gender = (dic[@"_gender"] == [NSNull null]) ? @"" : dic[@"_gender"];
-    user.age = [dic[@"_age"] stringValue];
-    user.job = (dic[@"_job"] == [NSNull null]) ? @"" : dic[@"_job"];
-    user.lang = (dic[@"_lang"] == [NSNull null]) ? @"" : dic[@"_lang"];
-    user.link = (dic[@"_link"] == [NSNull null]) ? @"" : dic[@"_link"];
-
-    [app.managedObjectContext save:nil];
-  } @catch (NSException * e) {
-    NSLog(@"addUserData Exception: %@", e);
-    return;
+  } else {
+    //NSString *age = user.age;
+    NSDictionary *retDic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:user.type, user.id, user.name, user.avgScore, user.scoreCount, user.gender, user.age, user.job, user.lang, user.link, user.level, nil] forKeys:[NSArray arrayWithObjects:@"_type", @"_id", @"_name", @"_avg_score", @"_count", @"_gender", @"_age", @"_job", @"_lang", @"_link", @"_level", nil]];
+    return retDic;
   }
 }
 
@@ -209,8 +169,6 @@
   cell.roomImage.image = ([prodDic[@"_photo"]boolValue]) ? [UIImage imageNamed:@"Room"] : [UIImage imageNamed:@"NonRoom"];
   cell.smokeImage.image = ([prodDic[@"_smoke"]boolValue]) ? [UIImage imageNamed:@"Smoke"] : [UIImage imageNamed:@"NonSmoke"];
   
-  //畫圓框
-  [cell.photoButton drawCircleButton:[UIColor redColor]];
   
   NSString *imgURL = [[prodDic[@"_image"] componentsSeparatedByString:@","] lastObject];
   
@@ -228,14 +186,15 @@
     weakCell.productImage.image = img;
     [weakCell setNeedsLayout];
   }
-  
+
+  /*
+  //取得使用者頭像
   NSString *photoURL = [Common getPhotoURLByType:prodDic[@"_usertype"] AndID:prodDic[@"_userid"]];
   NSString *photoFileName = [[photoURL componentsSeparatedByString:@"//"] lastObject];
   photoFileName = [photoFileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
   NSString *photoFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), photoFileName];
   //check img exist
   BOOL photoExist = [[NSFileManager defaultManager] fileExistsAtPath:photoFullName];
-  //photoExist = NO;
   if(!photoExist){
     [Common downloadImage:photoURL ToBtn:weakCell.photoButton Cell:weakCell SavePath:photoFullName];
   } else {
@@ -244,7 +203,12 @@
     [weakCell.photoButton setImage:img forState:UIControlStateNormal];
     [weakCell setNeedsLayout];
   }
-  
+  //畫圓框
+  User *user = [User getUser:prodDic[@"_usertype"] :prodDic[@"_userid"]];
+  if (user != nil) {
+    [cell.photoButton drawCircleButton:[Common getUserLevelColor:[user.level intValue]]];
+  }
+   */
   return cell;
 }
 
@@ -257,7 +221,6 @@
     cell = [[ProductFooterViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
   }
   cell.backgroundColor = [UIColor whiteColor];
-  [cell.photoButton drawCircleButton:[UIColor redColor]];
 
   NSArray *keys = [self.userDic allKeys];
   id aKey = [keys objectAtIndex:section];
@@ -280,7 +243,7 @@
 
       //_age, _job, _lang有可能是null
       //為什麼NSNull的exception抓不到？
-      cell.ageLabel.text = [NSString stringWithFormat:@"%@", dic[@"_age"]];
+      cell.ageLabel.text = [NSString stringWithFormat:@"%@", (dic[@"_age"] == [NSNull null]) ? @"" : dic[@"_age"]];
       NSString *job = ([dic[@"_job"] isKindOfClass:[NSNull class]]) ? @"" : [NSString stringWithFormat:@"%@", dic[@"_job"]];
       job = [[job componentsSeparatedByString:@","] firstObject];
       job = [Common getParameterByType:@"job" AndKey:job];
@@ -298,23 +261,33 @@
       }
       cell.langLabel.text = langResult;
       
+
+      //CGRect oldFrame = cell.photoButton.frame;
+      CGFloat xPosition = self.tableView.frame.size.width * 0.77;
+      
+      CircleButton *photoButton = [[CircleButton alloc] initWithFrame:CGRectMake(xPosition, -25, 50, 50)  ];
+      [photoButton drawCircleButton:[Common getUserLevelColor:[dic[@"_level"] intValue]]];
+      [photoButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+      // add to a view
+      cell.clipsToBounds = NO;
+      [cell addSubview:photoButton];
+      [cell bringSubviewToFront:photoButton];
+      
       NSString *imgURL = [Common getPhotoURLByType:dic[@"_type"] AndID:dic[@"_id"]];
       NSString *imgFileName = [[imgURL componentsSeparatedByString:@"//"] lastObject];
       imgFileName = [imgFileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
       NSString *imgFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), imgFileName];
       //check img exist
       BOOL imgExist = [[NSFileManager defaultManager] fileExistsAtPath:imgFullName];
-      imgExist = NO;
       __weak ProductFooterViewCell *weakCell = cell;
       if(!imgExist){
-        [Common downloadImage:imgURL ToBtn:weakCell.photoButton Cell:weakCell SavePath:imgFullName];
+        [Common downloadImage:imgURL ToBtn:photoButton Cell:weakCell SavePath:imgFullName];
       } else {
         UIImage *img = [[UIImage alloc] initWithContentsOfFile:imgFullName];
         
-        [weakCell.photoButton setImage:img forState:UIControlStateNormal];
+        [photoButton setImage:img forState:UIControlStateNormal];
         [weakCell setNeedsLayout];
       }
-      
     } @catch (NSException * e) {
       NSLog(@"viewForFooterInSection Exception: %@", e);
     }
@@ -322,6 +295,10 @@
   }
   
   return cell;
+}
+
+-(IBAction)buttonClicked:(id)sender {
+  NSLog(@"click");
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -355,7 +332,7 @@
  
       //每個section的第一個row顯示Favorite按鈕,最後一個row顯示photo按鈕
       ((ProductViewCell*)cell).favoriteButton.hidden = NO;
-      ((ProductViewCell*)cell).photoButton.hidden = NO;
+      //((ProductViewCell*)cell).photoButton.hidden = NO;
     } else if (rowIdx == 0) {
       CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds));
       CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds), CGRectGetMidX(bounds), CGRectGetMinY(bounds), cornerRadius);
@@ -364,7 +341,7 @@
       addLine = YES;
 
       ((ProductViewCell*)cell).favoriteButton.hidden = NO;
-      ((ProductViewCell*)cell).photoButton.hidden = YES;
+      //((ProductViewCell*)cell).photoButton.hidden = YES;
     } else if (rowIdx == rowsInSection-1) {
       CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds));
       CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds), CGRectGetMidX(bounds), CGRectGetMaxY(bounds), cornerRadius);
@@ -372,7 +349,7 @@
       CGPathAddLineToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMinY(bounds));
 
       ((ProductViewCell*)cell).favoriteButton.hidden = YES;
-      ((ProductViewCell*)cell).photoButton.hidden = NO;
+      //((ProductViewCell*)cell).photoButton.hidden = NO;
     } else {
       CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds));
       CGPathAddLineToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds));
@@ -382,7 +359,7 @@
       addLine = YES;
 
       ((ProductViewCell*)cell).favoriteButton.hidden = YES;
-      ((ProductViewCell*)cell).photoButton.hidden = YES;
+      //((ProductViewCell*)cell).photoButton.hidden = YES;
     }
     
     layer.path = pathRef;

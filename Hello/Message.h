@@ -15,6 +15,8 @@ typedef enum {
 
 @interface Message : NSObject
 @property (nonatomic, copy) NSString *icon;
+@property (nonatomic, copy) NSString *datetime;
+@property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *time;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, assign) MessageType type;
