@@ -10,13 +10,13 @@
 #import <UIKit/UIKit.h>
 #import "Message.h"
 
-#define MARGIN 10
+#define MARGIN 8
 #define ICON_WH 40
-#define DATE_FONT [UIFont systemFontOfSize:12]
+#define DATE_FONT [UIFont systemFontOfSize:11]
 #define DATE_MARGIN_W 10
 #define DATE_MARGIN_H 10
 
-#define CONTENT_FONT [UIFont systemFontOfSize:16]
+#define CONTENT_FONT [UIFont systemFontOfSize:14]
 #define CONTENT_W [UIScreen mainScreen].bounds.size.width * 0.6
 #define CONTENT_H 40
 #define CONTENT_LEFT 15
@@ -25,7 +25,7 @@
 #define CONTENT_BOTTOM 10
 
 #define TIME_FONT [UIFont systemFontOfSize:9]
-#define TIME_W 50
+#define TIME_W 30
 #define TIME_H 10
 #define TIME_LEFT 0
 #define TIME_RIGHT 0

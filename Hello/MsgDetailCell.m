@@ -7,6 +7,8 @@
 //
 
 #import "MsgDetailCell.h"
+#import "Common.h"
+#import "User.h"
 
 @implementation MsgDetailCell
 
@@ -33,8 +35,8 @@
     [_dateBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_dateBtn];
     
-    _iconView = [UIImageView new];
-    [self.contentView addSubview:_iconView];
+    _iconBtn = [CircleButton new];
+    [self.contentView addSubview:_iconBtn];
     
     _contentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_contentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -59,8 +61,16 @@
   [_dateBtn setTitle:message.date forState:UIControlStateNormal];
   _dateBtn.frame = _messageFrame.dateFrame;
   
-  _iconView.image = [UIImage imageNamed:message.icon];
-  _iconView.frame = _messageFrame.iconFrame;
+  //_iconView.image = [UIImage imageNamed:message.icon];
+  [_iconBtn setImage:message.iconImage.image forState:UIControlStateNormal];
+  //畫圓框
+  int userLevel = 0;
+  User *user = [User getUser:message.otherType :message.otherID];
+  if (user != nil)
+    userLevel = [user.level intValue];
+  
+  _iconBtn.frame = _messageFrame.iconFrame;
+  [_iconBtn drawCircleButton:[Common getUserLevelColor:userLevel]];
   
   [_contentBtn setTitle:message.content forState:UIControlStateNormal];
   _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(CONTENT_TOP, CONTENT_LEFT, CONTENT_BOTTOM, CONTENT_RIGHT);

@@ -10,15 +10,21 @@
 
 @implementation Message
 
-- (void) setDict:(NSDictionary*) dict {
-  _dict = dict;
-  self.icon = dict[@"icon"];
-  NSString *datetime = dict[@"datetime"];
+- (void) setFromDict:(NSDictionary*) dict otherType:(NSString*)type otherID:(NSString*)ID{
+  //self.icon = dict[@"icon"];
+  NSString *datetime = dict[@"_insert_dt"];
   self.datetime = datetime;
   NSArray *ary = [datetime componentsSeparatedByString:@" "];
   self.date = [ary firstObject];
   self.time = [ary lastObject];
-  self.content = dict[@"content"];
-  self.type = [dict[@"type"] intValue];
+  self.time = [self.time substringToIndex:5];
+  self.content = dict[@"_msg"];
+  
+  self.otherType = type;
+  self.otherID = ID;
+  if ([type isEqual:dict[@"_from_type"]] && [ID isEqual:dict[@"_from_id"]]) {
+    self.type = FROM_OTHER;
+  } else
+    self.type = FROM_ME;
 }
 @end

@@ -714,7 +714,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kgy-ul-QNH">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="545"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="560"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -723,43 +723,33 @@
                                 </connections>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8TC-8m-FCY">
-                                <rect key="frame" x="0.0" y="545" width="600" height="55"/>
+                                <rect key="frame" x="0.0" y="560" width="600" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="NKe-wr-vvB"/>
+                                    <constraint firstAttribute="height" constant="40" id="NKe-wr-vvB"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fb8-JP-7K0">
-                                <rect key="frame" x="20" y="557" width="510" height="30"/>
+                                <rect key="frame" x="10" y="564.5" width="580" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hag-9A-Jmv">
-                                <rect key="frame" x="540" y="557" width="50" height="30"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="JF7-Yu-pfe"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fb8-JP-7K0" firstAttribute="centerY" secondItem="8TC-8m-FCY" secondAttribute="centerY" id="1Qv-ix-r5D"/>
-                            <constraint firstItem="fb8-JP-7K0" firstAttribute="leading" secondItem="8TC-8m-FCY" secondAttribute="leading" constant="20" id="Eas-Z1-Ylq"/>
-                            <constraint firstItem="Hag-9A-Jmv" firstAttribute="centerY" secondItem="8TC-8m-FCY" secondAttribute="centerY" id="Mrq-Ob-rtj"/>
+                            <constraint firstItem="fb8-JP-7K0" firstAttribute="leading" secondItem="8TC-8m-FCY" secondAttribute="leading" constant="10" id="Eas-Z1-Ylq"/>
+                            <constraint firstItem="Kgy-ul-QNH" firstAttribute="bottom" secondItem="8TC-8m-FCY" secondAttribute="top" id="HH5-9V-94W"/>
                             <constraint firstItem="Kgy-ul-QNH" firstAttribute="trailing" secondItem="Obd-3S-Vey" secondAttribute="trailingMargin" constant="20" id="PPj-Dp-U3z"/>
-                            <constraint firstItem="Hag-9A-Jmv" firstAttribute="trailing" secondItem="8TC-8m-FCY" secondAttribute="trailing" constant="-10" id="UGZ-a2-g9Z"/>
-                            <constraint firstItem="8TC-8m-FCY" firstAttribute="leading" secondItem="Obd-3S-Vey" secondAttribute="leadingMargin" priority="999" constant="-20" id="Vxb-WK-0Uf"/>
-                            <constraint firstItem="8TC-8m-FCY" firstAttribute="trailing" secondItem="Obd-3S-Vey" secondAttribute="trailingMargin" priority="999" constant="20" id="ckD-2r-Weg"/>
+                            <constraint firstItem="fb8-JP-7K0" firstAttribute="centerY" secondItem="8TC-8m-FCY" secondAttribute="centerY" id="Tcu-QB-e3T"/>
+                            <constraint firstItem="8TC-8m-FCY" firstAttribute="leading" secondItem="Obd-3S-Vey" secondAttribute="leadingMargin" constant="-20" id="Vxb-WK-0Uf"/>
+                            <constraint firstItem="8TC-8m-FCY" firstAttribute="bottom" secondItem="NiA-Pb-aPQ" secondAttribute="top" id="X1b-qW-Oos"/>
+                            <constraint firstItem="fb8-JP-7K0" firstAttribute="trailing" secondItem="Obd-3S-Vey" secondAttribute="trailingMargin" constant="10" id="YWU-JB-AfA"/>
+                            <constraint firstItem="8TC-8m-FCY" firstAttribute="trailing" secondItem="Obd-3S-Vey" secondAttribute="trailingMargin" constant="20" id="ckD-2r-Weg"/>
                             <constraint firstItem="Kgy-ul-QNH" firstAttribute="top" secondItem="Obd-3S-Vey" secondAttribute="top" id="eya-qs-62x"/>
-                            <constraint firstItem="8TC-8m-FCY" firstAttribute="bottom" secondItem="NiA-Pb-aPQ" secondAttribute="top" id="jKV-u2-C3T"/>
                             <constraint firstItem="Kgy-ul-QNH" firstAttribute="leading" secondItem="Obd-3S-Vey" secondAttribute="leadingMargin" constant="-20" id="qDz-QE-Ilr"/>
-                            <constraint firstItem="fb8-JP-7K0" firstAttribute="trailing" secondItem="Hag-9A-Jmv" secondAttribute="leading" constant="-10" id="v6R-R3-uco"/>
-                            <constraint firstItem="Kgy-ul-QNH" firstAttribute="bottom" secondItem="8TC-8m-FCY" secondAttribute="top" id="wZ0-3v-iGy"/>
                         </constraints>
                     </view>
                     <connections>

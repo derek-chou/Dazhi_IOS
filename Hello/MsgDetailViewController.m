@@ -8,6 +8,8 @@
 
 #import "MsgDetailViewController.h"
 #import "MsgDetailCell.h"
+#import "Common.h"
+#import "User.h"
 
 @interface MsgDetailViewController ()
 
@@ -20,7 +22,7 @@
   tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
   tableV.allowsSelection = NO;
   tableV.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MessageBackground"]];
-  [tableV.backgroundView setAlpha:0.2f];
+  [tableV.backgroundView setAlpha:0.09f];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -29,6 +31,67 @@
   messageField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
   messageField.leftViewMode = UITextFieldViewModeAlways;
   messageField.delegate = self;
+  
+  NSString *prevDate = nil;
+  for (NSDictionary *dic in self.msgAry) {
+    MessageFrame *mf = [MessageFrame new];
+    Message *msg = [Message new];
+    [msg setFromDict:dic otherType:_otherType otherID:_otherID];
+    
+    //取得使用者頭像
+    NSString *photoURL = [Common getPhotoURLByType:_otherType AndID:_otherID];
+    NSString *photoFileName = [[photoURL componentsSeparatedByString:@"//"] lastObject];
+    photoFileName = [photoFileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *photoFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), photoFileName];
+    //check img exist
+    msg.iconImage = [UIImageView new];
+    BOOL photoExist = [[NSFileManager defaultManager] fileExistsAtPath:photoFullName];
+    if(!photoExist){
+      [Common downloadImage:photoURL To:msg.iconImage Cell:nil SavePath:photoFullName];
+    } else {
+      UIImage *img = [[UIImage alloc] initWithContentsOfFile:photoFullName];
+      
+      msg.iconImage.image = img;
+    }
+    
+    mf.showDate = ![prevDate isEqualToString:msg.date];
+    prevDate = msg.date;
+    mf.message = msg;
+    [_allMessageFrame addObject:mf];
+  }
+  
+  //[tableV reloadData];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count - 1 inSection:0];
+  [tableV scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+  [tableV setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  if (tableV.contentSize.height > tableV.frame.size.height)
+  {
+    CGPoint offset = CGPointMake(0, tableV.contentSize.height - tableV.frame.size.height);
+    [tableV setContentOffset:offset animated:NO];
+  }
+}
+
+- (void) addMessageWithContent:(NSString*)content datetime:(NSString*)datetime {
+  static BOOL flag = YES;
+  MessageFrame *mf = [MessageFrame new];
+  Message *msg = [Message new];
+  msg.content = content;
+  msg.datetime = datetime;
+  NSArray *ary = [datetime componentsSeparatedByString:@" "];
+  msg.date = [ary firstObject];
+  msg.time = [ary lastObject];
+  msg.time = [msg.time substringToIndex:5];
+  msg.icon = @"Car";
+  msg.type = (flag) ? FROM_ME : FROM_OTHER;
+  flag = !flag;
+  mf.showDate = YES;
+  mf.message = msg;
+  [_allMessageFrame addObject:mf];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,24 +131,6 @@
   return YES;
 }
 
-- (void) addMessageWithContent:(NSString*)content datetime:(NSString*)datetime {
-  static BOOL flag = YES;
-  MessageFrame *mf = [MessageFrame new];
-  Message *msg = [Message new];
-  msg.content = content;
-  msg.datetime = datetime;
-  NSArray *ary = [datetime componentsSeparatedByString:@" "];
-  msg.date = [ary firstObject];
-  msg.time = [ary lastObject];
-  msg.time = [msg.time substringToIndex:5];
-  msg.icon = @"Car";
-  msg.type = (flag) ? FROM_ME : FROM_OTHER;
-  flag = !flag;
-  mf.showDate = YES;
-  mf.message = msg;
-  [_allMessageFrame addObject:mf];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;
 }
@@ -105,12 +150,8 @@
   if (cell == nil) {
     cell = [[MsgDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
   }
-  
-  @try {
-    cell.messageFrame = ([_allMessageFrame count] < indexPath.row)? nil :_allMessageFrame[indexPath.row];
-  } @catch(NSException *e) {
-  } @finally {
+
+  cell.messageFrame = ([_allMessageFrame count] < indexPath.row)? nil :_allMessageFrame[indexPath.row];
   return cell;
-  }
 }
 @end

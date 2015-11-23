@@ -14,6 +14,7 @@
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 #import "User.h"
+#import "MsgDetailViewController.h"
 
 @interface MsgTableViewController ()
 
@@ -182,8 +183,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
-  UITableViewController *detailView = (UITableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"MsgDetailView"];
+  MsgDetailViewController *detailView = (MsgDetailViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"MsgDetailView"];
   detailView.hidesBottomBarWhenPushed = YES;
+  NSArray *keys = [self.messageGroup allKeys];
+  id aKey = [keys objectAtIndex:indexPath.row];
+  id anObject = [self.messageGroup objectForKey:aKey];
+
+  detailView.otherType = aKey[0];
+  detailView.otherID = aKey[1];
+  detailView.msgAry = anObject;
   [self.navigationController pushViewController:detailView animated:NO];
 }
 

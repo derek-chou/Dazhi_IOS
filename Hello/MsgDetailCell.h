@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MessageFrame.h"
 #import "Message.h"
+#import "CircleButton.h"
 
 @interface MsgDetailCell : UITableViewCell {
   UIButton  *_dateBtn;
-  UIImageView *_iconView;
   UIButton *_contentBtn;
   UIButton *_timeBtn;
 }
+@property CircleButton *iconBtn;
 @property (nonatomic, strong) MessageFrame *messageFrame;
 @end
