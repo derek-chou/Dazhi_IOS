@@ -7,6 +7,7 @@
 //
 
 #import "FavoriteViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation FavoriteViewCell
 
@@ -18,6 +19,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+//確保downlad的圖片不會錯放Cell
+- (void)prepareForReuse {
+    [self.photoButton.imageView cancelImageRequestOperation];
+    [self.photoButton setImage:[UIImage imageNamed:@"top5_a1"] forState:UIControlStateNormal];
 }
 
 @end

@@ -136,15 +136,6 @@
                                             </constraints>
                                             <state key="normal" image="NonFavorite"/>
                                         </button>
-                                        <button contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MfE-bi-NXu" customClass="CircleButton">
-                                            <rect key="frame" x="519" y="77" width="50" height="50"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="nQ8-ru-Oc2"/>
-                                                <constraint firstAttribute="height" constant="50" id="sh9-4x-CaT"/>
-                                            </constraints>
-                                            <state key="normal" image="top5_a1.png"/>
-                                        </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NonCar" translatesAutoresizingMaskIntoConstraints="NO" id="Jjq-yy-PO2">
                                             <rect key="frame" x="90" y="81" width="20" height="20"/>
                                             <animations/>
@@ -199,9 +190,7 @@
                                         <constraint firstItem="gej-jW-YEg" firstAttribute="trailing" secondItem="zj0-ys-cJf" secondAttribute="trailingMargin" constant="-43" id="cTJ-8Y-jwG"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="olg-ZA-6ke" secondAttribute="trailing" constant="15" id="ew4-vs-QxO"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="J8I-5M-ttr" secondAttribute="bottom" constant="-7.5" id="fGK-Mn-M2U"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="MfE-bi-NXu" secondAttribute="bottom" constant="-33" id="gvS-Qu-9ri"/>
                                         <constraint firstItem="gej-jW-YEg" firstAttribute="leading" secondItem="Mfy-AV-oMe" secondAttribute="trailing" constant="10" id="hk1-Vx-E9i"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="MfE-bi-NXu" secondAttribute="trailing" constant="23" id="iZa-5r-cdJ"/>
                                         <constraint firstItem="Mfy-AV-oMe" firstAttribute="leading" secondItem="zj0-ys-cJf" secondAttribute="leadingMargin" constant="12" id="ksA-ot-H0j"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -212,7 +201,6 @@
                                     <outlet property="drinkImage" destination="vHn-lG-hyH" id="s0D-sG-ztH"/>
                                     <outlet property="favoriteButton" destination="olg-ZA-6ke" id="LSM-Wf-glh"/>
                                     <outlet property="feeLabel" destination="NGQ-Wp-zPU" id="Etj-bd-Vhi"/>
-                                    <outlet property="photoButton" destination="MfE-bi-NXu" id="v1X-mg-YGP"/>
                                     <outlet property="productImage" destination="Mfy-AV-oMe" id="xsf-ge-uTg"/>
                                     <outlet property="roomImage" destination="egX-SV-5lY" id="aVh-tH-Z85"/>
                                     <outlet property="smokeImage" destination="J8I-5M-ttr" id="0Y4-fO-TW4"/>
@@ -233,7 +221,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvh-AN-5od" userLabel="Name Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvh-AN-5od" userLabel="Name Label">
                                             <rect key="frame" x="105" y="3" width="413.5" height="0.0"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -289,15 +277,6 @@
                                                 <constraint firstAttribute="height" constant="25" id="tRl-cZ-xCV"/>
                                             </constraints>
                                         </imageView>
-                                        <button clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLZ-Ka-K14" customClass="CircleButton">
-                                            <rect key="frame" x="519" y="-25" width="50" height="50"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="EML-jP-s2z"/>
-                                                <constraint firstAttribute="height" constant="50" id="sJC-Rh-52k"/>
-                                            </constraints>
-                                            <state key="normal" image="top5_a1.png"/>
-                                        </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star full" translatesAutoresizingMaskIntoConstraints="NO" id="7do-eb-qpY" userLabel="star_1">
                                             <rect key="frame" x="13" y="6" width="12" height="12"/>
                                             <animations/>
@@ -362,13 +341,11 @@
                                         <constraint firstItem="IaZ-xm-OcY" firstAttribute="leading" secondItem="7do-eb-qpY" secondAttribute="trailing" constant="1" id="Ltx-Tj-4vq"/>
                                         <constraint firstItem="IaZ-xm-OcY" firstAttribute="top" secondItem="d7s-H3-XgC" secondAttribute="topMargin" constant="-2" id="MEE-ED-dR2"/>
                                         <constraint firstItem="cb4-q0-IaB" firstAttribute="top" secondItem="7do-eb-qpY" secondAttribute="bottom" constant="10" id="NRQ-cp-lVS"/>
-                                        <constraint firstItem="jvh-AN-5od" firstAttribute="trailing" secondItem="xLZ-Ka-K14" secondAttribute="leading" id="OBq-Tz-6p7"/>
                                         <constraint firstItem="9yj-5Q-DVo" firstAttribute="leading" secondItem="sb6-bS-kYG" secondAttribute="trailing" constant="1" id="OjO-os-p29"/>
                                         <constraint firstItem="6mr-zl-QqW" firstAttribute="leading" secondItem="d7s-H3-XgC" secondAttribute="centerXWithinMargins" multiplier="0.5" id="Pbl-Qd-xKj"/>
                                         <constraint firstItem="jvh-AN-5od" firstAttribute="top" secondItem="d7s-H3-XgC" secondAttribute="topMargin" constant="-5" id="SeE-kf-Tjg"/>
                                         <constraint firstItem="ILb-Zx-7sA" firstAttribute="leading" secondItem="9yj-5Q-DVo" secondAttribute="trailing" constant="3" id="TO8-Uy-fNd"/>
                                         <constraint firstItem="ILb-Zx-7sA" firstAttribute="top" secondItem="d7s-H3-XgC" secondAttribute="topMargin" constant="-2" id="TzY-ts-uUr"/>
-                                        <constraint firstItem="xLZ-Ka-K14" firstAttribute="top" secondItem="d7s-H3-XgC" secondAttribute="topMargin" constant="-33" id="VmV-7I-g2D"/>
                                         <constraint firstItem="eXF-cP-dgN" firstAttribute="top" secondItem="7do-eb-qpY" secondAttribute="bottom" constant="10" id="YmI-1k-kGC"/>
                                         <constraint firstItem="N6e-gc-BEa" firstAttribute="leading" secondItem="ILb-Zx-7sA" secondAttribute="trailing" constant="5" id="ZMd-v0-Hed"/>
                                         <constraint firstItem="cb4-q0-IaB" firstAttribute="leading" secondItem="d7s-H3-XgC" secondAttribute="centerXWithinMargins" id="ZP3-ab-4Mf"/>
@@ -381,7 +358,6 @@
                                         <constraint firstItem="9yj-5Q-DVo" firstAttribute="top" secondItem="d7s-H3-XgC" secondAttribute="topMargin" constant="-2" id="p5N-GV-TzH"/>
                                         <constraint firstItem="iRm-pI-Kkg" firstAttribute="centerY" secondItem="cb4-q0-IaB" secondAttribute="centerY" id="ucG-HG-1hq"/>
                                         <constraint firstItem="NAC-nw-Ryc" firstAttribute="top" secondItem="d7s-H3-XgC" secondAttribute="topMargin" constant="-2" id="vfq-6P-It4"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="xLZ-Ka-K14" secondAttribute="trailing" constant="23" id="wV1-Q2-g7C"/>
                                         <constraint firstItem="h2e-4z-A6Y" firstAttribute="centerY" secondItem="eXF-cP-dgN" secondAttribute="centerY" id="xHm-Mg-eUn"/>
                                         <constraint firstItem="h2e-4z-A6Y" firstAttribute="trailing" secondItem="6mr-zl-QqW" secondAttribute="leading" id="zvx-to-0zw"/>
                                     </constraints>
@@ -394,7 +370,6 @@
                                     <outlet property="jobLabel" destination="Tsk-pe-gh4" id="ID7-TL-kLA"/>
                                     <outlet property="langLabel" destination="iRm-pI-Kkg" id="FvV-aW-kU2"/>
                                     <outlet property="nameLabel" destination="jvh-AN-5od" id="isk-6Y-DCo"/>
-                                    <outlet property="photoButton" destination="xLZ-Ka-K14" id="FpZ-gn-4P8"/>
                                     <outlet property="scoreCountLabel" destination="ILb-Zx-7sA" id="lPQ-td-CR4"/>
                                     <outlet property="star1Image" destination="7do-eb-qpY" id="XuA-pS-dAy"/>
                                     <outlet property="star2Image" destination="IaZ-xm-OcY" id="Qf8-3a-MbM"/>

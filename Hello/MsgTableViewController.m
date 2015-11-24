@@ -107,7 +107,7 @@
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
   
-  self.parentViewController.parentViewController.navigationItem.title = @"Hello";
+  //self.parentViewController.parentViewController.navigationItem.title = @"Hello";
 }
 
 
@@ -193,6 +193,13 @@
   detailView.otherID = aKey[1];
   detailView.msgAry = anObject;
   [self.navigationController pushViewController:detailView animated:NO];
+  
+  NSString *name = @"";
+  if ([anObject[0][@"_from_type"] isEqualToString:aKey[0]] && [anObject[0][@"_from_id"] isEqualToString:aKey[1]])
+    name = anObject[0][@"_from_name"];
+  else
+    name = anObject[0][@"_to_name"];
+  self.parentViewController.parentViewController.navigationItem.title = name;
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

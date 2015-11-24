@@ -104,9 +104,6 @@
 		650C76C81BFACD86008A9F6A /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
 		650C76C91BFACD86008A9F6A /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
 		650C76CE1BFCC956008A9F6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		650C76D21BFCCA13008A9F6A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		650C76D31BFCCAD5008A9F6A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hant"; path = "zh-Hant.lproj/Main.storyboard"; sourceTree = "<group>"; };
-		650C76D41BFCCB6D008A9F6A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		650C76D51BFD9CBA008A9F6A /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		650C76D61BFD9CBA008A9F6A /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		650C76D81BFD9E1C008A9F6A /* MessageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrame.h; sourceTree = "<group>"; };
@@ -583,7 +580,6 @@
 			knownRegions = (
 				en,
 				Base,
-				"zh-Hant",
 			);
 			mainGroup = 652305E51BEC2F9500594D54;
 			productRefGroup = 652305EF1BEC2F9500594D54 /* Products */;
@@ -727,7 +723,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				650C76CE1BFCC956008A9F6A /* Base */,
-				650C76D21BFCCA13008A9F6A /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -736,7 +731,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				652305FB1BEC2F9500594D54 /* Base */,
-				650C76D31BFCCAD5008A9F6A /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -745,7 +739,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				652306031BEC2F9500594D54 /* Base */,
-				650C76D41BFCCB6D008A9F6A /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -820,6 +813,7 @@
 		6510E5821BEE2D5D00B8B216 /* Ad-Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: CHIH-I Chou (54S75HLD96)";
 				INFOPLIST_FILE = HelloUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "idv.derek-chou.HelloUITests";

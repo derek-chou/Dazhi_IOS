@@ -186,29 +186,6 @@
     weakCell.productImage.image = img;
     [weakCell setNeedsLayout];
   }
-
-  /*
-  //取得使用者頭像
-  NSString *photoURL = [Common getPhotoURLByType:prodDic[@"_usertype"] AndID:prodDic[@"_userid"]];
-  NSString *photoFileName = [[photoURL componentsSeparatedByString:@"//"] lastObject];
-  photoFileName = [photoFileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-  NSString *photoFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), photoFileName];
-  //check img exist
-  BOOL photoExist = [[NSFileManager defaultManager] fileExistsAtPath:photoFullName];
-  if(!photoExist){
-    [Common downloadImage:photoURL ToBtn:weakCell.photoButton Cell:weakCell SavePath:photoFullName];
-  } else {
-    UIImage *img = [[UIImage alloc] initWithContentsOfFile:photoFullName];
-    
-    [weakCell.photoButton setImage:img forState:UIControlStateNormal];
-    [weakCell setNeedsLayout];
-  }
-  //畫圓框
-  User *user = [User getUser:prodDic[@"_usertype"] :prodDic[@"_userid"]];
-  if (user != nil) {
-    [cell.photoButton drawCircleButton:[Common getUserLevelColor:[user.level intValue]]];
-  }
-   */
   return cell;
 }
 
@@ -265,13 +242,13 @@
       //CGRect oldFrame = cell.photoButton.frame;
       CGFloat xPosition = self.tableView.frame.size.width * 0.77;
       
-      CircleButton *photoButton = [[CircleButton alloc] initWithFrame:CGRectMake(xPosition, -25, 50, 50)  ];
-      [photoButton drawCircleButton:[Common getUserLevelColor:[dic[@"_level"] intValue]]];
-      [photoButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+      CircleButton *photoBtn = [[CircleButton alloc] initWithFrame:CGRectMake(xPosition, -25, 50, 50)  ];
+      [photoBtn drawCircleButton:[Common getUserLevelColor:[dic[@"_level"] intValue]]];
+      [photoBtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
       // add to a view
       cell.clipsToBounds = NO;
-      [cell addSubview:photoButton];
-      [cell bringSubviewToFront:photoButton];
+      [cell addSubview:photoBtn];
+      [cell bringSubviewToFront:photoBtn];
       
       NSString *imgURL = [Common getPhotoURLByType:dic[@"_type"] AndID:dic[@"_id"]];
       NSString *imgFileName = [[imgURL componentsSeparatedByString:@"//"] lastObject];
@@ -281,11 +258,11 @@
       BOOL imgExist = [[NSFileManager defaultManager] fileExistsAtPath:imgFullName];
       __weak ProductFooterViewCell *weakCell = cell;
       if(!imgExist){
-        [Common downloadImage:imgURL ToBtn:photoButton Cell:weakCell SavePath:imgFullName];
+        [Common downloadImage:imgURL ToBtn:photoBtn Cell:weakCell SavePath:imgFullName];
       } else {
         UIImage *img = [[UIImage alloc] initWithContentsOfFile:imgFullName];
         
-        [photoButton setImage:img forState:UIControlStateNormal];
+        [photoBtn setImage:img forState:UIControlStateNormal];
         [weakCell setNeedsLayout];
       }
     } @catch (NSException * e) {

@@ -61,19 +61,22 @@
   }
   
   //[tableV reloadData];
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count - 1 inSection:0];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count-1 inSection:0];
   [tableV scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-  [tableV setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  if (tableV.contentSize.height > tableV.frame.size.height)
-  {
+  
+  //讓scroll bar移到最底
+  //if (tableV.contentSize.height > tableV.frame.size.height) {
     CGPoint offset = CGPointMake(0, tableV.contentSize.height - tableV.frame.size.height);
     [tableV setContentOffset:offset animated:NO];
-  }
+    //[tableV setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+  //}
+  //[tableV scrollRectToVisible:CGRectMake(0, tableV.contentSize.height - tableV.bounds.size.height, tableV.bounds.size.width, tableV.bounds.size.height) animated:YES];
+  
 }
 
 - (void) addMessageWithContent:(NSString*)content datetime:(NSString*)datetime {

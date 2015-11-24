@@ -9,6 +9,9 @@
 #import "FavoriteTableViewController.h"
 #import "ViewController.h"
 #import "FavoriteViewCell.h"
+#import "Common.h"
+#import "AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface FavoriteTableViewController () {
   //UITableView *_tableView;
@@ -20,16 +23,31 @@
 
 @implementation FavoriteTableViewController
 
+- (void) loadFavoriteArray
+{
+  if (_favoriteArray == nil) {
+    _favoriteArray = [NSMutableArray arrayWithCapacity:20];
+  }
+  NSString *url = [Common getSetting:@"Server URL"];
+  NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "favorite"];
+  
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  [manager GET:urlString parameters:@{@"type":userType, @"id":userID}
+       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         [self.favoriteArray addObjectsFromArray:responseObject];
+         [self.tableView reloadData];
+       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+       }
+   ];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-    
-  //CGRect frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-49);
-  //_tableView = [[UITableView alloc]initWithFrame:frame style:UITableViewStylePlain];
   
-//  _viewDefaultFrame = frame;
-  //_tableView.delegate = self;
-  //_tableView.dataSource = self;
-  //[self.view addSubview:_tableView];
+  [self loadFavoriteArray];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -67,7 +85,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 3;
+  return _favoriteArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -79,11 +97,53 @@
     cell = [[FavoriteViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
   }
   
-  cell.nameLabel.text = [NSString stringWithFormat:@"Favorite %li",(long)indexPath.row];
-  [cell.photoButton setImage:[UIImage imageNamed:@"top5_b1.png"] forState:UIControlStateNormal];
-  
+  NSDictionary *dic = _favoriteArray[indexPath.row];
+  cell.nameLabel.text = dic[@"_name"];
+  __weak FavoriteViewCell *weakCell = cell;
+  //取得使用者頭像
+  NSString *photoURL = [Common getPhotoURLByType:dic[@"_favorite_type"] AndID:dic[@"_favorite_id"]];
+  NSString *photoFileName = [[photoURL componentsSeparatedByString:@"//"] lastObject];
+  photoFileName = [photoFileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+  NSString *photoFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), photoFileName];
+  //check img exist
+  BOOL photoExist = [[NSFileManager defaultManager] fileExistsAtPath:photoFullName];
+  if(!photoExist){
+    [Common downloadImage:photoURL ToBtn:weakCell.photoButton Cell:weakCell SavePath:photoFullName];
+  } else {
+    UIImage *img = [[UIImage alloc] initWithContentsOfFile:photoFullName];
+    
+    [weakCell.photoButton setImage:img forState:UIControlStateNormal];
+    [weakCell setNeedsLayout];
+  }
   //畫圓框
-  [cell.photoButton drawCircleButton:[UIColor redColor]];
+  [cell.photoButton drawCircleButton:[Common getUserLevelColor:[dic[@"_level"] intValue]]];
+  
+  cell.scoreCountLabel.text = [NSString stringWithFormat:@"(%@)", dic[@"_count"]];
+  int score = [dic[@"_avg_score"] intValue];
+  cell.star1Image.image = (score >= 2) ? [UIImage imageNamed:@"Star full"] : ((score >= 1) ? [UIImage imageNamed:@"Star half"] : [UIImage imageNamed:@"Star empty"]);
+  cell.star2Image.image = (score >= 4) ? [UIImage imageNamed:@"Star full"] : ((score >= 3) ? [UIImage imageNamed:@"Star half"] : [UIImage imageNamed:@"Star empty"]);
+  cell.star3Image.image = (score >= 6) ? [UIImage imageNamed:@"Star full"] : ((score >= 5) ? [UIImage imageNamed:@"Star half"] : [UIImage imageNamed:@"Star empty"]);
+  cell.star4Image.image = (score >= 8) ? [UIImage imageNamed:@"Star full"] : ((score >= 7) ? [UIImage imageNamed:@"Star half"] : [UIImage imageNamed:@"Star empty"]);
+  cell.star5Image.image = (score >= 10) ? [UIImage imageNamed:@"Star full"] : ((score >= 9) ? [UIImage imageNamed:@"Star half"] : [UIImage imageNamed:@"Star empty"]);
+  cell.genderImage.image = ([dic[@"_gender"] isEqual: @"female"]) ? [UIImage imageNamed:@"Female"] : [UIImage imageNamed:@"Male"];
+  
+  cell.ageLabel.text = [NSString stringWithFormat:@"%@", (dic[@"_age"] == [NSNull null]) ? @"" : dic[@"_age"]];
+  NSString *job = ([dic[@"_job"] isKindOfClass:[NSNull class]]) ? @"" : [NSString stringWithFormat:@"%@", dic[@"_job"]];
+  job = [[job componentsSeparatedByString:@","] firstObject];
+  job = [Common getParameterByType:@"job" AndKey:job];
+  cell.jobLabel.text = job;
+  
+  NSString *lang = ([dic[@"_lang"] isKindOfClass:[NSNull class]]) ? @"" : [NSString stringWithFormat:@"%@", dic[@"_lang"]];
+  NSArray *ary = [lang componentsSeparatedByString:@","];
+  NSString *langResult = @"";
+  for (NSString *str in ary) {
+    NSString *tmp = [langResult stringByAppendingString:[Common getParameterByType:@"lang" AndKey:str]];
+    langResult = tmp;
+    
+    if (![str isEqual: [ary lastObject]])
+      langResult = [langResult stringByAppendingString:@","];
+  }
+  cell.langLabel.text = langResult;
   
   return cell;
 }
