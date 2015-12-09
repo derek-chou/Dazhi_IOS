@@ -137,7 +137,7 @@
   
   __block int userLevel = 0;
   //Core Data中如沒有資料，則至server中取得
-  User *user = [User getUser:aKey[0] :aKey[1]];
+  User *user = [User getByType:aKey[0] AndID:aKey[1]];
   if (user != nil) {
     cell.nameLabel.text = user.name;
     userLevel = [user.level intValue];
@@ -146,7 +146,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlString parameters:@{@"type":aKey[0], @"id":aKey[1]}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-           [User addUser:responseObject[0]];
+           [User addWithDic:responseObject[0]];
            cell.nameLabel.text = responseObject[0][@"_name"];
            userLevel = [responseObject[0][@"_level"] intValue];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

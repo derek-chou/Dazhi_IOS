@@ -65,7 +65,7 @@
   [_iconBtn setImage:message.iconImage.image forState:UIControlStateNormal];
   //畫圓框
   int userLevel = 0;
-  User *user = [User getUser:message.otherType :message.otherID];
+  User *user = [User getByType:message.otherType AndID:message.otherID];
   if (user != nil)
     userLevel = [user.level intValue];
   

@@ -8,11 +8,12 @@
 
 #import "User.h"
 #import "AppDelegate.h"
+#import "Common.h"
 
 @implementation User
 
 // Insert code here to add functionality to your managed object subclass
-+ (User *)getUser:(NSString*)type :(NSString*)id {
++ (User *)getByType:(NSString*)type AndID:(NSString*)id {
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   if([type isKindOfClass:[NSNull class]])
     return nil;
@@ -35,24 +36,31 @@
   return nil;
 }
 
-+ (void) addUser:(NSDictionary *)dic {
++ (void) addWithDic:(NSDictionary *)dic {
+  if (![dic isKindOfClass:[NSDictionary class]]) {
+    return;
+  }
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   
   @try {
-    User *user;
-    user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:app.managedObjectContext];
-    user.type = dic[@"_type"];
-    user.id = dic[@"_id"];
-    user.name = (dic[@"_name"] == [NSNull null]) ? @"" : dic[@"_name"];
-    user.avgScore = (dic[@"_avg_score"] == [NSNull null]) ? @"" : dic[@"_avg_score"];
-    user.scoreCount = (dic[@"_count"] == [NSNull null]) ? @"" : dic[@"_count"];
-    user.gender = (dic[@"_gender"] == [NSNull null]) ? @"" : dic[@"_gender"];
-    NSString *age = [NSString stringWithFormat:@"%@", (dic[@"_age"] == [NSNull null]) ? @"" : dic[@"_age"]];
+    NSString *type = [Common getNSCFString:dic[@"_type"]];
+    NSString *userID = [Common getNSCFString:dic[@"_id"]];
+    User *user = [User getByType:type AndID:userID];
+    if (user == nil)
+      user = [NSEntityDescription insertNewObjectForEntityForName:@"User"
+                                            inManagedObjectContext:app.managedObjectContext];
+    user.type = [Common getNSCFString:dic[@"_type"]];
+    user.id = [Common getNSCFString:dic[@"_id"]];
+    user.name = [Common getNSCFString:dic[@"_name"]];
+    user.avgScore = [Common getNSCFString:dic[@"_avg_score"]];
+    user.scoreCount = [Common getNSCFString:dic[@"_count"]];
+    user.gender = [Common getNSCFString:dic[@"_gender"]];
+    NSString *age = [NSString stringWithFormat:@"%@", [Common getNSCFString:dic[@"_age"]]];
     user.age = age;
-    user.job = (dic[@"_job"] == [NSNull null]) ? @"" : dic[@"_job"];
-    user.lang = (dic[@"_lang"] == [NSNull null]) ? @"" : dic[@"_lang"];
-    user.link = (dic[@"_link"] == [NSNull null]) ? @"" : dic[@"_link"];
-    user.level = (dic[@"_level"] == [NSNull null]) ? @"" : dic[@"_level"];
+    user.job = [Common getNSCFString:dic[@"_job"]];
+    user.lang = [Common getNSCFString:dic[@"_lang"]];
+    user.link = [Common getNSCFString:dic[@"_link"]];
+    user.level = [Common getNSCFString:dic[@"_level"]];
     
     [app.managedObjectContext save:nil];
   } @catch (NSException * e) {

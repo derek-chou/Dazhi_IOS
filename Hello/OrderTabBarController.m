@@ -17,7 +17,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view.
-  
   self.delegate = self;
 }
 
@@ -55,6 +54,7 @@
                                 [UIColor redColor], NSForegroundColorAttributeName,
                                 [UIFont fontWithName:@"Helvetica" size:15.0], NSFontAttributeName, nil]
                       forState:UIControlStateSelected];
+  
   item = [self.tabBar.items objectAtIndex:1];
   [item setImage:nil];
   [item setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -80,5 +80,7 @@
 //   NSFontAttributeName,
 //   nil] forState:UIControlStateNormal];
 }
+
+
 
 @end

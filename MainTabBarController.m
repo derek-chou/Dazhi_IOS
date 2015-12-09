@@ -28,17 +28,18 @@
 
   [self.tabBar addSubview:_mainTabBar];
   
-  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"3"
+  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"6"
                                                  withStringColor:[UIColor whiteColor]
-                                                  withInsetColor:[UIColor redColor]
+                                                  withInsetColor:[UIColor blueColor]
                                                   withBadgeFrame:NO
                                              withBadgeFrameColor:[UIColor whiteColor]
                                                        withScale:.7
                                                      withShining:YES];
   [self.mainTabBar.MsgBadgeBtn setBadge:customBadge1];
-  CustomBadge *customBadge2 = [CustomBadge customBadgeWithString:@"1"
+  
+  CustomBadge *customBadge2 = [CustomBadge customBadgeWithString:@"3"
                                                  withStringColor:[UIColor whiteColor]
-                                                  withInsetColor:[UIColor blueColor]
+                                                  withInsetColor:[UIColor redColor]
                                                   withBadgeFrame:NO
                                              withBadgeFrameColor:[UIColor whiteColor]
                                                        withScale:.7

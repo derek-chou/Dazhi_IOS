@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "Order.h"
 
 @interface Common : NSObject {
 }
@@ -20,5 +21,9 @@
 
 + (NSString*)getPhotoURLByType:(NSString*)type AndID:(NSString*)id;
 + (UIColor*) getUserLevelColor:(int) level;
+
++ (NSString*) getNSCFString:(NSObject*)obj;
++ (NSNumber*) getNSCFNumber:(NSObject*)obj;
++ (NSArray*) getOtherSide:(Order*)order;
 
 @end

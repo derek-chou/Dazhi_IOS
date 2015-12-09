@@ -33,7 +33,8 @@
     return;
   
   if ([UrlString length]) {
-    UIImage *placeholderImage = [UIImage imageNamed:@"top5_a1.png"];
+    //UIImage *placeholderImage = [UIImage imageNamed:@"top5_a1.png"];
+    UIImage *placeholderImage = [UIImage imageNamed:@"loding.gif"];
     NSURL *url = [NSURL URLWithString:UrlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -63,7 +64,7 @@
               }
      ];
   } else {
-    view.image = [UIImage imageNamed:@"top5_a1.png"];
+    view.image = [UIImage imageNamed:@"loading.gif"];
   }
 
 }
@@ -73,7 +74,7 @@
     return;
   
   if ([UrlString length]) {
-    UIImage *placeholderImage = [UIImage imageNamed:@"top5_a1.png"];
+    UIImage *placeholderImage = [UIImage imageNamed:@"loading.gif"];
     NSURL *url = [NSURL URLWithString:UrlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -99,7 +100,7 @@
              }
      ];
   } else {
-    [btn setImage:[UIImage imageNamed:@"top5_a1.png"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"loading.gif"] forState:UIControlStateNormal];
   }
 }
 
@@ -153,5 +154,30 @@
   }
   return color;
 }
+
++ (NSString*) getNSCFString:(NSObject*)obj {
+  return ([obj isKindOfClass:[NSNull class]]) ? @"" : (NSString*)obj;
+}
+
++ (NSNumber*) getNSCFNumber:(NSObject*)obj {
+  return ([obj isKindOfClass:[NSNull class]]) ? 0 : (NSNumber*)obj;
+}
+
++ (NSArray*) getOtherSide:(Order*)order {
+  NSMutableArray *ary = [NSMutableArray new];
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  
+  if ([order.sellerType isEqualToString:userType] && [order.sellerID isEqualToString:userID]) {
+    [ary addObject:order.buyerType];
+    [ary addObject:order.buyerID];
+  } else {
+    [ary addObject:order.sellerType];
+    [ary addObject:order.sellerID];
+  }
+  
+  return ary;
+}
+
 
 @end

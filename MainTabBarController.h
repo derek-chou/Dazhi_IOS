@@ -13,5 +13,4 @@
 
 @property (nonatomic, strong) MainTabBar *mainTabBar;
 @property (nonatomic, copy) NSString *badgeValue;
-
 @end

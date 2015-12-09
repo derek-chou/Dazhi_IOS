@@ -76,7 +76,7 @@
            if ([self.userDic objectForKey:retKey]) {
              [self.userDic[retKey] addObject:responseObject[0]];
            }
-           [User addUser:responseObject[0]];
+           [User addWithDic:responseObject[0]];
            
            [self userDataFinish];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -92,7 +92,7 @@
 }
 
 - (NSDictionary *)getUserData:(NSString*)type :(NSString*)id {
-  User *user = [User getUser:type :id];
+  User *user = [User getByType:type AndID:id];
   
   if (user == nil) {
     return nil;

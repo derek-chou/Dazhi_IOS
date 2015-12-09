@@ -1,8 +1,8 @@
 //
-//  User.h
+//  Product.h
 //  Hello
 //
-//  Created by Derek Chou on 2015/11/13.
+//  Created by Derek Chou on 2015/12/8.
 //  Copyright © 2015年 Derek Chou. All rights reserved.
 //
 
@@ -11,13 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface User : NSManagedObject
+@interface Product : NSManagedObject
 
++ (Product *)getByID:(NSString*)prodID;
 + (void) addWithDic:(NSDictionary *)dic;
-+ (User *)getByType:(NSString*)type AndID:(NSString*)id;
+
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "User+CoreDataProperties.h"
+#import "Product+CoreDataProperties.h"

@@ -75,7 +75,7 @@
   if (cell == nil) {
     cell = [[TopicViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
   }
-  
+    
   NSDictionary *topicText = self.topicTexts[indexPath.row];
   cell.titleLabel.text = [NSString stringWithFormat:@"  %@  ", topicText[@"_title"]];
   cell.descLabel.text = [NSString stringWithFormat:@"  %@  ", topicText[@"_content"]];
