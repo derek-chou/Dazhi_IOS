@@ -11,4 +11,10 @@
 @interface MsgTableViewController : UITableViewController
 @property NSMutableArray *messageTexts;
 @property NSMutableDictionary *messageGroup;
+@property NSMutableDictionary *groupBadge;
+@property NSString *msgBadge;
+
+- (void)timerEvent:(NSTimer *)timer;
+@property NSTimer *timer;
+-(void)startTimer;
 @end

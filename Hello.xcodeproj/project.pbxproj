@@ -23,12 +23,14 @@
 		650C76C61BFABB08008A9F6A /* OrderTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76C51BFABB08008A9F6A /* OrderTabBarController.m */; };
 		650C76CA1BFACD86008A9F6A /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76C91BFACD86008A9F6A /* SettingTableViewController.m */; };
 		650C76CD1BFCC956008A9F6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 650C76CF1BFCC956008A9F6A /* Localizable.strings */; };
-		650C76D71BFD9CBA008A9F6A /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76D61BFD9CBA008A9F6A /* Message.m */; };
+		650C76D71BFD9CBA008A9F6A /* MessageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76D61BFD9CBA008A9F6A /* MessageData.m */; };
 		650C76DA1BFD9E1C008A9F6A /* MessageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76D91BFD9E1C008A9F6A /* MessageFrame.m */; };
 		650C76E01BFDA8CE008A9F6A /* MsgDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76DF1BFDA8CE008A9F6A /* MsgDetailCell.m */; };
 		650C76E31BFDB342008A9F6A /* MsgDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650C76E21BFDB342008A9F6A /* MsgDetailViewController.m */; };
 		6510E57B1BEDFA8B00B8B216 /* TopicTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6510E57A1BEDFA8B00B8B216 /* TopicTableViewController.m */; };
 		6510E57E1BEDFC4700B8B216 /* TopicViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6510E57D1BEDFC4700B8B216 /* TopicViewCell.m */; };
+		65165CDE1C191B4C004DF016 /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 65165CDB1C191B4C004DF016 /* Message+CoreDataProperties.m */; };
+		65165CDF1C191B4C004DF016 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 65165CDD1C191B4C004DF016 /* Message.m */; };
 		652305F31BEC2F9500594D54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 652305F21BEC2F9500594D54 /* main.m */; };
 		652305F61BEC2F9500594D54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 652305F51BEC2F9500594D54 /* AppDelegate.m */; };
 		652305F91BEC2F9500594D54 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 652305F81BEC2F9500594D54 /* ViewController.m */; };
@@ -130,8 +132,8 @@
 		650C76C81BFACD86008A9F6A /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
 		650C76C91BFACD86008A9F6A /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
 		650C76CE1BFCC956008A9F6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		650C76D51BFD9CBA008A9F6A /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		650C76D61BFD9CBA008A9F6A /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		650C76D51BFD9CBA008A9F6A /* MessageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageData.h; sourceTree = "<group>"; };
+		650C76D61BFD9CBA008A9F6A /* MessageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageData.m; sourceTree = "<group>"; };
 		650C76D81BFD9E1C008A9F6A /* MessageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrame.h; sourceTree = "<group>"; };
 		650C76D91BFD9E1C008A9F6A /* MessageFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageFrame.m; sourceTree = "<group>"; };
 		650C76DE1BFDA8CE008A9F6A /* MsgDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgDetailCell.h; sourceTree = "<group>"; };
@@ -142,6 +144,10 @@
 		6510E57A1BEDFA8B00B8B216 /* TopicTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicTableViewController.m; sourceTree = "<group>"; };
 		6510E57C1BEDFC4700B8B216 /* TopicViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewCell.h; sourceTree = "<group>"; };
 		6510E57D1BEDFC4700B8B216 /* TopicViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicViewCell.m; sourceTree = "<group>"; };
+		65165CDA1C191B4C004DF016 /* Message+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+CoreDataProperties.h"; sourceTree = "<group>"; };
+		65165CDB1C191B4C004DF016 /* Message+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+CoreDataProperties.m"; sourceTree = "<group>"; };
+		65165CDC1C191B4C004DF016 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		65165CDD1C191B4C004DF016 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		652305EE1BEC2F9500594D54 /* Hello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		652305F21BEC2F9500594D54 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		652305F41BEC2F9500594D54 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -280,8 +286,8 @@
 				650C76BE1BFAB26B008A9F6A /* MsgTableViewController.m */,
 				650C76C01BFAB2A6008A9F6A /* MsgViewCell.h */,
 				650C76C11BFAB2A6008A9F6A /* MsgViewCell.m */,
-				650C76D51BFD9CBA008A9F6A /* Message.h */,
-				650C76D61BFD9CBA008A9F6A /* Message.m */,
+				650C76D51BFD9CBA008A9F6A /* MessageData.h */,
+				650C76D61BFD9CBA008A9F6A /* MessageData.m */,
 				650C76D81BFD9E1C008A9F6A /* MessageFrame.h */,
 				650C76D91BFD9E1C008A9F6A /* MessageFrame.m */,
 				650C76DE1BFDA8CE008A9F6A /* MsgDetailCell.h */,
@@ -352,22 +358,22 @@
 				65727F451BF4E4C800EC3C37 /* CustomBadge */,
 				652B53F41BF03E020055DAA9 /* UIKit+AFNetworking */,
 				652B53D71BF03DF10055DAA9 /* AFNetworking */,
-				6523063C1BEC322900594D54 /* Controller */,
 				65B891ED1BF58C3400A04308 /* CoreData */,
 				650C76BC1BFAB1D6008A9F6A /* Lib */,
 				652306271BEC2FB300594D54 /* Icons */,
+				6523063C1BEC322900594D54 /* Controller */,
 				652C36781BF41CBE00B280AE /* Topic */,
 				652C36791BF41D9D00B280AE /* Favorite */,
 				650C76BB1BFAB1BB008A9F6A /* Message */,
 				650C76C31BFABA8F008A9F6A /* Order */,
 				650C76C71BFACD32008A9F6A /* Setting */,
+				652305F11BEC2F9500594D54 /* Supporting Files */,
 				652305F41BEC2F9500594D54 /* AppDelegate.h */,
 				652305F51BEC2F9500594D54 /* AppDelegate.m */,
 				652305FA1BEC2F9500594D54 /* Main.storyboard */,
 				652306001BEC2F9500594D54 /* Assets.xcassets */,
 				652306021BEC2F9500594D54 /* LaunchScreen.storyboard */,
 				652305FD1BEC2F9500594D54 /* Hello.xcdatamodeld */,
-				652305F11BEC2F9500594D54 /* Supporting Files */,
 			);
 			path = Hello;
 			sourceTree = "<group>";
@@ -525,6 +531,10 @@
 		65B891ED1BF58C3400A04308 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				65165CDA1C191B4C004DF016 /* Message+CoreDataProperties.h */,
+				65165CDB1C191B4C004DF016 /* Message+CoreDataProperties.m */,
+				65165CDC1C191B4C004DF016 /* Message.h */,
+				65165CDD1C191B4C004DF016 /* Message.m */,
 				65053F0E1C16D2AC00F0E482 /* Product+CoreDataProperties.h */,
 				65053F0F1C16D2AC00F0E482 /* Product+CoreDataProperties.m */,
 				65053F101C16D2AC00F0E482 /* Product.h */,
@@ -699,13 +709,15 @@
 				652B54071BF03E020055DAA9 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				652B53F31BF03DF10055DAA9 /* AFURLSessionManager.m in Sources */,
 				652B53ED1BF03DF10055DAA9 /* AFHTTPSessionManager.m in Sources */,
-				650C76D71BFD9CBA008A9F6A /* Message.m in Sources */,
+				650C76D71BFD9CBA008A9F6A /* MessageData.m in Sources */,
 				650C76E31BFDB342008A9F6A /* MsgDetailViewController.m in Sources */,
 				65727F4A1BF4E4C800EC3C37 /* CustomBadge.m in Sources */,
 				652C366D1BF2CE3600B280AE /* ProductViewCell.m in Sources */,
 				652306421BEC331100594D54 /* MainTabBar.m in Sources */,
+				65165CDE1C191B4C004DF016 /* Message+CoreDataProperties.m in Sources */,
 				652B53EE1BF03DF10055DAA9 /* AFNetworkReachabilityManager.m in Sources */,
 				652B540B1BF03E020055DAA9 /* UIImageView+AFNetworking.m in Sources */,
+				65165CDF1C191B4C004DF016 /* Message.m in Sources */,
 				650C76BF1BFAB26B008A9F6A /* MsgTableViewController.m in Sources */,
 				652C36671BF1CF4E00B280AE /* Common.m in Sources */,
 				650C76CA1BFACD86008A9F6A /* SettingTableViewController.m in Sources */,

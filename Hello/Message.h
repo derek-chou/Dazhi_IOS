@@ -2,28 +2,24 @@
 //  Message.h
 //  Hello
 //
-//  Created by Derek Chou on 2015/11/19.
+//  Created by Derek Chou on 2015/12/10.
 //  Copyright © 2015年 Derek Chou. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-typedef enum {
-  FROM_ME = 0,
-  FROM_OTHER = 1
-} MessageType;
+NS_ASSUME_NONNULL_BEGIN
 
-@interface Message : NSObject
-- (void) setFromDict:(NSDictionary*) dict otherType:(NSString*)type otherID:(NSString*)ID;
+@interface Message : NSManagedObject
 
-@property (nonatomic, copy) NSString *icon;
-@property (nonatomic, copy) NSString *datetime;
-@property (nonatomic, copy) NSString *date;
-@property (nonatomic, copy) NSString *time;
-@property (nonatomic, copy) NSString *content;
-@property (nonatomic, assign) MessageType type;
-@property (nonatomic) UIImageView *iconImage;
-@property (nonatomic, copy) NSString *otherType;
-@property (nonatomic, copy) NSString *otherID;
++ (Message *)getBySeq:(NSString*)seq;
++ (void) updateWithArray:(NSMutableArray *)ary;
++ (NSString*)getMaxSeq;
++ (NSArray*)getAll;
+
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Message+CoreDataProperties.h"

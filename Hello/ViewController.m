@@ -35,16 +35,27 @@
   self.pageViewController.delegate = self;
   self.pageViewController.dataSource = self;
   
-  
   UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
   
-  TopicTableViewController *topicView = (TopicTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"TopicView"];
-  FavoriteTableViewController *favoriteView = (FavoriteTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"FavoriteView"];
-  MsgTableViewController *msgView = (MsgTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"MsgView"];
-  OrderTabBarController *orderView = (OrderTabBarController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"OrderView"];
-  SettingTableViewController *setView = (SettingTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"SettingView"];
+  TopicTableViewController *topicView = (TopicTableViewController*)[mainStoryboard
+                                          instantiateViewControllerWithIdentifier: @"TopicView"];
+  FavoriteTableViewController *favoriteView = (FavoriteTableViewController*)[mainStoryboard
+                                          instantiateViewControllerWithIdentifier: @"FavoriteView"];
+  MsgTableViewController *msgView = (MsgTableViewController*)[mainStoryboard
+                                          instantiateViewControllerWithIdentifier: @"MsgView"];
+  OrderTabBarController *orderView = (OrderTabBarController*)[mainStoryboard
+                                          instantiateViewControllerWithIdentifier: @"OrderView"];
+  SettingTableViewController *setView = (SettingTableViewController*)[mainStoryboard
+                                          instantiateViewControllerWithIdentifier: @"SettingView"];
   
   _controllers = @[topicView, favoriteView, msgView, orderView, setView];
+  
+  //定時取Msg
+  [msgView startTimer];
+  [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
+
+  //msgView = [MsgTableViewController new];
+  //[msgView loadView];
   
   [self.pageViewController setViewControllers:@[topicView] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
   [self addChildViewController:self.pageViewController];
@@ -155,7 +166,6 @@
     
   }
 }
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
   NSUInteger index = [_controllers indexOfObject:viewController];

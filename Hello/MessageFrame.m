@@ -9,7 +9,7 @@
 #import "MessageFrame.h"
 
 @implementation MessageFrame
-- (void) setMessage:(Message *)message {
+- (void) setMessage:(MessageData *)message {
   _message = message;
   CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
   

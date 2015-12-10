@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="Message" representedClassName="Message" syncable="YES">
+        <attribute name="fromID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="insertDT" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="msg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="readDT" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seqID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toType" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Order" representedClassName="Order" syncable="YES">
         <attribute name="buyDT" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="buyerConfirmDT" optional="YES" attributeType="String" syncable="YES"/>
@@ -50,17 +62,20 @@
         <attribute name="scoreCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <fetchRequest name="FetchAllMessage" entity="Message"/>
     <fetchRequest name="FetchAllParameter" entity="Parameter"/>
     <fetchRequest name="FetchCurrentOrder" entity="Order" predicateString="travelDay &gt;= $DATE"/>
     <fetchRequest name="FetchHistoryOrder" entity="Order" predicateString="travelDay &lt; $DATE"/>
+    <fetchRequest name="FetchMessageBySeq" entity="Message" predicateString="seqID == $SEQ_ID"/>
     <fetchRequest name="FetchOrder" entity="Order" predicateString="orderID == $ID"/>
     <fetchRequest name="FetchParameter" entity="Parameter" predicateString="type == $TYPE AND key == $KEY"/>
     <fetchRequest name="FetchProduct" entity="Product" predicateString="productID == $PRODUCT_ID"/>
     <fetchRequest name="FetchUser" entity="User" predicateString="type == $TYPE AND id == $ID"/>
     <elements>
-        <element name="Parameter" positionX="-54" positionY="54" width="128" height="90"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Order" positionX="-54" positionY="63" width="128" height="240"/>
+        <element name="Parameter" positionX="-54" positionY="54" width="128" height="90"/>
         <element name="Product" positionX="-45" positionY="126" width="128" height="270"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="210"/>
+        <element name="Message" positionX="-54" positionY="135" width="128" height="195"/>
     </elements>
 </model>

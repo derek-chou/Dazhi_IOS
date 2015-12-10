@@ -35,7 +35,7 @@
   NSString *prevDate = nil;
   for (NSDictionary *dic in self.msgAry) {
     MessageFrame *mf = [MessageFrame new];
-    Message *msg = [Message new];
+    MessageData *msg = [MessageData new];
     [msg setFromDict:dic otherType:_otherType otherID:_otherID];
     
     //取得使用者頭像
@@ -82,7 +82,7 @@
 - (void) addMessageWithContent:(NSString*)content datetime:(NSString*)datetime {
   static BOOL flag = YES;
   MessageFrame *mf = [MessageFrame new];
-  Message *msg = [Message new];
+  MessageData *msg = [MessageData new];
   msg.content = content;
   msg.datetime = datetime;
   NSArray *ary = [datetime componentsSeparatedByString:@" "];

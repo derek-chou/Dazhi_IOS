@@ -56,7 +56,7 @@
 
 - (void) setMessageFrame:(MessageFrame *)messageFrame {
   _messageFrame = messageFrame;
-  Message *message = _messageFrame.message;
+  MessageData *message = _messageFrame.message;
   
   [_dateBtn setTitle:message.date forState:UIControlStateNormal];
   _dateBtn.frame = _messageFrame.dateFrame;

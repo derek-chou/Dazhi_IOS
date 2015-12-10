@@ -12,5 +12,9 @@
 @interface MainTabBarController : UITabBarController
 
 @property (nonatomic, strong) MainTabBar *mainTabBar;
-@property (nonatomic, copy) NSString *badgeValue;
+//@property (nonatomic, copy) NSString *badgeValue;
+
+- (void)setMsgBadge:(NSString*)badge;
+- (void)setOrderBadge:(NSString*)badge;
+
 @end

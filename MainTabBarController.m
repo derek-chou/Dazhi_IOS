@@ -28,23 +28,26 @@
 
   [self.tabBar addSubview:_mainTabBar];
   
-  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"6"
-                                                 withStringColor:[UIColor whiteColor]
-                                                  withInsetColor:[UIColor blueColor]
-                                                  withBadgeFrame:NO
-                                             withBadgeFrameColor:[UIColor whiteColor]
-                                                       withScale:.7
-                                                     withShining:YES];
-  [self.mainTabBar.MsgBadgeBtn setBadge:customBadge1];
+//  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"6"
+//                                                 withStringColor:[UIColor whiteColor]
+//                                                  withInsetColor:[UIColor blueColor]
+//                                                  withBadgeFrame:NO
+//                                             withBadgeFrameColor:[UIColor whiteColor]
+//                                                       withScale:.7
+//                                                     withShining:YES];
+//  [self.mainTabBar.MsgBadgeBtn setBadge:customBadge1];
+//  [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"5"];
   
-  CustomBadge *customBadge2 = [CustomBadge customBadgeWithString:@"3"
-                                                 withStringColor:[UIColor whiteColor]
-                                                  withInsetColor:[UIColor redColor]
-                                                  withBadgeFrame:NO
-                                             withBadgeFrameColor:[UIColor whiteColor]
-                                                       withScale:.7
-                                                     withShining:YES];
-  [self.mainTabBar.OrderBadgeBtn setBadge:customBadge2];
+//  CustomBadge *customBadge2 = [CustomBadge customBadgeWithString:@"3"
+//                                                 withStringColor:[UIColor whiteColor]
+//                                                  withInsetColor:[UIColor redColor]
+//                                                  withBadgeFrame:NO
+//                                             withBadgeFrameColor:[UIColor whiteColor]
+//                                                       withScale:.7
+//                                                     withShining:YES];
+//  [self.mainTabBar.OrderBadgeBtn setBadge:customBadge2];
+//  [self.mainTabBar.OrderBadgeBtn setBadgeWithString:@"3"];
+  [self setOrderBadge:@"0"];
 }
 
 - (void)viewWillLayoutSubviews
@@ -71,15 +74,19 @@
   self.tabBar.opaque = NO;
 }
 
-
 -(void)changeTabBar:(NSInteger)from to:(NSInteger)to{
   UINavigationController *nav = (UINavigationController *)self.selectedViewController;
   ViewController *vc = (ViewController *)nav.viewControllers.firstObject;
   [vc changeTabBar:to];
-
 }
 
+- (void)setMsgBadge:(NSString*)badge {
+  [self.mainTabBar.MsgBadgeBtn setBadgeWithString:badge];
+}
 
+- (void)setOrderBadge:(NSString*)badge {
+  [self.mainTabBar.OrderBadgeBtn setBadgeWithString:badge];
+}
 
 @end
 

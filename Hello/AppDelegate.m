@@ -56,7 +56,8 @@
   //清除所有Parameter
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   //NSDictionary *dicCondition = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:type, key, value, nil] forKeys:[NSArray arrayWithObjects:@"type", @"key", @"value", nil]];
-  NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchAllParameter" substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:@"type", @"", nil]];
+  NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchAllParameter"
+                    substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:@"type", @"", nil]];
   
   NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];
   for (Parameter *param in fetchResult) {
@@ -78,6 +79,7 @@
   // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
   
   //更改桌面icon badge
+  /*
   float version = [[[UIDevice currentDevice] systemVersion] floatValue];
   if (version >= 8.0) {
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
@@ -85,11 +87,13 @@
   }
   
   [UIApplication sharedApplication].applicationIconBadgeNumber = 3;
+  */
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
   // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
   // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+  NSLog(@"enter background");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

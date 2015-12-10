@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MessageFrame.h"
-#import "Message.h"
+#import "MessageData.h"
 #import "CircleButton.h"
 
 @interface MsgDetailCell : UITableViewCell {

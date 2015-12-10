@@ -16,22 +16,16 @@
   self.color = color;
   
   [self setTitleColor:color forState:UIControlStateNormal];
-  
   self.circleLayer = [CAShapeLayer layer];
-  
   [self.circleLayer setBounds:CGRectMake(0.0f, 0.0f, [self bounds].size.width,
                                          [self bounds].size.height)];
   [self.circleLayer setPosition:CGPointMake(CGRectGetMidX([self bounds]),CGRectGetMidY([self bounds]))];
-  
-  UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-  
+  UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:
+                        CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
   [self.circleLayer setPath:[path CGPath]];
-  
   [self.circleLayer setStrokeColor:[color CGColor]];
-  
   [self.circleLayer setLineWidth:5.0f];
   [self.circleLayer setFillColor:[[UIColor clearColor] CGColor]];
-
   
   [[self layer] addSublayer:self.circleLayer];
   self.clipsToBounds = YES;

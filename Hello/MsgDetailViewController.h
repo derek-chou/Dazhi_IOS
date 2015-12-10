@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MessageFrame.h"
-#import "Message.h"
+#import "MessageData.h"
 
 @interface MsgDetailViewController : UIViewController<UITextFieldDelegate> {
   IBOutlet UITableView *tableV;

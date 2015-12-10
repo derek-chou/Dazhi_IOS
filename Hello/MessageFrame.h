@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "Message.h"
+#import "MessageData.h"
 
 #define MARGIN 8
 #define ICON_WH 40
@@ -40,6 +40,6 @@
 
 @property (nonatomic, assign) CGFloat cellHeight;
 
-@property (nonatomic, strong) Message *message;
+@property (nonatomic, strong) MessageData *message;
 @property (nonatomic, assign) BOOL showDate;
 @end
