@@ -112,5 +112,23 @@
   }
 }
 
++ (NSArray*) getOtherSide:(Order*)order {
+  NSMutableArray *ary = [NSMutableArray new];
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  
+  if ([order.sellerType isEqualToString:userType] && [order.sellerID isEqualToString:userID]) {
+    [ary addObject:order.buyerType];
+    [ary addObject:order.buyerID];
+  } else if ([order.buyerType isEqualToString:userType] && [order.buyerID isEqualToString:userID]) {
+    [ary addObject:order.sellerType];
+    [ary addObject:order.sellerID];
+  } else {
+    [ary addObject:@""];
+    [ary addObject:@""];
+  }
+  
+  return ary;
+}
 
 @end

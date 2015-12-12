@@ -10,6 +10,7 @@
 #import "MsgDetailCell.h"
 #import "Common.h"
 #import "User.h"
+#import "AFNetworking.h"
 
 @interface MsgDetailViewController ()
 
@@ -19,6 +20,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
   tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
   tableV.allowsSelection = NO;
   tableV.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MessageBackground"]];
@@ -27,16 +29,38 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                    action:@selector(didTapOnTableView:)];
+  [tableV  addGestureRecognizer:tap];
+ 
   _allMessageFrame = [NSMutableArray new];
-  messageField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
-  messageField.leftViewMode = UITextFieldViewModeAlways;
-  messageField.delegate = self;
+  //messageView.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+  //messageView.leftViewMode = UITextFieldViewModeAlways;
+  //messageView.delegate = self;
   
+  [self refreshMessage:0];
+  //[tableV reloadData];
+
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  Message *lastMsgObj = [_msgAry lastObject];
+  if (lastMsgObj != nil && [lastMsgObj.readDT isEqualToString:@""] &&
+      [lastMsgObj.toType isEqualToString:userType] && [lastMsgObj.toID isEqualToString:userID])
+    [self setMsgRead];
+}
+
+-(void) didTapOnTableView:(UIGestureRecognizer*) recognizer {
+  [messageView resignFirstResponder];
+}
+
+-(void)refreshMessage:(int)oldCnt {
   NSString *prevDate = nil;
-  for (NSDictionary *dic in self.msgAry) {
+  NSArray *messages = [Message getWithOtherType:_otherType OtherID:_otherID];
+  int newCnt = [messages count];
+  for (Message *msgObj in messages) {
     MessageFrame *mf = [MessageFrame new];
     MessageData *msg = [MessageData new];
-    [msg setFromDict:dic otherType:_otherType otherID:_otherID];
+    [msg setFromMsgObj:msgObj otherType:_otherType otherID:_otherID];
     
     //取得使用者頭像
     NSString *photoURL = [Common getPhotoURLByType:_otherType AndID:_otherID];
@@ -59,28 +83,80 @@
     mf.message = msg;
     [_allMessageFrame addObject:mf];
   }
+
+  [tableV reloadData];
   
-  //[tableV reloadData];
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count-1 inSection:0];
-  [tableV scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+  if (oldCnt != newCnt) {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count-1 inSection:0];
+    [tableV scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [self setMsgRead];
+  }
 }
 
-- (void) viewDidAppear:(BOOL)animated
-{
+-(void) setMsgRead {
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  manager.requestSerializer = [AFJSONRequestSerializer serializer];
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  
+  NSString *seq = [Message getMaxNonReadSeqFromOtherType:_otherType OtherID:_otherID];
+
+  NSString *url = [Common getSetting:@"Server URL"];
+  NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "message"];
+  NSDictionary *params = @{@"to_type":userType, @"to_id":userID,
+                           @"from_type":_otherType, @"from_id":_otherID, @"seq":seq};
+  [manager PUT:urlString parameters:params
+  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"setMsgRead: %@", responseObject);
+  }
+  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"Error: %@", error);
+  }];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
   //讓scroll bar移到最底
-  //if (tableV.contentSize.height > tableV.frame.size.height) {
-    CGPoint offset = CGPointMake(0, tableV.contentSize.height - tableV.frame.size.height);
-    [tableV setContentOffset:offset animated:NO];
-    //[tableV setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
-  //}
-  //[tableV scrollRectToVisible:CGRectMake(0, tableV.contentSize.height - tableV.bounds.size.height, tableV.bounds.size.width, tableV.bounds.size.height) animated:YES];
+  CGPoint offset = CGPointMake(0, tableV.contentSize.height - tableV.frame.size.height);
+  [tableV setContentOffset:offset animated:NO];
   
+  [self startTimer];
 }
 
+-(void)startTimer {
+  if (_pollingTimer != nil)
+    return;
+  
+  _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:2
+                                                   target:self
+                                                 selector:@selector(timerPolling:)
+                                                 userInfo:nil
+                                                  repeats:true];
+}
+
+-(void)stopTimer {
+  [_pollingTimer invalidate];
+  _pollingTimer = nil;
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  [_pollingTimer invalidate];
+  _pollingTimer = nil;
+}
+
+-(void)timerPolling:(NSTimer *)timer {
+  int oldCnt = [_allMessageFrame count];
+  [_allMessageFrame removeAllObjects];
+  [self refreshMessage:oldCnt];
+}
+
+
 - (void) addMessageWithContent:(NSString*)content datetime:(NSString*)datetime {
-  static BOOL flag = YES;
+  MessageFrame *lastFrame = [_allMessageFrame lastObject];
+  
   MessageFrame *mf = [MessageFrame new];
   MessageData *msg = [MessageData new];
   msg.content = content;
@@ -89,10 +165,12 @@
   msg.date = [ary firstObject];
   msg.time = [ary lastObject];
   msg.time = [msg.time substringToIndex:5];
-  msg.icon = @"Car";
-  msg.type = (flag) ? FROM_ME : FROM_OTHER;
-  flag = !flag;
-  mf.showDate = YES;
+  msg.type = FROM_ME;
+  
+  //判斷最後一筆的日期是否是同一天
+  if (lastFrame == nil || ![lastFrame.message.date isEqualToString:msg.date])
+    mf.showDate = YES;
+  
   mf.message = msg;
   [_allMessageFrame addObject:mf];
 }
@@ -116,11 +194,17 @@
   }];
 }
 
-- (BOOL) textFieldShouldReturn:(UITextField *)textField {
-  NSString *content = textField.text;
+- (IBAction)sendMessage:(id)sender {
+  //[_allMessageFrame removeAllObjects];
+  //[tableV reloadData];
+  [self stopTimer];
+  NSString *content = messageView.text;
   if ([content isEqual:@""]) {
-    return YES;
+    return;
   }
+
+  [self sendMsgToRemote:content];
+  
   NSDateFormatter *fmt = [NSDateFormatter new];
   NSDate *date = [NSDate date];
   fmt.dateFormat = @"yyyy/MM/dd HH:mm:ss";
@@ -130,8 +214,35 @@
   
   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessageFrame.count - 1 inSection:0];
   [tableV scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-  messageField.text = nil;
-  return YES;
+  messageView.text = nil;
+  [self startTimer];
+}
+
+- (void)sendMsgToRemote:(NSString*)msg {
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  manager.requestSerializer = [AFJSONRequestSerializer serializer];
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  
+  NSString *url = [Common getSetting:@"Server URL"];
+  NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "message"];
+  NSDictionary *params = @{@"to_type":_otherType, @"to_id":_otherID,
+                           @"from_type":userType, @"from_id":userID, @"msg":msg};
+  [manager POST:urlString parameters:params
+  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"sendMsgToRemote: %@", responseObject);
+  }
+  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"error" message:@"訊息無法發送，請稍侯再試" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction *action){
+                                [self dismissViewControllerAnimated:YES completion:nil];
+                              }];
+    [alert addAction:okAct];
+    [self presentViewController:alert animated:YES completion:nil];
+  }];
+  
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

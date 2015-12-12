@@ -36,6 +36,9 @@
          contextName = "-[FavoriteTableViewController tableView:cellForRowAtIndexPath:]:FavoriteTableViewController.m">
       </ContextState>
       <ContextState
+         contextName = "-[MsgTableViewController prepareMessageGroup]:MsgTableViewController.m">
+      </ContextState>
+      <ContextState
          contextName = "-[MsgTableViewController tableView:numberOfRowsInSection:]:MsgTableViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -89,13 +92,13 @@
                value = "btn.frame">
             </PersistentString>
             <PersistentString
-               value = "dic[@&quot;_link&quot;]">
+               value = "[self.productDic objectForKey:aKey]">
             </PersistentString>
             <PersistentString
                value = "cell.view.frame">
             </PersistentString>
             <PersistentString
-               value = "[self.productDic objectForKey:aKey]">
+               value = "dic[@&quot;_link&quot;]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -120,6 +123,9 @@
                value = "obj[@&quot;_usertype&quot;]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MessageData setFromMsgObj:otherType:otherID:]:MessageData.m">
       </ContextState>
       <ContextState
          contextName = "-[TopicTableViewController tableView:numberOfRowsInSection:]:TopicTableViewController.m">
@@ -171,6 +177,14 @@
          contextName = "-[ProductViewController numberOfSectionsInTableView:]:ProductViewController.m">
       </ContextState>
       <ContextState
+         contextName = "-[TopicTableViewController scrollViewDidScroll:]:TopicTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "scrollView.contentOffset.y">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "__42-[OrderTableViewController loadOrderData:]_block_invoke:OrderTableViewController.m">
       </ContextState>
       <ContextState
@@ -219,6 +233,14 @@
          <PersistentStrings>
             <PersistentString
                value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MsgTableViewController setMsgGroupBadgeForButton:Value:]:MsgTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[badge length]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

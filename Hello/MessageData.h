@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "Message.h"
 
 typedef enum {
   FROM_ME = 0,
@@ -15,7 +16,7 @@ typedef enum {
 } MessageType;
 
 @interface MessageData : NSObject
-- (void) setFromDict:(NSDictionary*) dict otherType:(NSString*)type otherID:(NSString*)ID;
+- (void) setFromMsgObj:(Message*) msgObj otherType:(NSString*)type otherID:(NSString*)ID;
 
 @property (nonatomic, copy) NSString *icon;
 @property (nonatomic, copy) NSString *datetime;

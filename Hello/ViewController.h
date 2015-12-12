@@ -15,7 +15,8 @@
 @property(nonatomic,assign) NSUInteger currentPageIndex;
 @property(nonatomic,strong) UIScrollView *pageScrollView;
 @property(nonatomic,assign) BOOL hasAppearedFlag;
-
+@property NSTimer *pollingTimer;
+-(void)timerPolling:(NSTimer *)timer;
 -(void)changeTabBar:(NSInteger)index;
 
 @end

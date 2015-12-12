@@ -15,9 +15,9 @@
 // Insert code here to add functionality to your managed object subclass
 + (User *)getByType:(NSString*)type AndID:(NSString*)id {
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-  if([type isKindOfClass:[NSNull class]])
+  if([type isKindOfClass:[NSNull class]] || type == nil)
     return nil;
-  if([id isKindOfClass:[NSNull class]])
+  if([id isKindOfClass:[NSNull class]] || id == nil)
     return nil;
   
   @try {

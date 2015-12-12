@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TopicTableViewController : UITableViewController
+@interface TopicTableViewController : UITableViewController<UISearchBarDelegate>
 
 @property NSMutableArray *topicTexts;
-
+@property UISearchBar *searchBar;
+@property CGPoint lastContentOffset;
 @end

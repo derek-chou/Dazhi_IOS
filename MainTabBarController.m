@@ -27,27 +27,6 @@
   //_mainTabBar.backgroundColor =  [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.1];
 
   [self.tabBar addSubview:_mainTabBar];
-  
-//  CustomBadge *customBadge1 = [CustomBadge customBadgeWithString:@"6"
-//                                                 withStringColor:[UIColor whiteColor]
-//                                                  withInsetColor:[UIColor blueColor]
-//                                                  withBadgeFrame:NO
-//                                             withBadgeFrameColor:[UIColor whiteColor]
-//                                                       withScale:.7
-//                                                     withShining:YES];
-//  [self.mainTabBar.MsgBadgeBtn setBadge:customBadge1];
-//  [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"5"];
-  
-//  CustomBadge *customBadge2 = [CustomBadge customBadgeWithString:@"3"
-//                                                 withStringColor:[UIColor whiteColor]
-//                                                  withInsetColor:[UIColor redColor]
-//                                                  withBadgeFrame:NO
-//                                             withBadgeFrameColor:[UIColor whiteColor]
-//                                                       withScale:.7
-//                                                     withShining:YES];
-//  [self.mainTabBar.OrderBadgeBtn setBadge:customBadge2];
-//  [self.mainTabBar.OrderBadgeBtn setBadgeWithString:@"3"];
-  [self setOrderBadge:@"0"];
 }
 
 - (void)viewWillLayoutSubviews
@@ -81,11 +60,21 @@
 }
 
 - (void)setMsgBadge:(NSString*)badge {
-  [self.mainTabBar.MsgBadgeBtn setBadgeWithString:badge];
+  if ([badge isEqualToString:@""] || [badge isEqualToString:@"0"])
+    [self.mainTabBar.MsgBadgeBtn setBadge:nil];
+  else if ([badge length] > 2)
+    [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"99+"];
+  else
+    [self.mainTabBar.MsgBadgeBtn setBadgeWithString:badge];
 }
 
 - (void)setOrderBadge:(NSString*)badge {
-  [self.mainTabBar.OrderBadgeBtn setBadgeWithString:badge];
+  if ([badge isEqualToString:@""] || [badge isEqualToString:@"0"])
+    [self.mainTabBar.OrderBadgeBtn setBadge:nil];
+  else if ([badge length] > 3)
+    [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"99+"];
+  else
+    [self.mainTabBar.OrderBadgeBtn setBadgeWithString:badge];
 }
 
 @end

@@ -7,24 +7,37 @@
 //
 
 #import "MessageData.h"
+#import "Message.h"
 
 @implementation MessageData
 
-- (void) setFromDict:(NSDictionary*) dict otherType:(NSString*)type otherID:(NSString*)ID{
+- (void) setFromMsgObj:(Message*) msgObj otherType:(NSString*)type otherID:(NSString*)ID{
   //self.icon = dict[@"icon"];
-  NSString *datetime = dict[@"_insert_dt"];
-  self.datetime = datetime;
-  NSArray *ary = [datetime componentsSeparatedByString:@" "];
+  NSString *insertDT = msgObj.insertDT;
+  NSString *readDT = msgObj.readDT;
+  self.datetime = insertDT;
+  NSArray *ary = [insertDT componentsSeparatedByString:@" "];
   self.date = [ary firstObject];
-  self.time = [ary lastObject];
-  self.time = [self.time substringToIndex:5];
-  self.content = dict[@"_msg"];
+  
+  self.content = msgObj.msg;
   
   self.otherType = type;
   self.otherID = ID;
-  if ([type isEqual:dict[@"_from_type"]] && [ID isEqual:dict[@"_from_id"]]) {
+  if ([type isEqual:msgObj.fromType] && [ID isEqual:msgObj.fromID]) {
     self.type = FROM_OTHER;
   } else
     self.type = FROM_ME;
+  
+  if (![readDT isEqualToString:@""] && self.type == FROM_ME) {
+    NSArray *readDTary = [readDT componentsSeparatedByString:@" "];
+    self.time = [readDTary lastObject];
+    self.time = [self.time substringToIndex:5];
+    self.time = [NSString stringWithFormat:@"%@\n%@", self.time, @"已讀"];
+  } else {
+    self.time = [ary lastObject];
+    self.time = [self.time substringToIndex:5];
+  }
+  
+
 }
 @end

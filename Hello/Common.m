@@ -108,7 +108,30 @@
   NSString *path = [NSString stringWithFormat:@"%@/Documents/Setting.plist", NSHomeDirectory()];
   
   NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+//  [self setSettingForKey:@"fff" Value:@"123"];
   return [plist objectForKey:key];
+}
+
++ (void)setSettingForKey:(NSString*)key Value:(NSString*)value {
+  NSString* plistPath = nil;
+  NSFileManager* manager = [NSFileManager defaultManager];
+//  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//  NSString *documentsDirectory = [paths objectAtIndex:0];
+//  NSLog(@"path:%@",documentsDirectory);
+//  NSLog(@"path2:%@", NSHomeDirectory());
+//  if ((plistPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:
+//                   [NSString stringWithFormat:@"%@/Documents/Setting.plist", NSHomeDirectory()]]))
+  plistPath = [NSString stringWithFormat:@"%@/Documents/Setting.plist", NSHomeDirectory()];
+  {
+    if ([manager isWritableFileAtPath:plistPath])
+    {
+      NSMutableDictionary* infoDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+      [infoDict setObject:value forKey:key];
+      [infoDict writeToFile:plistPath atomically:NO];
+      [manager setAttributes:[NSDictionary dictionaryWithObject:[NSDate date]
+              forKey:NSFileModificationDate] ofItemAtPath:[[NSBundle mainBundle] bundlePath] error:nil];
+    }
+  }
 }
 
 + (NSString*)getParameterByType:(NSString*)type AndKey:(NSString*)key {
@@ -162,22 +185,5 @@
 + (NSNumber*) getNSCFNumber:(NSObject*)obj {
   return ([obj isKindOfClass:[NSNull class]]) ? 0 : (NSNumber*)obj;
 }
-
-+ (NSArray*) getOtherSide:(Order*)order {
-  NSMutableArray *ary = [NSMutableArray new];
-  NSString *userType = [Common getSetting:@"User Type"];
-  NSString *userID = [Common getSetting:@"User ID"];
-  
-  if ([order.sellerType isEqualToString:userType] && [order.sellerID isEqualToString:userID]) {
-    [ary addObject:order.buyerType];
-    [ary addObject:order.buyerID];
-  } else {
-    [ary addObject:order.sellerType];
-    [ary addObject:order.sellerID];
-  }
-  
-  return ary;
-}
-
 
 @end

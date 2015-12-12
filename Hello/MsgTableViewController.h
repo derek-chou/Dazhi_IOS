@@ -14,7 +14,6 @@
 @property NSMutableDictionary *groupBadge;
 @property NSString *msgBadge;
 
-- (void)timerEvent:(NSTimer *)timer;
-@property NSTimer *timer;
--(void)startTimer;
+- (void) loadMessageTexts:(NSString*)seq;
+- (void) prepareMessageGroup;
 @end

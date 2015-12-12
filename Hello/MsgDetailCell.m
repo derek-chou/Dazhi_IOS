@@ -80,6 +80,7 @@
   }
 
   [_timeBtn setTitle:message.time forState:UIControlStateNormal];
+  _timeBtn.titleLabel.numberOfLines = 0;
   _timeBtn.contentEdgeInsets = UIEdgeInsetsMake(TIME_TOP, TIME_LEFT, TIME_BOTTOM, TIME_RIGHT);
   _timeBtn.frame = _messageFrame.timeFrame;
   if (message.type == FROM_ME) {

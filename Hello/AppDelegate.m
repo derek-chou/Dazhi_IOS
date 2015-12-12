@@ -29,10 +29,13 @@
   
   NSString *src = [[NSBundle mainBundle] pathForResource:@"Setting" ofType:@"plist"];
   NSString *dst = [NSString stringWithFormat:@"%@/Documents/Setting.plist", NSHomeDirectory()];
-  if ([fm fileExistsAtPath:dst]) {
-    [fm removeItemAtPath:dst error:nil];
-  }
-  [fm copyItemAtPath:src toPath:dst error:nil];
+//  if ([fm fileExistsAtPath:dst]) {
+//    [fm removeItemAtPath:dst error:nil];
+//  }
+//  [fm copyItemAtPath:src toPath:dst error:nil];
+  
+  if (![fm fileExistsAtPath:dst])
+    [fm copyItemAtPath:src toPath:dst error:nil];
   
   //取得sysParameter
   NSString *urlString = [NSString stringWithFormat:@"%@%s", [Common getSetting:@"Server URL"], "sysParameter"];
@@ -79,6 +82,7 @@
   // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
   
   //更改桌面icon badge
+  
   /*
   float version = [[[UIDevice currentDevice] systemVersion] floatValue];
   if (version >= 8.0) {

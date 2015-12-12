@@ -14,9 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Message : NSManagedObject
 
 + (Message *)getBySeq:(NSString*)seq;
-+ (void) updateWithArray:(NSMutableArray *)ary;
 + (NSString*)getMaxSeq;
++ (NSString*)getMaxNonReadSeqFromOtherType:(NSString*)otherType OtherID:(NSString*)otherID;
 + (NSArray*)getAll;
++ (NSArray*)getWithOtherType:(NSString*)otherType OtherID:(NSString*)otherID;
+
++ (void) updateWithArray:(NSMutableArray *)ary;
 
 @end
 

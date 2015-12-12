@@ -15,6 +15,7 @@
 #import "MsgTableViewController.h"
 #import "OrderTabBarController.h"
 #import "SettingTableViewController.h"
+#import "Message.h"
 
 @interface ViewController ()<UIScrollViewDelegate>
 {
@@ -24,6 +25,7 @@
 
 @implementation ViewController
 
+MsgTableViewController *msgView;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
@@ -41,7 +43,7 @@
                                           instantiateViewControllerWithIdentifier: @"TopicView"];
   FavoriteTableViewController *favoriteView = (FavoriteTableViewController*)[mainStoryboard
                                           instantiateViewControllerWithIdentifier: @"FavoriteView"];
-  MsgTableViewController *msgView = (MsgTableViewController*)[mainStoryboard
+  msgView = (MsgTableViewController*)[mainStoryboard
                                           instantiateViewControllerWithIdentifier: @"MsgView"];
   OrderTabBarController *orderView = (OrderTabBarController*)[mainStoryboard
                                           instantiateViewControllerWithIdentifier: @"OrderView"];
@@ -51,8 +53,8 @@
   _controllers = @[topicView, favoriteView, msgView, orderView, setView];
   
   //定時取Msg
-  [msgView startTimer];
-  [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
+  //[msgView startTimer];
+  //[(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
 
   //msgView = [MsgTableViewController new];
   //[msgView loadView];
@@ -67,7 +69,26 @@
   pageViewRect.origin.y += 69;
   pageViewRect.size.height -= 69;
   self.pageViewController.view.frame = pageViewRect;
+  
+  //先以Timer來暫代APNS(push server)
+  [msgView prepareMessageGroup];
+  [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
+  //[self timerPolling:_pollingTimer];
+  _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:2
+                                            target:self
+                                          selector:@selector(timerPolling:)
+                                          userInfo:nil
+                                           repeats:true];
 }
+
+-(void)timerPolling:(NSTimer *)timer {
+  NSString *lastSeq = [Message getMaxSeq];
+  int seq = [lastSeq integerValue];
+  seq++;
+  [msgView loadMessageTexts:[NSString stringWithFormat:@"%d", seq]];
+  [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
+}
+
 
 -(void)viewWillAppear:(BOOL)animated {
   if (!self.hasAppearedFlag) {

@@ -107,7 +107,7 @@
     orders = self.historyOrders;
   for (Order *order in orders) {
     //避免重複查詢相同的User
-    NSArray *other = [Common getOtherSide:order];
+    NSArray *other = [Order getOtherSide:order];
     NSString *tmpKey = [NSString stringWithFormat:@"%@@%@", other[0], other[1]];
     if (![tmpUserDic valueForKey:tmpKey]) {
       [tmpUserDic setObject:@"" forKey:tmpKey];
@@ -199,7 +199,7 @@
   else
     order = (Order*)self.historyOrders[row];
   
-  NSArray *other = [Common getOtherSide:order];
+  NSArray *other = [Order getOtherSide:order];
   User *user = [User getByType:other[0] AndID:other[1]];
   Product *product = [Product getByID:order.productID];
   int userLevel = 0;

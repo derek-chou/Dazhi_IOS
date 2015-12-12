@@ -9,13 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "MessageFrame.h"
 #import "MessageData.h"
+#import "Message.h"
 
 @interface MsgDetailViewController : UIViewController<UITextFieldDelegate> {
   IBOutlet UITableView *tableV;
-  IBOutlet UITextField *messageField;
+  IBOutlet UITextView *messageView;
+  IBOutlet UIButton *sendButton;
+  
   NSMutableArray *_allMessageFrame;
 }
 @property NSArray *msgAry;
 @property NSString *otherType;
 @property NSString *otherID;
+@property NSTimer *pollingTimer;
+-(void)timerPolling:(NSTimer *)timer;
+
 @end

@@ -24,6 +24,5 @@
 
 + (NSString*) getNSCFString:(NSObject*)obj;
 + (NSNumber*) getNSCFNumber:(NSObject*)obj;
-+ (NSArray*) getOtherSide:(Order*)order;
 
 @end

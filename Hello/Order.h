@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray *)getCurrent;
 + (NSArray *)getHistory;
 + (void) updateWithArray:(NSMutableArray *)ary;
++ (NSArray*) getOtherSide:(Order*)order;
 
 @end
 

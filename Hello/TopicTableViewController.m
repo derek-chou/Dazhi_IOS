@@ -40,11 +40,18 @@
   [super viewDidLoad];
   [self loadTopicTexts];
   
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
+  if (self.searchBar == nil) {
+    CGRect rect = CGRectMake(self.tableView.frame.origin.x,
+                             self.tableView.frame.origin.y+5, self.tableView.frame.size.width, 35);
+    self.searchBar = [[UISearchBar alloc] initWithFrame:rect];
+    [self.searchBar setBackgroundColor:[UIColor clearColor]];
+    [self.searchBar setTintColor:[UIColor clearColor]];
+    [self.searchBar setAlpha:0.6];
+    [self.searchBar setBackgroundImage:[UIImage new]];
+    self.searchBar.delegate = self;
+    [self.tableView addSubview:self.searchBar];
+  }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -100,6 +107,24 @@
   return cell;
 }
 
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchTerm {
+//}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+  NSLog(@"do search");
+  [self.searchBar resignFirstResponder];
+  self.searchBar.text = @"";
+}
+
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+//  [self.searchBar resignFirstResponder];
+//}
+//
+//- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+//  [self.searchBar resignFirstResponder];
+//}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
   ProdSearchResultViewController *productView = (ProdSearchResultViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"ProdSearchResultView"];
@@ -110,5 +135,20 @@
   [self.navigationController pushViewController:productView animated:NO];
 }
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+  CGRect rect = _searchBar.frame;
+  
+  CGPoint currentOffset = scrollView.contentOffset;
+  if (currentOffset.y > self.lastContentOffset.y && self.tableView.bounds.origin.y != 0)
+    rect.origin.y = -1;
+  else
+    rect.origin.y = self.tableView.bounds.origin.y + 3;
+  self.lastContentOffset = currentOffset;
+  
+  //rect.origin.y = self.tableView.bounds.origin.y + 3;
+  //NSLog(@"%@", [NSString stringWithFormat:@"rect.origin.y = %f", rect.origin.y]);
+  _searchBar.frame = rect;
+}
 
 @end

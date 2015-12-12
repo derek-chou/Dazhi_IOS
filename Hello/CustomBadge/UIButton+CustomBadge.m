@@ -77,7 +77,7 @@ static char const * const CustomBadgeTagKey = "ObjectTag";
                                           withInsetColor:[UIColor redColor]
                                           withBadgeFrame:YES
                                      withBadgeFrameColor:[UIColor whiteColor]
-                                               withScale:1.0
+                                               withScale:0.8
                                              withShining:YES];
     }
     
@@ -91,7 +91,7 @@ static char const * const CustomBadgeTagKey = "ObjectTag";
                                                     withInsetColor:[UIColor redColor]
                                                     withBadgeFrame:YES
                                                withBadgeFrameColor:[UIColor whiteColor]
-                                                         withScale:1.0
+                                                         withScale:0.8
                                                        withShining:YES];
     [self setBadge:customBadge];
 }

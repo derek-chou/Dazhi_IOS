@@ -28,7 +28,7 @@
       return fetchResult[0];
     }
   } @catch (NSException * e) {
-    NSLog(@"[Message getByID] Exception: %@", e);
+    NSLog(@"[Message getBySeq] Exception: %@", e);
     return nil;
   }
   return nil;
@@ -58,6 +58,68 @@
     return @"0";
   }
   return @"0";
+}
+
++ (NSString*)getMaxNonReadSeqFromOtherType:(NSString*)otherType OtherID:(NSString*)otherID {
+  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+  
+  @try {
+    NSFetchRequest *request = [NSFetchRequest new];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Message"
+                                              inManagedObjectContext:app.managedObjectContext];
+    [request setEntity:entity];
+    
+    NSString *userType = [Common getSetting:@"User Type"];
+    NSString *userID = [Common getSetting:@"User ID"];
+    NSString *pred = [NSString stringWithFormat:@"(fromType='%@' and fromID='%@' and toType='%@' and toID='%@')",
+                      otherType, otherID, userType, userID];
+    NSPredicate *p1 = [NSPredicate predicateWithFormat:pred];
+    NSPredicate *p2 = [NSPredicate predicateWithFormat:@"readDT==''"];
+    
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2]];
+    request.sortDescriptors = [NSArray array];
+    
+    NSArray *array = [app.managedObjectContext executeFetchRequest:request error:nil];
+    Message *msgObj = [array lastObject];
+    if (msgObj) {
+      return msgObj.seqID;
+    }
+  } @catch (NSException * e) {
+    NSLog(@"[Message getMaxSeq] Exception: %@", e);
+    return @"0";
+  }
+  return @"0";
+}
+
++ (NSArray*)getWithOtherType:(NSString*)otherType OtherID:(NSString*)otherID {
+  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+  
+  @try {
+    NSFetchRequest *request = [NSFetchRequest new];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Message"
+                                              inManagedObjectContext:app.managedObjectContext];
+    [request setEntity:entity];
+    
+    NSString *pred = [NSString stringWithFormat:@"(fromType='%@' and fromID='%@') or (toType='%@' and toID='%@')",
+                      otherType, otherID, otherType, otherID];
+    NSPredicate *p1 = [NSPredicate predicateWithFormat:pred];
+    
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[p1]];
+
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"seqID"
+                                                                   ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+
+//    request.sortDescriptors = [NSArray array];
+    
+    NSArray *array = [app.managedObjectContext executeFetchRequest:request error:nil];
+    return array;
+  } @catch (NSException * e) {
+    NSLog(@"[Message getMaxSeq] Exception: %@", e);
+    return nil;
+  }
+  return nil;
 }
 
 + (void) updateWithArray:(NSMutableArray *)ary {
@@ -94,6 +156,11 @@
   @try {
     NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchAllMessage"
                 substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:@"", [NSNull null], nil]];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"seqID"
+                                                                   ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [fetch setSortDescriptors:sortDescriptors];
     
     NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];
     return fetchResult;
