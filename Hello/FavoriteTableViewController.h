@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface FavoriteTableViewController : UITableViewController
-@property NSMutableArray *favoriteArray;
+@property NSMutableArray *favoriteText;
+@property NSArray *favoriteArray;
 
 @end

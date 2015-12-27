@@ -14,8 +14,10 @@
 #import "FavoriteTableViewController.h"
 #import "MsgTableViewController.h"
 #import "OrderTabBarController.h"
+#import "OrderTableViewController.h"
 #import "SettingTableViewController.h"
 #import "Message.h"
+#import "Common.h"
 
 @interface ViewController ()<UIScrollViewDelegate>
 {
@@ -71,10 +73,14 @@ MsgTableViewController *msgView;
   self.pageViewController.view.frame = pageViewRect;
   
   //先以Timer來暫代APNS(push server)
+  OrderTableViewController *currentOrder = (OrderTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"OrderCurrentView"];
+
+  [currentOrder loadOrderData:@"0"];
+  [(MainTabBarController*)self.tabBarController setOrderBadge:[NSString stringWithFormat:@"%d", [currentOrder getBadge]]];
   [msgView prepareMessageGroup];
   [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
   //[self timerPolling:_pollingTimer];
-  _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:2
+  _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:4
                                             target:self
                                           selector:@selector(timerPolling:)
                                           userInfo:nil
@@ -82,11 +88,18 @@ MsgTableViewController *msgView;
 }
 
 -(void)timerPolling:(NSTimer *)timer {
-  NSString *lastSeq = [Message getMaxSeq];
-  int seq = [lastSeq integerValue];
-  seq++;
+  //NSString *lastSeq = [Message getMaxSeq];
+  NSString *lastSeq = [Common getSetting:@"order last seq"];
+  int seq = (int)[lastSeq integerValue];
+  if (seq != 0) seq++;
+  
   [msgView loadMessageTexts:[NSString stringWithFormat:@"%d", seq]];
   [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
+  
+  //order badge
+  UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
+  OrderTableViewController *currentOrder = (OrderTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"OrderCurrentView"];
+  [(MainTabBarController*)self.tabBarController setOrderBadge:[NSString stringWithFormat:@"%d", [currentOrder getBadge]]];
 }
 
 

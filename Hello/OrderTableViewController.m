@@ -13,6 +13,7 @@
 #import "Order.h"
 #import "User.h"
 #import "Product.h"
+#import "OrderDetailViewController.h"
 
 @interface OrderTableViewController ()
 
@@ -39,7 +40,7 @@
          self.currentOrders = [Order getCurrent];
          self.historyOrders = [Order getHistory];
          [self checkUserAndProduct];
-//         [self.tableView reloadData];
+         [self.tableView reloadData];
        }
        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          NSLog(@"loadOrderData Error: %@", error);
@@ -129,7 +130,6 @@
         [opAry addObject:op];
       }
     }
-    
   }
   
   NSArray *operations = [AFURLConnectionOperation batchOfRequestOperations:opAry
@@ -139,7 +139,7 @@
 
   } completionBlock:^(NSArray *operations)
   {
-    NSLog(@"All operations in batch complete");
+    //NSLog(@"All operations in batch complete");
     [self.tableView reloadData];
   }];
   [[NSOperationQueue mainQueue] addOperations:operations waitUntilFinished:NO];
@@ -157,12 +157,34 @@
   NSLog(@"%@", [NSString stringWithFormat:@"tab tag = %ld", (long)tab.tag]);
   self.tabTag = tab.tag;
   
-  if (_tabTag == 0)
-    [self loadOrderData:@"0"];
-  else {
-    self.historyOrders = [Order getHistory];
-    [self checkUserAndProduct];
+  [self loadData];
+}
+
+//下完訂單後(ProductDetailViewController)，可看到最新訂單
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  
+  if (_pollingTimer != nil) {
+    return;
   }
+  _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:3
+                                                   target:self
+                                                 selector:@selector(timerPolling:)
+                                                 userInfo:nil
+                                                  repeats:true];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  if (_pollingTimer) {
+    [_pollingTimer invalidate];
+    _pollingTimer = nil;
+  }
+}
+
+-(void)timerPolling:(NSTimer *)timer {
+  [self loadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -210,7 +232,7 @@
   }
   if (product != nil) {
     cell.productTitleLabel.text = product.title;
-    cell.productPriceLabel.text = [NSString stringWithFormat:@"%@ $%@", product.currency, product.price];
+    cell.productPriceLabel.text = [NSString stringWithFormat:@"%@ $%@", product.currency, order.amount];
   }
   
   __weak OrderCell *weakCell = cell;
@@ -243,6 +265,52 @@
     cell.statImage.image = [UIImage imageNamed:@"OrderWait"];
   
   return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+  int row = indexPath.row;
+  Order *order;
+  if (_tabTag == 0)
+    order = (Order*)self.currentOrders[row];
+  else
+    order = (Order*)self.historyOrders[row];
+  
+  if (order == nil) {
+    return;
+  }
+
+  UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
+  
+  if (_tabTag == 0) {
+    OrderDetailViewController *detailView = (OrderDetailViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"OrderDetailView"];
+    detailView.hidesBottomBarWhenPushed = YES;
+    detailView.orderID = order.orderID;
+    [self.navigationController pushViewController:detailView animated:NO];
+  } else {
+    OrderDetailViewController *detailView = (OrderDetailViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"OrderReviewView"];
+    detailView.hidesBottomBarWhenPushed = YES;
+    detailView.orderID = order.orderID;
+    [self.navigationController pushViewController:detailView animated:NO];
+  }
+}
+
+-(void)loadData {
+  if (_tabTag == 0)
+    [self loadOrderData:@"0"];
+  else {
+    self.historyOrders = [Order getHistory];
+    [self checkUserAndProduct];
+  }
+}
+
+-(int) getBadge {
+  _orderBadge = 0;
+  for (Order *order in [Order getCurrent]) {
+    if ([order.sellerConfirmDT isEqualToString:@""] && [order.buyerConfirmDT isEqualToString:@""])
+      _orderBadge++;
+  }
+  
+  return _orderBadge;
 }
 
 

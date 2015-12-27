@@ -16,5 +16,6 @@
 
 - (void)setMsgBadge:(NSString*)badge;
 - (void)setOrderBadge:(NSString*)badge;
+-(void)changeTabBar:(NSInteger)from to:(NSInteger)to;
 
 @end

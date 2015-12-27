@@ -14,5 +14,11 @@
 @property NSArray *historyOrders;
 @property NSOperationQueue *opQueue;
 @property int tabTag;
+@property int orderBadge;
+@property NSTimer *pollingTimer;
+
+-(void)loadData;
+-(void)loadOrderData:(NSString*)seq;
+-(int) getBadge;
 
 @end

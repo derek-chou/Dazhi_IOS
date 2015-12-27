@@ -52,7 +52,15 @@
     self.searchBar.delegate = self;
     [self.tableView addSubview:self.searchBar];
   }
+  
+//  UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doDoubleTap)];
+//  doubleTap.numberOfTapsRequired = 2;
+//  [self.tableView addGestureRecognizer:doubleTap];
 }
+
+//-(void) doDoubleTap:(UIGestureRecognizer*) recognizer {
+//  [self.searchBar resignFirstResponder];
+//}
 
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
@@ -112,6 +120,9 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
   NSLog(@"do search");
+  
+  [self jumpToSearchResult:SEARCH_BY_KEYWORD Text:self.searchBar.text];
+
   [self.searchBar resignFirstResponder];
   self.searchBar.text = @"";
 }
@@ -124,15 +135,20 @@
 //  [self.searchBar resignFirstResponder];
 //}
 
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)jumpToSearchResult:(SearchType)searchType Text:(NSString*)text {
   UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
   ProdSearchResultViewController *productView = (ProdSearchResultViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"ProdSearchResultView"];
   productView.hidesBottomBarWhenPushed = YES;
   productView.title = @"";
-  productView.topicID = self.topicTexts[indexPath.row][@"_id"];
-
+  
+  productView.searchType = searchType;
+  productView.searchText = text;
+  
   [self.navigationController pushViewController:productView animated:NO];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+  [self jumpToSearchResult:SEARCH_BY_TOPIC Text:self.topicTexts[indexPath.row][@"_id"]];
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView

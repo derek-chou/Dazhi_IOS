@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "AppDelegate.h"
 #import "Parameter.h"
+#import "User.h"
 
 @implementation Common
 
@@ -137,7 +138,8 @@
 + (NSString*)getParameterByType:(NSString*)type AndKey:(NSString*)key {
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   NSDictionary *dicCondition = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:type, key, nil] forKeys:[NSArray arrayWithObjects:@"TYPE", @"KEY", nil]];
-  NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchParameter" substitutionVariables:dicCondition];
+  NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchParameter"
+                                                             substitutionVariables:dicCondition];
   
   NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];
   if ([fetchResult count] > 0){
@@ -184,6 +186,79 @@
 
 + (NSNumber*) getNSCFNumber:(NSObject*)obj {
   return ([obj isKindOfClass:[NSNull class]]) ? 0 : (NSNumber*)obj;
+}
+
++(void)alertTitle:(NSString*)title Msg:(NSString*)msg View:(UIViewController*)view Back:(BOOL)isBack {
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action){
+                                                  [view dismissViewControllerAnimated:YES completion:nil];
+                                                  if (isBack) {
+                                                    [view.navigationController popViewControllerAnimated:YES];
+                                                  }
+                                                }];
+  [alert addAction:okAct];
+  [view presentViewController:alert animated:YES completion:nil];
+  
+}
+
++ (void) loadUserToLabel:(UILabel*)lbl ByType:(NSString*)userType AndID:(NSString*)userID {
+  NSString *url = [Common getSetting:@"Server URL"];
+  NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "user"];
+  
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  [manager GET:urlString parameters:@{@"type":userType, @"id":userID}
+       success:^(AFHTTPRequestOperation *operation, id responseObj) {
+         if ([responseObj count] > 0) {
+           [User addWithDic:responseObj[0]];
+           
+           lbl.text = [Common getNSCFString:responseObj[0][@"_name"]];
+         }
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"loadUserByType Error: %@", error);
+       }
+   ];
+}
+
++ (void) loadUserByType:(NSString*)userType AndID:(NSString*)userID {
+  NSString *url = [Common getSetting:@"Server URL"];
+  NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "user"];
+  
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  [manager GET:urlString parameters:@{@"type":userType, @"id":userID}
+       success:^(AFHTTPRequestOperation *operation, id responseObj) {
+         if ([responseObj count] > 0) {
+           [User addWithDic:responseObj[0]];
+         }
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"loadUserByType Error: %@", error);
+       }
+   ];
+}
+
++ (NSString*) convertLangCodeToString:(NSString*)langCode {
+  NSArray *ary = [langCode componentsSeparatedByString:@","];
+  NSString *langResult = @"";
+  NSMutableArray *langStrAry = [NSMutableArray new];
+  for (NSString *str in ary) {
+    NSString *langStr = [Common getParameterByType:@"lang" AndKey:str];
+    if ([langStr isEqualToString:@""])
+      continue;
+    
+    [langStrAry addObject:langStr];
+  }
+  langResult = [langStrAry componentsJoinedByString:@","];
+  
+  return langResult;
+}
+
++ (NSString*) convertJobCodeToString:(NSString*)jobCode {
+  NSString *job = jobCode;
+  job = [[job componentsSeparatedByString:@","] firstObject];
+  job = [Common getParameterByType:@"job" AndKey:job];
+  return job;
 }
 
 @end

@@ -15,6 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
 #import "AppDelegate.h"
+#import "ProductDetailViewController.h"
 
 @interface ProdSearchResultViewController ()
 
@@ -24,10 +25,23 @@
 
 - (void) loadProduct {
   self.productArray = [NSMutableArray arrayWithCapacity:20];
-  NSString *urlString = [NSString stringWithFormat:@"%@%s", [Common getSetting:@"Server URL"], "product/byTopicID"];
+  NSString *urlString;
+  NSDictionary *params;
+  if (self.searchType == SEARCH_BY_TOPIC) {
+    urlString = [NSString stringWithFormat:@"%@%s", [Common getSetting:@"Server URL"], "product/byTopicID"];
+    params = @{@"topicID":self.searchText};
+  } else {
+    urlString = [NSString stringWithFormat:@"%@%s", [Common getSetting:@"Server URL"], "product/search"];
+    self.searchText = [_searchText stringByReplacingOccurrencesOfString:@"%" withString:@""];
+    params = @{@"str":self.searchText};
+  }
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-  [manager GET:urlString parameters:@{@"topicID":self.topicID}
+  [manager GET:urlString parameters:params
        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         if ([responseObject count] == 0) {
+           [Common alertTitle:@"sorry" Msg:@"未找到相關行程" View:self Back:true];
+           
+         }
          self.productArray = responseObject;
          [self prepareProduct];
        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -71,6 +85,9 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlString parameters:@{@"type":key[0], @"id":key[1]}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           if ([responseObject count] == 0) {
+             return;
+           }
            NSArray *retKey = [NSArray arrayWithObjects:responseObject[0][@"_type"], responseObject[0][@"_id"], nil];
        
            if ([self.userDic objectForKey:retKey]) {
@@ -126,7 +143,7 @@
   
   //tableview的style改為grouped時,背景會自動改為灰色，透過以下二行將背景色改為白色
   [self.tableView setBackgroundView:nil];
-  self.tableView.backgroundColor = [UIColor whiteColor];
+  self.tableView.backgroundColor = [UIColor whiteColor];  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -169,7 +186,10 @@
   cell.roomImage.image = ([prodDic[@"_photo"]boolValue]) ? [UIImage imageNamed:@"Room"] : [UIImage imageNamed:@"NonRoom"];
   cell.smokeImage.image = ([prodDic[@"_smoke"]boolValue]) ? [UIImage imageNamed:@"Smoke"] : [UIImage imageNamed:@"NonSmoke"];
   
-  
+  NSString *imgList = [Common getNSCFString:prodDic[@"_image"]];
+  if ([imgList isEqualToString:@""]) {
+    return cell;
+  }
   NSString *imgURL = [[prodDic[@"_image"] componentsSeparatedByString:@","] lastObject];
   
   NSString *imgFileName = [[imgURL componentsSeparatedByString:@"/"] lastObject];
@@ -274,6 +294,54 @@
   return cell;
 }
 
+//計算中英文混合的字串長度，中文算2
+- (int)calcStringLength:(NSString*)strtemp
+{
+  int strlength = 0;
+  char* p = (char*)[strtemp cStringUsingEncoding:NSUnicodeStringEncoding];
+  for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
+    if (*p) {
+      p++;
+      strlength++;
+    }
+    else {
+      p++;
+    }
+    
+  }
+  return strlength;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+  UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
+  UIViewController *prodDetailView = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"ProductDetailViewController"];
+  prodDetailView.hidesBottomBarWhenPushed = YES;
+  NSInteger row = indexPath.row;
+  NSArray *keys = [self.productDic allKeys];
+  id aKey = [keys objectAtIndex:indexPath.section];
+  NSDictionary *prodDic = self.productDic[aKey][row];
+//  NSString *naviTitle = [NSString stringWithFormat:@"%@(%@)", prodDic[@"_title"], prodDic[@"_product_id"]];
+  NSString *naviTitle = [NSString stringWithFormat:@"%@", prodDic[@"_title"]];
+  //prodDetailView.navigationItem.title = [NSString stringWithFormat:@"%@", naviTitle];
+//  int naviTitleLen = [naviTitle length];
+//  int len = MIN(naviTitleLen, 17);
+//  if (len == 17)
+//    naviTitle = [NSString stringWithFormat:@"%@...", [naviTitle substringToIndex:14]];
+  //naviTitle = [naviTitle substringToIndex:len];
+  //self.navigationItem.title = @"back";
+  
+  //prodDetailView.navigationItem.title = naviTitle;
+  self.navigationItem.title = naviTitle;
+  [(ProductDetailViewController *)prodDetailView setProductID:prodDic[@"_product_id"]];
+
+  [self.navigationController pushViewController:prodDetailView animated:YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  
+  self.navigationItem.title = @"";
+}
 -(IBAction)buttonClicked:(id)sender {
   NSLog(@"click");
 }

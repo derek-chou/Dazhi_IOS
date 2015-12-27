@@ -23,5 +23,6 @@
 @property IBOutlet UILabel *ageLabel;
 @property IBOutlet UILabel *jobLabel;
 @property IBOutlet UILabel *langLabel;
+@property IBOutlet UIButton *favoriteButton;
 
 @end

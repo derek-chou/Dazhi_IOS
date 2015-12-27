@@ -81,6 +81,11 @@
 //   nil] forState:UIControlStateNormal];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  
+  self.parentViewController.parentViewController.navigationItem.title = @"Hello";
+}
 
 
 @end

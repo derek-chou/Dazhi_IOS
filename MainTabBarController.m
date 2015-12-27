@@ -69,12 +69,16 @@
 }
 
 - (void)setOrderBadge:(NSString*)badge {
+  /*
   if ([badge isEqualToString:@""] || [badge isEqualToString:@"0"])
     [self.mainTabBar.OrderBadgeBtn setBadge:nil];
   else if ([badge length] > 3)
     [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"99+"];
   else
     [self.mainTabBar.OrderBadgeBtn setBadgeWithString:badge];
+  */
+
+  [self.mainTabBar.OrderBadgeBtn setBadge:nil];
 }
 
 @end

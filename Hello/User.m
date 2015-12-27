@@ -12,7 +12,6 @@
 
 @implementation User
 
-// Insert code here to add functionality to your managed object subclass
 + (User *)getByType:(NSString*)type AndID:(NSString*)id {
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   if([type isKindOfClass:[NSNull class]] || type == nil)
@@ -61,6 +60,7 @@
     user.lang = [Common getNSCFString:dic[@"_lang"]];
     user.link = [Common getNSCFString:dic[@"_link"]];
     user.level = [Common getNSCFString:dic[@"_level"]];
+    user.desc = [Common getNSCFString:dic[@"_desc"]];
     
     [app.managedObjectContext save:nil];
   } @catch (NSException * e) {
@@ -69,5 +69,40 @@
   }
 }
 
++ (void) addWithFavoriteArray:(NSMutableArray *)ary {
+  if (![ary isKindOfClass:[NSMutableArray class]]) {
+    return;
+  }
+  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+  
+  @try {
+    for (NSDictionary *dic in ary) {
+      NSString *type = [Common getNSCFString:dic[@"_favorite_type"]];
+      NSString *userID = [Common getNSCFString:dic[@"_favorite_id"]];
+      User *user = [User getByType:type AndID:userID];
+      if (user == nil)
+        user = [NSEntityDescription insertNewObjectForEntityForName:@"User"
+                                             inManagedObjectContext:app.managedObjectContext];
+      user.type = [Common getNSCFString:dic[@"_favorite_type"]];
+      user.id = [Common getNSCFString:dic[@"_favorite_id"]];
+      user.name = [Common getNSCFString:dic[@"_name"]];
+      user.avgScore = [Common getNSCFString:dic[@"_avg_score"]];
+      user.scoreCount = [Common getNSCFString:dic[@"_count"]];
+      user.gender = [Common getNSCFString:dic[@"_gender"]];
+      NSString *age = [NSString stringWithFormat:@"%@", [Common getNSCFString:dic[@"_age"]]];
+      user.age = age;
+      user.job = [Common getNSCFString:dic[@"_job"]];
+      user.lang = [Common getNSCFString:dic[@"_lang"]];
+      user.link = [Common getNSCFString:dic[@"_link"]];
+      user.level = [Common getNSCFString:dic[@"_level"]];
+      user.desc = [Common getNSCFString:dic[@"_desc"]];
+      
+      [app.managedObjectContext save:nil];
+    }
+  } @catch (NSException * e) {
+    NSLog(@"[User addWithFavoriteDic] Exception: %@", e);
+    return;
+  }
+}
 
 @end

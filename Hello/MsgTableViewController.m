@@ -58,11 +58,15 @@
   [manager GET:urlString parameters:params
        success:^(AFHTTPRequestOperation *operation, id responseObject) {
          //self.messageTexts = responseObject;
+         if (responseObject == 0) {
+           return;
+         }
          [Message updateWithArray:responseObject];
          [self.messageTexts addObjectsFromArray:responseObject];
          NSInteger cnt = [responseObject count];
          if (cnt == 100) {
            NSString *seq = responseObject[cnt-1][@"_seq_id"];
+           [Common setSettingForKey:@"order last seq" Value:seq];
            int iSeq = [seq intValue];
            iSeq++;
            [self loadMessageTexts:[NSString stringWithFormat:@"%d", iSeq]];
@@ -302,7 +306,7 @@
     name = msgObj.fromName;
   else
     name = msgObj.toName;
-  self.parentViewController.parentViewController.navigationItem.title = name;
+  detailView.navigationItem.title = name;
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

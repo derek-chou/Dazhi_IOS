@@ -41,12 +41,30 @@
   NSDate *now = [NSDate date];
   fmt.dateFormat = @"yyyy/MM/dd";
   NSString *date = [fmt stringFromDate:now];
-  
+
   @try {
     NSDictionary *dicCondition = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: date, nil]
                                                     forKeys:[NSArray arrayWithObjects:@"DATE", nil]];
     NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchCurrentOrder"
                                                                substitutionVariables:dicCondition];
+
+//    NSSortDescriptor *sortBy = [[NSSortDescriptor alloc] initWithKey:@"orderID" ascending:YES
+//      comparator:^(id a, id b) {
+//        if ([a length] < [b length]) {
+//          return NSOrderedAscending;
+//        } else if ([a length] > [b length]) {
+//          return NSOrderedDescending;
+//        } else {
+//          return NSOrderedSame;
+//        }
+//      }];
+    
+    NSSortDescriptor *sortByOrderID = [[NSSortDescriptor alloc] initWithKey:@"orderID"
+                                                           ascending:NO ];
+    NSSortDescriptor *sortByTravelDate = [[NSSortDescriptor alloc] initWithKey:@"travelDay"
+                                                           ascending:YES ];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortByTravelDate, sortByOrderID, nil];
+    [fetch setSortDescriptors:sortDescriptors];
     
     NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];
     return fetchResult;
@@ -85,11 +103,15 @@
   
   @try {
     for (NSDictionary *dic in ary) {
-      Order *order = [Order getByID:dic[@"_order_id"]];
+      NSNumber *orderNum = [Common getNSCFNumber:dic[@"_order_id"]];
+      NSString *orderID = [NSString stringWithFormat:@"%010d", [orderNum intValue]];
+
+      Order *order = [Order getByID:orderID];
       if (order == nil)
         order = [NSEntityDescription insertNewObjectForEntityForName:@"Order"
                                             inManagedObjectContext:app.managedObjectContext];
-      order.orderID = [Common getNSCFString:dic[@"_order_id"]];
+      
+      order.orderID = [NSString stringWithFormat:@"%10@", orderID];
       order.buyerType = [Common getNSCFString:dic[@"_buyer_type"]];
       order.buyerID = [Common getNSCFString:dic[@"_buyer_id"]];
       order.sellerType = [Common getNSCFString:dic[@"_seller_type"]];
@@ -102,6 +124,9 @@
       order.numberOfPeople = [Common getNSCFNumber:dic[@"_number_of_people"]];
       order.travelDay = [Common getNSCFString:dic[@"_travel_day"]];
       order.cancelDT = [Common getNSCFString:dic[@"_cancel_dt"]];
+      NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+      f.numberStyle = NSNumberFormatterDecimalStyle;
+      order.amount = [f numberFromString:[Common getNSCFString:dic[@"_amount"]]];
     }
     
     [app.managedObjectContext save:nil];

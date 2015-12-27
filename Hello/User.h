@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface User : NSManagedObject
 
 + (void) addWithDic:(NSDictionary *)dic;
++ (void) addWithFavoriteArray:(NSMutableArray *)ary;
 + (User *)getByType:(NSString*)type AndID:(NSString*)id;
 
 @end

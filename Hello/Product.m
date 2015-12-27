@@ -58,7 +58,9 @@
     product.photo = dic[@"_photo"];
     product.smoke = dic[@"_smoke"];
     product.memo = [Common getNSCFString:dic[@"_memo"]];
-    product.topicID = [Common getNSCFString:dic[@"_topic_id"]];    
+    product.topicID = [Common getNSCFString:dic[@"_topic_id"]];
+    product.maxNumber = [Common getNSCFNumber:dic[@"_maxnumber"]];
+    product.period = [Common getNSCFNumber:dic[@"_period"]];
     
     [app.managedObjectContext save:nil];
   } @catch (NSException * e) {
