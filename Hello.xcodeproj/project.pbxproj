@@ -31,6 +31,8 @@
 		6510E57E1BEDFC4700B8B216 /* TopicViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6510E57D1BEDFC4700B8B216 /* TopicViewCell.m */; };
 		65165CDE1C191B4C004DF016 /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 65165CDB1C191B4C004DF016 /* Message+CoreDataProperties.m */; };
 		65165CDF1C191B4C004DF016 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 65165CDD1C191B4C004DF016 /* Message.m */; };
+		652033281C31089F005540C4 /* ReviewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 652033271C31089F005540C4 /* ReviewHeaderCell.m */; };
+		6520332B1C3108B6005540C4 /* ReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6520332A1C3108B6005540C4 /* ReviewCell.m */; };
 		652305F31BEC2F9500594D54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 652305F21BEC2F9500594D54 /* main.m */; };
 		652305F61BEC2F9500594D54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 652305F51BEC2F9500594D54 /* AppDelegate.m */; };
 		652305F91BEC2F9500594D54 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 652305F81BEC2F9500594D54 /* ViewController.m */; };
@@ -159,6 +161,10 @@
 		65165CDB1C191B4C004DF016 /* Message+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+CoreDataProperties.m"; sourceTree = "<group>"; };
 		65165CDC1C191B4C004DF016 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		65165CDD1C191B4C004DF016 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		652033261C31089F005540C4 /* ReviewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewHeaderCell.h; sourceTree = "<group>"; };
+		652033271C31089F005540C4 /* ReviewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewHeaderCell.m; sourceTree = "<group>"; };
+		652033291C3108B6005540C4 /* ReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewCell.h; sourceTree = "<group>"; };
+		6520332A1C3108B6005540C4 /* ReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewCell.m; sourceTree = "<group>"; };
 		652305EE1BEC2F9500594D54 /* Hello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		652305F21BEC2F9500594D54 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		652305F41BEC2F9500594D54 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -486,6 +492,10 @@
 				655E08541C2CEEE100EA6069 /* PersonalCell.m */,
 				655E08561C2CEF6400EA6069 /* PersonalHeaderCell.h */,
 				655E08571C2CEF6400EA6069 /* PersonalHeaderCell.m */,
+				652033261C31089F005540C4 /* ReviewHeaderCell.h */,
+				652033271C31089F005540C4 /* ReviewHeaderCell.m */,
+				652033291C3108B6005540C4 /* ReviewCell.h */,
+				6520332A1C3108B6005540C4 /* ReviewCell.m */,
 			);
 			name = CommonView;
 			sourceTree = "<group>";
@@ -791,6 +801,7 @@
 				650C76D71BFD9CBA008A9F6A /* MessageData.m in Sources */,
 				650C76E31BFDB342008A9F6A /* MsgDetailViewController.m in Sources */,
 				65727F4A1BF4E4C800EC3C37 /* CustomBadge.m in Sources */,
+				6520332B1C3108B6005540C4 /* ReviewCell.m in Sources */,
 				652C366D1BF2CE3600B280AE /* ProductViewCell.m in Sources */,
 				652306421BEC331100594D54 /* MainTabBar.m in Sources */,
 				65165CDE1C191B4C004DF016 /* Message+CoreDataProperties.m in Sources */,
@@ -811,6 +822,7 @@
 				652B540D1BF03E020055DAA9 /* UIRefreshControl+AFNetworking.m in Sources */,
 				652B53F11BF03DF10055DAA9 /* AFURLRequestSerialization.m in Sources */,
 				65053F121C16D2AC00F0E482 /* Product+CoreDataProperties.m in Sources */,
+				652033281C31089F005540C4 /* ReviewHeaderCell.m in Sources */,
 				652B53F01BF03DF10055DAA9 /* AFURLConnectionOperation.m in Sources */,
 				65B891F31BF58C5700A04308 /* User.m in Sources */,
 				65053F0D1C15384E00F0E482 /* OrderTableViewController.m in Sources */,

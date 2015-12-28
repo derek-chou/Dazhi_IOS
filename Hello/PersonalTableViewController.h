@@ -14,4 +14,9 @@
 @property NSString *personType;
 @property NSString *personID;
 @property NSMutableArray *productArray;
+@property NSMutableArray *reviewArray;
+
+@property IBOutlet UITableView *tableV;
+
+@property UIScrollView *beginScrollView;
 @end

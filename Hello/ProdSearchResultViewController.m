@@ -16,6 +16,7 @@
 #import "User.h"
 #import "AppDelegate.h"
 #import "ProductDetailViewController.h"
+#import "PersonalTableViewController.h"
 
 @interface ProdSearchResultViewController ()
 
@@ -262,9 +263,10 @@
       //CGRect oldFrame = cell.photoButton.frame;
       CGFloat xPosition = self.tableView.frame.size.width * 0.77;
       
-      CircleButton *photoBtn = [[CircleButton alloc] initWithFrame:CGRectMake(xPosition, -25, 50, 50)  ];
+      CircleButton *photoBtn = [[CircleButton alloc] initWithFrame:CGRectMake(xPosition, -25, 50, 50)];
       [photoBtn drawCircleButton:[Common getUserLevelColor:[dic[@"_level"] intValue]]];
       [photoBtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+      [photoBtn setUserInteractionEnabled:NO];
       // add to a view
       cell.clipsToBounds = NO;
       [cell addSubview:photoBtn];
@@ -285,6 +287,14 @@
         [photoBtn setImage:img forState:UIControlStateNormal];
         [weakCell setNeedsLayout];
       }
+      
+      cell.tag = section;
+      UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                  action:@selector(handleGesture:)];
+      [singleTapRecognizer setDelegate:(id)self];
+      singleTapRecognizer.numberOfTouchesRequired = 1;
+      singleTapRecognizer.numberOfTapsRequired = 1;
+      [cell addGestureRecognizer:singleTapRecognizer];
     } @catch (NSException * e) {
       NSLog(@"viewForFooterInSection Exception: %@", e);
     }
@@ -292,6 +302,26 @@
   }
   
   return cell;
+}
+
+-(void) handleGesture:(UIGestureRecognizer *)gestureRecognizer {
+  NSArray *keys = [self.userDic allKeys];
+  ProductFooterViewCell *footer = (ProductFooterViewCell*)gestureRecognizer.view;
+  id aKey = [keys objectAtIndex:footer.tag];
+  NSDictionary *dic;
+  NSInteger valueCnt = [[self.userDic objectForKey:aKey] count];
+  if ( valueCnt > 0) {
+    dic = self.userDic[aKey][0];
+  
+  
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
+    PersonalTableViewController *personalView = (PersonalTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"PersonalView"];
+    personalView.hidesBottomBarWhenPushed = YES;
+    personalView.personType = dic[@"_type"];
+    personalView.personID = dic[@"_id"];
+    [self.navigationController pushViewController:personalView animated:YES];
+  }
+
 }
 
 //計算中英文混合的字串長度，中文算2
