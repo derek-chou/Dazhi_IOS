@@ -261,4 +261,11 @@
   return job;
 }
 
++ (void) loadUserBySelf {
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  
+  [Common loadUserByType:userType AndID:userID];
+}
+
 @end

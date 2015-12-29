@@ -80,6 +80,7 @@ MsgTableViewController *msgView;
   [msgView prepareMessageGroup];
   [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
   //[self timerPolling:_pollingTimer];
+  [Common loadUserBySelf];
   _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:4
                                             target:self
                                           selector:@selector(timerPolling:)

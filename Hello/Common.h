@@ -29,6 +29,7 @@
 
 + (void) loadUserByType:(NSString*)userType AndID:(NSString*)userID;
 + (void) loadUserToLabel:(UILabel*)lbl ByType:(NSString*)userType AndID:(NSString*)userID;
++ (void) loadUserBySelf;
 
 + (NSString*) convertLangCodeToString:(NSString*)langCode;
 + (NSString*) convertJobCodeToString:(NSString*)jobCode;
