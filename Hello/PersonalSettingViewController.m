@@ -27,11 +27,11 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
   [bandArray addObject:@"台灣 台北"];
   [bandArray addObject:@"日本 東京"];
   [bandArray addObject:@"美國 華盛頓"];
-  self.cityPicker = [self.cityPicker initWithData:bandArray];
-  self.cityPicker.placeholder = cityPlaceholder;
+  [self.cityPicker setPlaceholder:cityPlaceholder];
+  self.cityPicker = [[DownPicker alloc] initWithTextField:self.cityTextField withData:bandArray];
   [self.cityPicker addTarget:self
-                   action:@selector(citySelected:)
-                   forControlEvents:UIControlEventValueChanged];
+                      action:@selector(citySelected:)
+            forControlEvents:UIControlEventValueChanged];
   
   self.langDescArray = [[NSMutableArray alloc] initWithArray:@[@"中文", @"英文", @"日文"]];
   self.langSelected = [NSMutableIndexSet new];
@@ -50,8 +50,27 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
   self.nameTextField.text = user.name;
   //self.birtydayTextField.text
 
+  //取得使用者頭像
+  NSString *photoURL = [Common getPhotoURLByType:userType AndID:userID];
+  NSString *photoFileName = [[photoURL componentsSeparatedByString:@"//"] lastObject];
+  photoFileName = [photoFileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+  NSString *photoFullName = [NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), photoFileName];
+  //check img exist
+  BOOL photoExist = [[NSFileManager defaultManager] fileExistsAtPath:photoFullName];
+  if(!photoExist){
+    [Common downloadImage:photoURL To:self.photoImage Cell:nil SavePath:photoFullName];
+  } else {
+    UIImage *img = [[UIImage alloc] initWithContentsOfFile:photoFullName];
+    self.photoImage.image = img;
+  }
+  
+  
   UITapGestureRecognizer *tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollView)];
   [self.scrollView addGestureRecognizer:tapScrollView];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+  [self.cityPicker setPlaceholder:cityPlaceholder];
 }
 
 -(void)tapScrollView{
@@ -63,7 +82,6 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
 
 
 -(void)citySelected:(id)dp {
-  self.cityPicker.placeholder = cityPlaceholder;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,20 +117,23 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
   return YES;
 }
 
+- (void) textFieldDidEndEditing:(UITextField *)textField {
+}
+
 - (void)popupListView:(LPPopupListView *)popUpListView didSelectIndex:(NSInteger)index
 {
   NSLog(@"popUpListView - didSelectIndex: %d", index);
 }
 
-- (void)popupListViewDidHide:(LPPopupListView *)popUpListView selectedIndexes:(NSIndexSet *)selectedIndexes
+- (void)popupListViewDidHide:(LPPopupListView *)popUpListView selectedIndexes:(NSMutableIndexSet *)selectedIndexes
 {
   NSLog(@"popupListViewDidHide - selectedIndexes: %@", selectedIndexes.description);
   
   NSMutableArray *tmpAry = [NSMutableArray new];
-  _langSelected = [NSMutableIndexSet new];
+  _langSelected = selectedIndexes;
   [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
     [tmpAry addObject:_langDescArray[idx]];
-    [_langSelected addIndex:idx];
+    //[_langSelected addIndex:idx];
   }];
   
   _langTextField.text = [tmpAry componentsJoinedByString:@","];

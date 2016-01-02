@@ -61,9 +61,10 @@
     
     NSSortDescriptor *sortByOrderID = [[NSSortDescriptor alloc] initWithKey:@"orderID"
                                                            ascending:NO ];
-    NSSortDescriptor *sortByTravelDate = [[NSSortDescriptor alloc] initWithKey:@"travelDay"
-                                                           ascending:YES ];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortByTravelDate, sortByOrderID, nil];
+//    NSSortDescriptor *sortByTravelDate = [[NSSortDescriptor alloc] initWithKey:@"travelDay"
+//                                                           ascending:YES ];
+    //NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortByTravelDate, sortByOrderID, nil];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortByOrderID, nil];
     [fetch setSortDescriptors:sortDescriptors];
     
     NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];

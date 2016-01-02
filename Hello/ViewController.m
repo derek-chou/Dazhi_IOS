@@ -81,11 +81,14 @@ MsgTableViewController *msgView;
   [(MainTabBarController*)self.tabBarController setMsgBadge:[msgView msgBadge]];
   //[self timerPolling:_pollingTimer];
   [Common loadUserBySelf];
-  _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:4
-                                            target:self
-                                          selector:@selector(timerPolling:)
-                                          userInfo:nil
-                                           repeats:true];
+  
+  if (_pollingTimer == nil) {
+    _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:10
+                                              target:self
+                                            selector:@selector(timerPolling:)
+                                            userInfo:nil
+                                             repeats:true];
+  }
 }
 
 -(void)timerPolling:(NSTimer *)timer {
@@ -101,6 +104,15 @@ MsgTableViewController *msgView;
   UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
   OrderTableViewController *currentOrder = (OrderTableViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"OrderCurrentView"];
   [(MainTabBarController*)self.tabBarController setOrderBadge:[NSString stringWithFormat:@"%d", [currentOrder getBadge]]];
+  if (_pollingTimer != nil && _pollingTimer.timeInterval == 10) {
+    [_pollingTimer invalidate];
+    _pollingTimer = nil;
+    _pollingTimer = [NSTimer scheduledTimerWithTimeInterval:5
+                                                     target:self
+                                                   selector:@selector(timerPolling:)
+                                                   userInfo:nil
+                                                    repeats:true];
+  }
 }
 
 
@@ -152,6 +164,7 @@ MsgTableViewController *msgView;
   }
 }
 
+//點擊Main Tab Button
 -(void)changeTabBar:(NSInteger)index{
   if (!self.isPageScrollingFlag) {
     
@@ -159,24 +172,19 @@ MsgTableViewController *msgView;
     
     __weak typeof(self) weakSelf = self;
     
-    //由左拖到右
     if (index > tempIndex) {
       //%%% scroll through all the objects between the two points
       for (int i = (int)tempIndex+1; i<=index; i++) {
-        [self.pageViewController setViewControllers:@[[_controllers objectAtIndex:i]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL complete){
-          
-          //%%% if the action finishes scrolling (i.e. the user doesn't stop it in the middle),
-          //then it updates the page that it's currently on
+        [self.pageViewController setViewControllers:@[[_controllers objectAtIndex:i]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:^(BOOL complete){
           if (complete) {
             [weakSelf updateCurrentPageIndex:i];
           }
         }];
       }
     }
-    //由右拖到左
     else if (index < tempIndex) {
       for (int i = (int)tempIndex-1; i >= index; i--) {
-        [self.pageViewController setViewControllers:@[[_controllers objectAtIndex:i]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL complete){
+        [self.pageViewController setViewControllers:@[[_controllers objectAtIndex:i]] direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:^(BOOL complete){
           if (complete) {
             [weakSelf updateCurrentPageIndex:i];
           }

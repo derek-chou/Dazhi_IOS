@@ -77,10 +77,6 @@
 }
 
 -(void) btnClick:(UIButton *)button{
-  self.selectedBtn.selected = NO;
-  button.selected = YES;
-  self.selectedBtn = button;
-  [self.delegate changeTabBar:self.selectedBtn.tag-1000 to:button.tag-1000];
   
   //將所有button的layer顏色改為透明
   for( UIButton *btn in self.subviews){
@@ -110,7 +106,10 @@
     border.frame = CGRectMake(0, btnHeight - 3, btnWidth, 3);
     [button.layer addSublayer:border];
   }
-  
+  self.selectedBtn.selected = NO;
+  button.selected = YES;
+  self.selectedBtn = button;
+  [self.delegate changeTabBar:self.selectedBtn.tag-1000 to:button.tag-1000];
 }
 
 

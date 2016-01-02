@@ -14,8 +14,10 @@
 @property IBOutlet UIScrollView *scrollView;
 @property IBOutlet UITextField *nameTextField;
 @property IBOutlet UITextField *birtydayTextField;
-@property IBOutlet UIDownPicker *cityPicker;
+@property (strong, nonatomic) IBOutlet DownPicker *cityPicker;
+@property IBOutlet UITextField *cityTextField;
 @property IBOutlet UITextField *langTextField;
+@property IBOutlet UIImageView *photoImage;
 
 @property NSMutableArray *langDescArray;
 @property NSMutableIndexSet *langSelected;

@@ -173,6 +173,14 @@
          contextName = "-[OrderTableViewController viewDidLoad]:OrderTableViewController.m">
       </ContextState>
       <ContextState
+         contextName = "-[LoginViewController viewDidLoad]:LoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[TopicTableViewController tableView:didSelectRowAtIndexPath:]:TopicTableViewController.m">
       </ContextState>
       <ContextState
@@ -213,6 +221,14 @@
          contextName = "__42-[OrderTableViewController loadOrderData:]_block_invoke:OrderTableViewController.m">
       </ContextState>
       <ContextState
+         contextName = "-[LoginViewController onProfileUpdated:]:LoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[FBSDKProfile currentProfile]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ProdSearchResultViewController addUserData:]:ProdSearchResultViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -244,6 +260,9 @@
                value = "_messageFrame">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[LoginViewController loginButton:didCompleteWithResult:error:]:LoginViewController.m">
       </ContextState>
       <ContextState
          contextName = "+[User addUser:]:User.m">
