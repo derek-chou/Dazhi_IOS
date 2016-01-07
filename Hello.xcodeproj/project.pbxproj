@@ -114,6 +114,14 @@
 		65727F441BF485DF00EC3C37 /* Setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65727F431BF485DF00EC3C37 /* Setting.plist */; };
 		65727F4A1BF4E4C800EC3C37 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 65727F471BF4E4C800EC3C37 /* CustomBadge.m */; };
 		65727F4B1BF4E4C800EC3C37 /* UIButton+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 65727F491BF4E4C800EC3C37 /* UIButton+CustomBadge.m */; };
+		659C73B71C3B5F8000E9E1C4 /* intro1.png in Resources */ = {isa = PBXBuildFile; fileRef = 659C73B31C3B5F8000E9E1C4 /* intro1.png */; };
+		659C73B81C3B5F8000E9E1C4 /* intro2.png in Resources */ = {isa = PBXBuildFile; fileRef = 659C73B41C3B5F8000E9E1C4 /* intro2.png */; };
+		659C73B91C3B5F8000E9E1C4 /* intro3.png in Resources */ = {isa = PBXBuildFile; fileRef = 659C73B51C3B5F8000E9E1C4 /* intro3.png */; };
+		659C73BA1C3B5F8000E9E1C4 /* intro4.png in Resources */ = {isa = PBXBuildFile; fileRef = 659C73B61C3B5F8000E9E1C4 /* intro4.png */; };
+		659C73BD1C3B653300E9E1C4 /* IntroPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C73BC1C3B653300E9E1C4 /* IntroPageViewController.m */; };
+		659C73C01C3B655200E9E1C4 /* IntroDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C73BF1C3B655200E9E1C4 /* IntroDetailViewController.m */; };
+		659C73C31C3CCC0600E9E1C4 /* CellPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C73C21C3CCC0600E9E1C4 /* CellPhoneViewController.m */; };
+		659C73C61C3CE09000E9E1C4 /* SMSVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C73C51C3CE09000E9E1C4 /* SMSVerifyViewController.m */; };
 		65A444351C2409CD0034595C /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A444341C2409CD0034595C /* OrderDetailViewController.m */; };
 		65B891F21BF58C5700A04308 /* User+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B891EF1BF58C5700A04308 /* User+CoreDataProperties.m */; };
 		65B891F31BF58C5700A04308 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B891F11BF58C5700A04308 /* User.m */; };
@@ -324,6 +332,18 @@
 		65727F471BF4E4C800EC3C37 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		65727F481BF4E4C800EC3C37 /* UIButton+CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+CustomBadge.h"; sourceTree = "<group>"; };
 		65727F491BF4E4C800EC3C37 /* UIButton+CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+CustomBadge.m"; sourceTree = "<group>"; };
+		659C73B31C3B5F8000E9E1C4 /* intro1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro1.png; sourceTree = "<group>"; };
+		659C73B41C3B5F8000E9E1C4 /* intro2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro2.png; sourceTree = "<group>"; };
+		659C73B51C3B5F8000E9E1C4 /* intro3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro3.png; sourceTree = "<group>"; };
+		659C73B61C3B5F8000E9E1C4 /* intro4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro4.png; sourceTree = "<group>"; };
+		659C73BB1C3B653300E9E1C4 /* IntroPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageViewController.h; sourceTree = "<group>"; };
+		659C73BC1C3B653300E9E1C4 /* IntroPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageViewController.m; sourceTree = "<group>"; };
+		659C73BE1C3B655200E9E1C4 /* IntroDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroDetailViewController.h; sourceTree = "<group>"; };
+		659C73BF1C3B655200E9E1C4 /* IntroDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroDetailViewController.m; sourceTree = "<group>"; };
+		659C73C11C3CCC0600E9E1C4 /* CellPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPhoneViewController.h; sourceTree = "<group>"; };
+		659C73C21C3CCC0600E9E1C4 /* CellPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellPhoneViewController.m; sourceTree = "<group>"; };
+		659C73C41C3CE09000E9E1C4 /* SMSVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSVerifyViewController.h; sourceTree = "<group>"; };
+		659C73C51C3CE09000E9E1C4 /* SMSVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSVerifyViewController.m; sourceTree = "<group>"; };
 		65A444331C2409CD0034595C /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
 		65A444341C2409CD0034595C /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
 		65B891EE1BF58C5700A04308 /* User+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -585,6 +605,10 @@
 		652306271BEC2FB300594D54 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				659C73B31C3B5F8000E9E1C4 /* intro1.png */,
+				659C73B41C3B5F8000E9E1C4 /* intro2.png */,
+				659C73B51C3B5F8000E9E1C4 /* intro3.png */,
+				659C73B61C3B5F8000E9E1C4 /* intro4.png */,
 				65FEB50F1C0E95AD007063E9 /* loading.gif */,
 				652306281BEC2FB300594D54 /* top5_a1.png */,
 				652306291BEC2FB300594D54 /* top5_a2.png */,
@@ -611,6 +635,14 @@
 				652306411BEC331100594D54 /* MainTabBar.m */,
 				652033721C33A590005540C4 /* LoginViewController.h */,
 				652033731C33A590005540C4 /* LoginViewController.m */,
+				659C73BB1C3B653300E9E1C4 /* IntroPageViewController.h */,
+				659C73BC1C3B653300E9E1C4 /* IntroPageViewController.m */,
+				659C73BE1C3B655200E9E1C4 /* IntroDetailViewController.h */,
+				659C73BF1C3B655200E9E1C4 /* IntroDetailViewController.m */,
+				659C73C11C3CCC0600E9E1C4 /* CellPhoneViewController.h */,
+				659C73C21C3CCC0600E9E1C4 /* CellPhoneViewController.m */,
+				659C73C41C3CE09000E9E1C4 /* SMSVerifyViewController.h */,
+				659C73C51C3CE09000E9E1C4 /* SMSVerifyViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -898,6 +930,7 @@
 				6520335B1C323435005540C4 /* closeButton.png in Resources */,
 				652306011BEC2F9500594D54 /* Assets.xcassets in Resources */,
 				652306381BEC2FB300594D54 /* top5_d1.png in Resources */,
+				659C73B81C3B5F8000E9E1C4 /* intro2.png in Resources */,
 				65727F441BF485DF00EC3C37 /* Setting.plist in Resources */,
 				652306341BEC2FB300594D54 /* top5_b1.png in Resources */,
 				652306371BEC2FB300594D54 /* top5_c2.png in Resources */,
@@ -905,11 +938,14 @@
 				652306391BEC2FB300594D54 /* top5_d2.png in Resources */,
 				652306321BEC2FB300594D54 /* top5_a1.png in Resources */,
 				652033411C3219D0005540C4 /* downArrow.png in Resources */,
+				659C73BA1C3B5F8000E9E1C4 /* intro4.png in Resources */,
 				652033431C3219D0005540C4 /* downArrow@3x.png in Resources */,
 				652306331BEC2FB300594D54 /* top5_a2.png in Resources */,
 				6523063A1BEC2FB300594D54 /* top5_e1.png in Resources */,
+				659C73B71C3B5F8000E9E1C4 /* intro1.png in Resources */,
 				652033331C315C99005540C4 /* privacy.html in Resources */,
 				650C76CD1BFCC956008A9F6A /* Localizable.strings in Resources */,
+				659C73B91C3B5F8000E9E1C4 /* intro3.png in Resources */,
 				652033591C323435005540C4 /* checkMark.png in Resources */,
 				6523063B1BEC2FB300594D54 /* top5_e2.png in Resources */,
 				65FEB5101C0E95AD007063E9 /* loading.gif in Resources */,
@@ -940,6 +976,7 @@
 				65B891F21BF58C5700A04308 /* User+CoreDataProperties.m in Sources */,
 				655E08521C2CED9200EA6069 /* PersonalTableViewController.m in Sources */,
 				652B53EB1BF03DF10055DAA9 /* AFHTTPRequestOperation.m in Sources */,
+				659C73C31C3CCC0600E9E1C4 /* CellPhoneViewController.m in Sources */,
 				652305F91BEC2F9500594D54 /* ViewController.m in Sources */,
 				6523063F1BEC32C000594D54 /* MainTabBarController.m in Sources */,
 				6523064D1BED876100594D54 /* FavoriteViewCell.m in Sources */,
@@ -949,6 +986,7 @@
 				652B53ED1BF03DF10055DAA9 /* AFHTTPSessionManager.m in Sources */,
 				650C76D71BFD9CBA008A9F6A /* MessageData.m in Sources */,
 				650C76E31BFDB342008A9F6A /* MsgDetailViewController.m in Sources */,
+				659C73BD1C3B653300E9E1C4 /* IntroPageViewController.m in Sources */,
 				65727F4A1BF4E4C800EC3C37 /* CustomBadge.m in Sources */,
 				6520332B1C3108B6005540C4 /* ReviewCell.m in Sources */,
 				652C366D1BF2CE3600B280AE /* ProductViewCell.m in Sources */,
@@ -958,6 +996,7 @@
 				652B540B1BF03E020055DAA9 /* UIImageView+AFNetworking.m in Sources */,
 				65165CDF1C191B4C004DF016 /* Message.m in Sources */,
 				650C76BF1BFAB26B008A9F6A /* MsgTableViewController.m in Sources */,
+				659C73C01C3B655200E9E1C4 /* IntroDetailViewController.m in Sources */,
 				652C36671BF1CF4E00B280AE /* Common.m in Sources */,
 				650C76CA1BFACD86008A9F6A /* SettingTableViewController.m in Sources */,
 				652B540C1BF03E020055DAA9 /* UIProgressView+AFNetworking.m in Sources */,
@@ -979,6 +1018,7 @@
 				655E08441C2B7F8A00EA6069 /* OrderPayViewController.m in Sources */,
 				652B540A1BF03E020055DAA9 /* UIButton+AFNetworking.m in Sources */,
 				652C366A1BF1F61300B280AE /* ProdSearchResultViewController.m in Sources */,
+				659C73C61C3CE09000E9E1C4 /* SMSVerifyViewController.m in Sources */,
 				65053F061C15147000F0E482 /* Order+CoreDataProperties.m in Sources */,
 				650C76E01BFDA8CE008A9F6A /* MsgDetailCell.m in Sources */,
 				652B54081BF03E020055DAA9 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -1116,14 +1156,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: CHIH-I Chou (57W2VFBFKE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: CHIH-I Chou (57W2VFBFKE)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"/Users/derek/Documents/FacebookSDKs-iOS-20151111",
 				);
 				INFOPLIST_FILE = Hello/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "idv.derek-chou.Hello";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1250,6 +1291,7 @@
 					"/Users/derek/Documents/FacebookSDKs-iOS-20151111",
 				);
 				INFOPLIST_FILE = Hello/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "idv.derek-chou.Hello";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1262,13 +1304,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"/Users/derek/Documents/FacebookSDKs-iOS-20151111",
 				);
 				INFOPLIST_FILE = Hello/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "idv.derek-chou.Hello";

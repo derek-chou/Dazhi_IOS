@@ -56,7 +56,7 @@
 -(void)refreshMessage:(int)oldCnt {
   NSString *prevDate = nil;
   NSArray *messages = [Message getWithOtherType:_otherType OtherID:_otherID];
-  int newCnt = [messages count];
+  int newCnt = (int)[messages count];
   for (Message *msgObj in messages) {
     MessageFrame *mf = [MessageFrame new];
     MessageData *msg = [MessageData new];
@@ -148,7 +148,7 @@
 }
 
 -(void)timerPolling:(NSTimer *)timer {
-  int oldCnt = [_allMessageFrame count];
+  int oldCnt = (int)[_allMessageFrame count];
   [_allMessageFrame removeAllObjects];
   [self refreshMessage:oldCnt];
 }
@@ -234,13 +234,7 @@
   }
   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"Error: %@", error);
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"error" message:@"訊息無法發送，請稍侯再試" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                              handler:^(UIAlertAction *action){
-                                [self dismissViewControllerAnimated:YES completion:nil];
-                              }];
-    [alert addAction:okAct];
-    [self presentViewController:alert animated:YES completion:nil];
+    [Common alertTitle:@"error" Msg:@"訊息無法發送，請稍侯再試" View:self Back:false];
   }];
   
 }

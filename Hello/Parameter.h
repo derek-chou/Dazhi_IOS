@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Parameter : NSManagedObject
 
-// Insert code here to declare functionality of your managed object subclass
++ (NSArray *)getByType:(NSString*)type;
 
 @end
 

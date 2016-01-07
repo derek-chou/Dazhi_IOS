@@ -70,7 +70,30 @@
   }
 }
 
-+ (NSArray*) getAll {
++ (void)addWithType:(NSString*)type AndID:(NSString*)_id {
+  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+  
+  if ([Favorite getByType:type AndID:_id]) {
+    return;
+  }
+  Favorite *favorite = [NSEntityDescription insertNewObjectForEntityForName:@"Favorite"
+                                           inManagedObjectContext:app.managedObjectContext];
+  
+  favorite.type = type;
+  favorite.id = _id;
+  
+  [app.managedObjectContext save:nil];
+}
+
++ (void)deleteWithType:(NSString*)type AndID:(NSString*)_id {
+  AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+  
+  Favorite *favorite = [Favorite getByType:type AndID:_id];
+  if (favorite)
+    [app.managedObjectContext deleteObject:favorite];
+}
+
++ (NSMutableArray*) getAll {
   AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   @try {
     NSFetchRequest *fetch = [app.managedObjectModel fetchRequestFromTemplateWithName:@"FetchAllFavorite"
@@ -82,7 +105,7 @@
     [fetch setSortDescriptors:sortDescriptors];
     
     NSArray *fetchResult = [app.managedObjectContext executeFetchRequest:fetch error:nil];
-    return fetchResult;
+    return [NSMutableArray arrayWithArray:fetchResult];
   } @catch (NSException * e) {
     NSLog(@"[Favorite getAll] Exception: %@", e);
     return nil;

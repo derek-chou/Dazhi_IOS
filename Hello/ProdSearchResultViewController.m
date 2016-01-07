@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "ProductDetailViewController.h"
 #import "PersonalTableViewController.h"
+#import "favorite.h"
 
 @interface ProdSearchResultViewController ()
 
@@ -49,6 +50,8 @@
          NSLog(@"Error: %@", error);
        }
    ];
+  
+  self.favoriteAry = [Favorite getAll];
 }
 
 - (void) prepareProduct {
@@ -166,6 +169,31 @@
   return rows;
 }
 
+- (IBAction)onFavoriteClick:(id)sender {
+  NSLog(@"favorite click");
+  UIButton *btn = (UIButton*)sender;
+  NSArray *info = btn.accessibilityElements;
+  if (info == nil) {
+    return;
+  }
+  
+  NSString *type = info[0];
+  NSString *_id = info[1];
+  NSString *status = info[2];
+
+  NSArray *newInfo;
+  if ([status isEqualToString:@"Favorite"]) {
+    [btn setImage:[UIImage imageNamed:@"NonFavorite"] forState:UIControlStateNormal];
+    newInfo = @[type, _id, @"NonFavorite"];
+    [Common changeFavoriteToView:self ByType:type AndID:_id isFavorite:NO];
+  } else {
+    [btn setImage:[UIImage imageNamed:@"Favorite"] forState:UIControlStateNormal];
+    newInfo = @[type, _id, @"Favorite"];
+    [Common changeFavoriteToView:self ByType:type AndID:_id isFavorite:YES];
+  }
+  [btn setAccessibilityElements:newInfo];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   static NSString *cellID = @"ProductCell";
   
@@ -186,6 +214,29 @@
   cell.drinkImage.image = ([prodDic[@"_drink"]boolValue]) ? [UIImage imageNamed:@"Drink"] : [UIImage imageNamed:@"NonDrink"];
   cell.roomImage.image = ([prodDic[@"_photo"]boolValue]) ? [UIImage imageNamed:@"Room"] : [UIImage imageNamed:@"NonRoom"];
   cell.smokeImage.image = ([prodDic[@"_smoke"]boolValue]) ? [UIImage imageNamed:@"Smoke"] : [UIImage imageNamed:@"NonSmoke"];
+  
+  NSArray *userKeys = [self.userDic allKeys];
+  id userKey = [userKeys objectAtIndex:indexPath.section];
+  NSDictionary *userDic;
+  NSInteger valueCnt = [[self.userDic objectForKey:userKey] count];
+  NSString *btnStatus = @"NonFavorite";
+  if ( valueCnt > 0) {
+    userDic = self.userDic[userKey][0];
+    if ([Favorite getByType:userDic[@"_type"] AndID:userDic[@"_id"]]) {
+      [cell.favoriteButton setImage:[UIImage imageNamed:@"Favorite"] forState:UIControlStateNormal];
+      btnStatus = @"Favorite";
+    } else {
+      [cell.favoriteButton setImage:[UIImage imageNamed:@"NonFavorite"] forState:UIControlStateNormal];
+      btnStatus = @"NonFavorite";
+    }
+    
+    NSArray *info = @[userDic[@"_type"], userDic[@"_id"], btnStatus];
+    [cell.favoriteButton setAccessibilityElements: info];
+  }
+  //cell.favoriteButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+  //[cell.favoriteButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+  cell.favoriteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+  cell.favoriteButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
   
   NSString *imgList = [Common getNSCFString:prodDic[@"_image"]];
   if ([imgList isEqualToString:@""]) {

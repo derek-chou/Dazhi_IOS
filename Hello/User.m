@@ -61,6 +61,8 @@
     user.link = [Common getNSCFString:dic[@"_link"]];
     user.level = [Common getNSCFString:dic[@"_level"]];
     user.desc = [Common getNSCFString:dic[@"_desc"]];
+    user.birthday = [Common getNSCFString:dic[@"_birthday"]];
+    user.city = [Common getNSCFString:dic[@"_city"]];
     
     [app.managedObjectContext save:nil];
   } @catch (NSException * e) {
@@ -96,6 +98,8 @@
       user.link = [Common getNSCFString:dic[@"_link"]];
       user.level = [Common getNSCFString:dic[@"_level"]];
       user.desc = [Common getNSCFString:dic[@"_desc"]];
+      user.birthday = [Common getNSCFString:dic[@"_birthday"]];
+      user.city = [Common getNSCFString:dic[@"_city"]];
       
       [app.managedObjectContext save:nil];
     }

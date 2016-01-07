@@ -8,6 +8,9 @@
 
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "AFNetworking.h"
+#import "Common.h"
+#import "CellPhoneViewController.h"
 
 @interface LoginViewController ()
 
@@ -42,29 +45,18 @@
   if ([FBSDKAccessToken currentAccessToken]) {
     //jump to main page
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
-    MainTabBarController *mainView = (MainTabBarController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"MainView"];
-    mainView.hidesBottomBarWhenPushed = NO;
-    //[self.navigationController pushViewController:mainView animated:NO];
-    [self presentViewController:mainView animated:NO completion:nil];
-    
-    //[self.navigationController pushViewController:mainView animated:NO];
-    //[self.navigationController presentViewController:mainView animated:NO completion:^(void){}];
-    //[self addChildViewController:mainView];
+    CellPhoneViewController *view = (CellPhoneViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"CellPhoneInputView"];
+    view.hidesBottomBarWhenPushed = NO;
+    [self presentViewController:view animated:NO completion:nil];
   }
-
 }
-
-//- (void) onProfileUpdated:(NSNotification*)notification {
-//  NSLog(@"profile : %@", [FBSDKProfile currentProfile]);
-//  NSLog(@"User name: %@",[FBSDKProfile currentProfile].name);
-//  NSLog(@"User ID: %@",[FBSDKProfile currentProfile].userID);
-//}
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
               error:	(NSError *)error {
   if (error) {
     // Process error
     NSLog(@"Process error");
+    [Common alertTitle:@"error" Msg:@"FB登入失敗" View:self Back:false];
   } else if (result.isCancelled) {
     // Handle cancellations
     NSLog(@"Handle cancellations: %@, %@, %@", result, result.grantedPermissions, [FBSDKAccessToken currentAccessToken]);
@@ -75,17 +67,43 @@
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
        if (!error) {
          //NSLog(@"user info : %@", result);
-         NSLog(@"id : %@", [result objectForKey:@"id"]);
+         NSString *type = @"FB";
+         NSString *_id = [result objectForKey:@"id"];
+         NSString *name = [result objectForKey:@"name"];
+         NSString *link = [result objectForKey:@"link"];
+         NSString *gender = [result objectForKey:@"gender"];
+         NSString *email = [result objectForKey:@"email"];
+         NSString *birthday = ([result objectForKey:@"birthday"] == nil) ? @"" : [result objectForKey:@"birthday"];
+         NSString *locale = [result objectForKey:@"locale"];
+         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+         manager.requestSerializer = [AFJSONRequestSerializer serializer];
+       
+         NSString *url = [Common getSetting:@"Server URL"];
+         NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "user"];
+         NSDictionary *params = @{@"type":type, @"id":_id,
+                                  @"name":name, @"link":link,
+                                  @"gender":gender, @"email":email,
+                                  @"birthday":birthday, @"locale":locale};
+         [manager POST:urlString parameters:params
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@"add user: %@", responseObject);
+               }
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"add user error: %@", error);
+                 [Common alertTitle:@"error" Msg:@"加入系統失敗" View:self Back:false];
+               }];
+         [Common setSettingForKey:@"User Type" Value:type];
+         [Common setSettingForKey:@"User ID" Value:_id];
+         [Common setSettingForKey:@"User Name" Value:name];
+         [Common setSettingForKey:@"User Link" Value:link];
+         [Common setSettingForKey:@"User Gender" Value:gender];
+         [Common setSettingForKey:@"User Email" Value:email];
+         [Common setSettingForKey:@"User Birthday" Value:birthday];
+         [Common setSettingForKey:@"User Locale" Value:locale];
        } else {
          NSLog(@"error: %@", error);
        }
      }];
-    
-    if ([result.grantedPermissions containsObject:@"public_profile"]) {
-      NSLog(@"with public_profile");
-    } else {
-      NSLog(@"without public_profile");
-    }
   }
   
   NSLog(@"fb login complete!!");
@@ -105,15 +123,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

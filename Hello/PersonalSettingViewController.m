@@ -9,6 +9,7 @@
 #import "PersonalSettingViewController.h"
 #import "User.h"
 #import "Common.h"
+#import "Parameter.h"
 
 @interface PersonalSettingViewController ()
 
@@ -23,20 +24,43 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
   self.scrollView.delegate = self;
   self.langTextField.delegate = self;
 
+  NSString *userType = [Common getSetting:@"User Type"];
+  NSString *userID = [Common getSetting:@"User ID"];
+  User *user = [User getByType:userType AndID:userID];
+
+  if ([user.gender isEqualToString:@"female"]) {
+    self.genderSegment.selectedSegmentIndex = 1;
+  }else
+    self.genderSegment.selectedSegmentIndex = 0;
+  
+  NSArray *cityParam = [Parameter getByType:@"city"];
   NSMutableArray* bandArray = [[NSMutableArray alloc] init];
-  [bandArray addObject:@"台灣 台北"];
-  [bandArray addObject:@"日本 東京"];
-  [bandArray addObject:@"美國 華盛頓"];
+  for (Parameter *param in cityParam) {
+    NSString *city = [param.value stringByReplacingOccurrencesOfString:@"$" withString:@" "];
+    [bandArray addObject:city];
+  }
   [self.cityPicker setPlaceholder:cityPlaceholder];
   self.cityPicker = [[DownPicker alloc] initWithTextField:self.cityTextField withData:bandArray];
   [self.cityPicker addTarget:self
                       action:@selector(citySelected:)
             forControlEvents:UIControlEventValueChanged];
+  NSString *citySel = [Common getParameterByType:@"city" AndKey:user.city];
+  self.cityTextField.text = [citySel stringByReplacingOccurrencesOfString:@"$" withString:@" "];
   
-  self.langDescArray = [[NSMutableArray alloc] initWithArray:@[@"中文", @"英文", @"日文"]];
+  NSArray *langParam = [Parameter getByType:@"lang"];
+  _langDescArray = [NSMutableArray new];
+  for (Parameter *param in langParam) {
+    [_langDescArray addObject:param.value];
+  }
+  //self.langDescArray = [[NSMutableArray alloc] initWithArray:langAry];
   self.langSelected = [NSMutableIndexSet new];
-  [_langSelected addIndex:0];
-  [_langSelected addIndex:1];
+  NSArray *langAry = [user.lang componentsSeparatedByString:@","];
+  for (NSString *lang in langAry) {
+    if ([lang isEqualToString:@""]) {
+      continue;
+    }
+    [_langSelected addIndex:[lang intValue]];
+  }
   NSMutableArray *tmpAry = [NSMutableArray new];
   [_langSelected enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
     [tmpAry addObject:_langDescArray[idx]];
@@ -44,9 +68,6 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
   
   self.langTextField.text = [tmpAry componentsJoinedByString:@","];
   
-  NSString *userType = [Common getSetting:@"User Type"];
-  NSString *userID = [Common getSetting:@"User ID"];
-  User *user = [User getByType:userType AndID:userID];
   self.nameTextField.text = user.name;
   //self.birtydayTextField.text
 
@@ -64,6 +85,8 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
     self.photoImage.image = img;
   }
   
+  self.birtydayTextField.text = user.birthday;
+  
   
   UITapGestureRecognizer *tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollView)];
   [self.scrollView addGestureRecognizer:tapScrollView];
@@ -73,7 +96,7 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
   [self.cityPicker setPlaceholder:cityPlaceholder];
 }
 
--(void)tapScrollView{
+-(void)tapScrollView {
   NSLog(@"single Tap on scrollView");
   
   [self.nameTextField resignFirstResponder];
@@ -89,8 +112,7 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
 }
 
 //不能左右scroll
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if (scrollView.contentOffset.x != 0) {
     CGPoint offset = scrollView.contentOffset;
     offset.x = 0;
@@ -120,13 +142,11 @@ static NSString *cityPlaceholder = @"請選擇您的所在城市...";
 - (void) textFieldDidEndEditing:(UITextField *)textField {
 }
 
-- (void)popupListView:(LPPopupListView *)popUpListView didSelectIndex:(NSInteger)index
-{
-  NSLog(@"popUpListView - didSelectIndex: %d", index);
+- (void)popupListView:(LPPopupListView *)popUpListView didSelectIndex:(NSInteger)index {
+  NSLog(@"popUpListView - didSelectIndex: %ld", (long)index);
 }
 
-- (void)popupListViewDidHide:(LPPopupListView *)popUpListView selectedIndexes:(NSMutableIndexSet *)selectedIndexes
-{
+- (void)popupListViewDidHide:(LPPopupListView *)popUpListView selectedIndexes:(NSMutableIndexSet *)selectedIndexes {
   NSLog(@"popupListViewDidHide - selectedIndexes: %@", selectedIndexes.description);
   
   NSMutableArray *tmpAry = [NSMutableArray new];

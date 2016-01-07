@@ -43,10 +43,10 @@
          [Favorite addWithArray:responseObject];
          [User addWithFavoriteArray:responseObject];
          
-         self.favoriteArray = [Favorite getAll];
+         self.favoriteArray = (NSMutableArray*)[Favorite getAll];
          [self.tableView reloadData];
        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         self.favoriteArray = [Favorite getAll];
+         self.favoriteArray = (NSMutableArray*)[Favorite getAll];
          [self.tableView reloadData];
          NSLog(@"Error: %@", error);
        }
@@ -61,6 +61,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
+  self.favoriteArray = [Favorite getAll];
+  [self.tableView reloadData];
   
   self.parentViewController.parentViewController.navigationItem.title = @"Hello";
   /*
@@ -149,6 +151,9 @@
 
   NSArray *info = @[favorite.type, favorite.id];
   [cell.favoriteButton setAccessibilityElements: info];
+
+  cell.favoriteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+  cell.favoriteButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
   
   return cell;
 }
@@ -159,6 +164,12 @@
   if (info == nil) {
     return;
   }
+  [Common changeFavoriteToView:self ByType:info[0] AndID:info[1] isFavorite:NO];
+  
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[[sender superview] superview]];
+  [self.favoriteArray removeObjectAtIndex:indexPath.row];
+  //self.favoriteArray = [Favorite getAll];
+  [self.tableView reloadData];
   
   NSLog(@"%@", [NSString stringWithFormat:@"favorite click : type=%@, id=%@", info[0], info[1]]);
 }

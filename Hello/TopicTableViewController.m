@@ -31,6 +31,7 @@
          self.topicTexts = responseObject;
          [self.tableView reloadData];
        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [Common alertTitle:@"error" Msg:@"請確認網路連線正常" View:self Back:NO];
          NSLog(@"Error: %@", error);
        }
    ];
@@ -43,7 +44,7 @@
   
   if (self.searchBar == nil) {
     CGRect rect = CGRectMake(self.tableView.frame.origin.x,
-                             self.tableView.frame.origin.y+5, self.tableView.frame.size.width, 35);
+                             self.tableView.frame.origin.y+5, self.tableView.frame.size.width, 40);
     self.searchBar = [[UISearchBar alloc] initWithFrame:rect];
     [self.searchBar setBackgroundColor:[UIColor clearColor]];
     [self.searchBar setTintColor:[UIColor clearColor]];

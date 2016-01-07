@@ -24,7 +24,7 @@
 //確保downlad的圖片不會錯放Cell
 - (void)prepareForReuse {
     [self.photoButton.imageView cancelImageRequestOperation];
-    [self.photoButton setImage:[UIImage imageNamed:@"top5_a1"] forState:UIControlStateNormal];
+    [self.photoButton setImage:[UIImage imageNamed:@"loding.gif"] forState:UIControlStateNormal];
 }
 
 @end

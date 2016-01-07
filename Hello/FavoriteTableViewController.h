@@ -10,6 +10,6 @@
 
 @interface FavoriteTableViewController : UITableViewController
 @property NSMutableArray *favoriteText;
-@property NSArray *favoriteArray;
+@property NSMutableArray *favoriteArray;
 
 @end

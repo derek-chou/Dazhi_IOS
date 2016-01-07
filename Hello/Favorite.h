@@ -13,9 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Favorite : NSManagedObject
 
-+ (void) addWithArray:(NSMutableArray *)ary;
++ (void)addWithArray:(NSMutableArray *)ary;
++ (void)addWithType:(NSString*)type AndID:(NSString*)_id;
++ (void)deleteWithType:(NSString*)type AndID:(NSString*)_id;
+
 + (Favorite *)getByType:(NSString*)type AndID:(NSString*)id;
-+ (NSArray*) getAll;
++ (NSArray*)getAll;
 
 @end
 

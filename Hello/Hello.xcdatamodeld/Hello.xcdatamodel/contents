@@ -60,6 +60,8 @@
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="age" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avgScore" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="birthday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -80,6 +82,7 @@
     <fetchRequest name="FetchMessageBySeq" entity="Message" predicateString="seqID == $SEQ_ID"/>
     <fetchRequest name="FetchOrder" entity="Order" predicateString="orderID == $ID"/>
     <fetchRequest name="FetchParameter" entity="Parameter" predicateString="type == $TYPE AND key == $KEY"/>
+    <fetchRequest name="FetchParameterByType" entity="Parameter" predicateString="type == $TYPE"/>
     <fetchRequest name="FetchProduct" entity="Product" predicateString="productID == $PRODUCT_ID"/>
     <fetchRequest name="FetchUser" entity="User" predicateString="type == $TYPE AND id == $ID"/>
     <elements>
@@ -88,6 +91,6 @@
         <element name="Order" positionX="-54" positionY="63" width="128" height="255"/>
         <element name="Parameter" positionX="-54" positionY="54" width="128" height="90"/>
         <element name="Product" positionX="-45" positionY="126" width="128" height="298"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="255"/>
     </elements>
 </model>

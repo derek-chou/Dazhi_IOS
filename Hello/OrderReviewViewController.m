@@ -171,7 +171,7 @@ static NSString *textPlacehold = @"寫下您要給對方的評價...";
          NSLog(@"comment Error: %@", error);
          [Common alertTitle:@"" Msg:@"評價送出失敗，請稍候再試" View:self Back:false];
        }];
-  
+  [self.reviewText resignFirstResponder];
 }
 
 - (void)tapView{

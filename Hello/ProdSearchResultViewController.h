@@ -23,4 +23,6 @@ typedef enum {
 @property NSString *searchText;
 //@property(nonatomic,retain) UIView *tableFooterView;
 
+@property NSArray *favoriteAry;
+
 @end

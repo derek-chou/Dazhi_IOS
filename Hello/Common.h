@@ -33,4 +33,7 @@
 
 + (NSString*) convertLangCodeToString:(NSString*)langCode;
 + (NSString*) convertJobCodeToString:(NSString*)jobCode;
+
++ (void)changeFavoriteToView:(UIViewController*)view ByType:(NSString*)favoriteType AndID:(NSString*)favoriteID isFavorite:(BOOL)isFavorite;
+
 @end

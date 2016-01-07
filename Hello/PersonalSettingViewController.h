@@ -18,6 +18,7 @@
 @property IBOutlet UITextField *cityTextField;
 @property IBOutlet UITextField *langTextField;
 @property IBOutlet UIImageView *photoImage;
+@property IBOutlet UISegmentedControl *genderSegment;
 
 @property NSMutableArray *langDescArray;
 @property NSMutableIndexSet *langSelected;

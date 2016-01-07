@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "Parameter.h"
 #import "User.h"
+#import "Favorite.h"
 
 @implementation Common
 
@@ -192,7 +193,7 @@
   UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
   UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                 handler:^(UIAlertAction *action){
-                                                  [view dismissViewControllerAnimated:YES completion:nil];
+                                                  [alert dismissViewControllerAnimated:YES completion:nil];
                                                   if (isBack) {
                                                     [view.navigationController popViewControllerAnimated:YES];
                                                   }
@@ -267,5 +268,41 @@
   
   [Common loadUserByType:userType AndID:userID];
 }
+
++ (void)changeFavoriteToView:(UIViewController*)view ByType:(NSString*)favoriteType AndID:(NSString*)favoriteID isFavorite:(BOOL)isFavorite{
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  manager.requestSerializer = [AFJSONRequestSerializer serializer];
+  
+  NSString *type = [Common getSetting:@"User Type"];
+  NSString *_id = [Common getSetting:@"User ID"];
+  NSString *url = [Common getSetting:@"Server URL"];
+  NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "favorite"];
+  NSDictionary *params = @{@"type":type, @"id":_id,
+                           @"favorite_type":favoriteType, @"favorite_id":favoriteID};
+  if (isFavorite) {
+    [manager POST:urlString parameters:params
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"add favorite: %@", responseObject);
+            [Favorite addWithType:favoriteType AndID:favoriteID];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"add favorete error: %@", error);
+            [Common alertTitle:@"error" Msg:@"新增我的最愛失敗" View:view Back:false];
+          }];
+  } else {
+    [manager PUT:urlString parameters:params
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           NSLog(@"delete favorite: %@", responseObject);
+           [Favorite deleteWithType:favoriteType AndID:favoriteID];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           NSLog(@"delete favorete error: %@", error);
+           [Common alertTitle:@"error" Msg:@"刪除我的最愛失敗" View:view Back:false];
+         }];
+  }
+  
+}
+
+
 
 @end

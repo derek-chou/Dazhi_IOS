@@ -6,9 +6,19 @@
 	<string>10153433568951071</string>
 	<key>User Type</key>
 	<string>FB</string>
+	<key>User Name</key>
+	<string></string>
+	<key>User Link</key>
+	<string></string>
+	<key>User Gender</key>
+	<string></string>
+	<key>User Email</key>
+	<string></string>
+	<key>User Birthday</key>
+	<string></string>
+	<key>User Locale</key>
+	<string></string>
 	<key>Server URL</key>
 	<string>http://52.27.238.26:8080/</string>
-	<key>kkk</key>
-	<string></string>
 </dict>
 </plist>
