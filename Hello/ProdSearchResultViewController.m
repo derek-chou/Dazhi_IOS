@@ -147,7 +147,10 @@
   
   //tableview的style改為grouped時,背景會自動改為灰色，透過以下二行將背景色改為白色
   [self.tableView setBackgroundView:nil];
-  self.tableView.backgroundColor = [UIColor whiteColor];  
+  self.tableView.backgroundColor = [UIColor whiteColor];
+  
+  [self setIsAccessibilityElement:YES];
+  [self.tableView setIsAccessibilityElement:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -172,27 +175,39 @@
 - (IBAction)onFavoriteClick:(id)sender {
   NSLog(@"favorite click");
   UIButton *btn = (UIButton*)sender;
-  NSArray *info = btn.accessibilityElements;
-  if (info == nil) {
-    return;
-  }
-  
+//  NSArray *info = btn.accessibilityElements;
+//  if (info == nil) {
+//    return;
+//  }
+//  
+  NSString *infoString = btn.accessibilityLabel;
+  NSArray *info = [infoString componentsSeparatedByString:@"$"];
+
   NSString *type = info[0];
   NSString *_id = info[1];
   NSString *status = info[2];
 
-  NSArray *newInfo;
+  //NSArray *newInfo;
+  NSString *newInfoString;
   if ([status isEqualToString:@"Favorite"]) {
     [btn setImage:[UIImage imageNamed:@"NonFavorite"] forState:UIControlStateNormal];
-    newInfo = @[type, _id, @"NonFavorite"];
+    //newInfo = @[type, _id, @"Favorite"];
+    newInfoString = [NSString stringWithFormat:@"%@$%@$%@", type, _id, @"NonFavorite"];
     [Common changeFavoriteToView:self ByType:type AndID:_id isFavorite:NO];
   } else {
     [btn setImage:[UIImage imageNamed:@"Favorite"] forState:UIControlStateNormal];
-    newInfo = @[type, _id, @"Favorite"];
+    //newInfo = @[type, _id, @"Favorite"];
+    newInfoString = [NSString stringWithFormat:@"%@$%@$%@", type, _id, @"Favorite"];
     [Common changeFavoriteToView:self ByType:type AndID:_id isFavorite:YES];
   }
-  [btn setAccessibilityElements:newInfo];
+  [btn setAccessibilityLabel:newInfoString];
+//  [btn setAccessibilityElements:newInfo];
+  
 }
+
+//- (BOOL)isAccessibilityElement{
+//  return YES;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   static NSString *cellID = @"ProductCell";
@@ -230,8 +245,12 @@
       btnStatus = @"NonFavorite";
     }
     
-    NSArray *info = @[userDic[@"_type"], userDic[@"_id"], btnStatus];
-    [cell.favoriteButton setAccessibilityElements: info];
+    //NSArray *info = @[userDic[@"_type"], userDic[@"_id"], btnStatus];
+    //[cell setIsAccessibilityElement:YES];
+    //[cell.favoriteButton setIsAccessibilityElement:YES];
+    NSString *infoString = [NSString stringWithFormat:@"%@$%@$%@", userDic[@"_type"], userDic[@"_id"], btnStatus];
+    [cell.favoriteButton setAccessibilityLabel:infoString];
+    //[cell.favoriteButton setAccessibilityElements:info];
   }
   //cell.favoriteButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
   //[cell.favoriteButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
@@ -318,6 +337,8 @@
       [photoBtn drawCircleButton:[Common getUserLevelColor:[dic[@"_level"] intValue]]];
       [photoBtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
       [photoBtn setUserInteractionEnabled:NO];
+      [photoBtn.imageView setContentMode:UIViewContentModeScaleAspectFill];
+
       // add to a view
       cell.clipsToBounds = NO;
       [cell addSubview:photoBtn];

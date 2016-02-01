@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Hello/ProdSearchResultViewController.m"
-            timestampString = "473823279.793496"
+            timestampString = "473913479.886877"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
             landmarkName = "-tableView:viewForFooterInSection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -135,14 +135,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Hello/LoginViewController.m"
-            timestampString = "473757789.850552"
+            filePath = "Hello/Common.m"
+            timestampString = "473866345.327449"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "-loginButton:didCompleteWithResult:error:"
-            landmarkType = "5">
+            startingLineNumber = "1"
+            endingLineNumber = "1">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

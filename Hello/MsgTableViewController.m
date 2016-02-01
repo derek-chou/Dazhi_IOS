@@ -254,6 +254,7 @@
   }
   //畫圓框
   [cell.photoButton drawCircleButton:[Common getUserLevelColor:userLevel]];
+  [cell.photoButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
   
   //對話群組badge
   UIButton *btn;

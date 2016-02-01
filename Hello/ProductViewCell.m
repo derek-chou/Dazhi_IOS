@@ -21,6 +21,10 @@
     // Configure the view for the selected state
 }
 
+//- (BOOL)isAccessibilityElement{
+//  return YES;
+//}
+
 //確保downlad的圖片不會錯放Cell
 - (void)prepareForReuse {
   [self.productImage cancelImageRequestOperation];

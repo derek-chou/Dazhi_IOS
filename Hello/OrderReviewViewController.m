@@ -208,10 +208,15 @@ static NSString *textPlacehold = @"寫下您要給對方的評價...";
 }
 
 - (void) keyBoardWillShow:(NSNotification*) note {
+  int deviceHeight =  [[UIScreen mainScreen] bounds].size.height;
+  
   CGRect rect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
   CGFloat ty = - rect.size.height;
   [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
-    self.view.transform = CGAffineTransformMakeTranslation(0, ty);
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9 && deviceHeight <= 480) {
+    } else {
+      self.view.transform = CGAffineTransformMakeTranslation(0, ty);
+    }
   }];
 }
 

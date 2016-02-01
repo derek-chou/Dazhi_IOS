@@ -190,17 +190,23 @@
 }
 
 +(void)alertTitle:(NSString*)title Msg:(NSString*)msg View:(UIViewController*)view Back:(BOOL)isBack {
-  UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                handler:^(UIAlertAction *action){
-                                                  [alert dismissViewControllerAnimated:YES completion:nil];
-                                                  if (isBack) {
-                                                    [view.navigationController popViewControllerAnimated:YES];
-                                                  }
-                                                }];
-  [alert addAction:okAct];
-  [view presentViewController:alert animated:YES completion:nil];
-  
+  if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction *action){
+                                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                                    if (isBack) {
+                                                      [view.navigationController popViewControllerAnimated:YES];
+                                                    }
+                                                  }];
+    [alert addAction:okAct];
+    [view presentViewController:alert animated:YES completion:nil];
+  } else {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:view
+                                          cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [alert show];
+  }
 }
 
 + (void) loadUserToLabel:(UILabel*)lbl ByType:(NSString*)userType AndID:(NSString*)userID {

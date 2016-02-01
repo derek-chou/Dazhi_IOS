@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)deleteWithType:(NSString*)type AndID:(NSString*)_id;
 
 + (Favorite *)getByType:(NSString*)type AndID:(NSString*)id;
-+ (NSArray*)getAll;
++ (NSMutableArray*)getAll;
 
 @end
 

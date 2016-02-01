@@ -18,6 +18,10 @@
 	<string></string>
 	<key>User Locale</key>
 	<string></string>
+	<key>Verb Notify</key>
+	<string>0</string>
+	<key>Sound Notify</key>
+	<string>0</string>
 	<key>Server URL</key>
 	<string>http://52.27.238.26:8080/</string>
 </dict>

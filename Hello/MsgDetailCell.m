@@ -71,6 +71,7 @@
   
   _iconBtn.frame = _messageFrame.iconFrame;
   [_iconBtn drawCircleButton:[Common getUserLevelColor:userLevel]];
+  [_iconBtn.imageView setContentMode:UIViewContentModeScaleAspectFill];
   
   [_contentBtn setTitle:message.content forState:UIControlStateNormal];
   _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(CONTENT_TOP, CONTENT_LEFT, CONTENT_BOTTOM, CONTENT_RIGHT);

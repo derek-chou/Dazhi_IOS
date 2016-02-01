@@ -32,13 +32,39 @@ int CellPhoneMinLen = 6;
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+  
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector(didTapOnTableView:)];
+  [self.view addGestureRecognizer:tap];
+}
+
+-(void) didTapOnTableView:(UIGestureRecognizer*) recognizer {
+  [self.cellPhoneField resignFirstResponder];
+  [self.countryCodesField resignFirstResponder];
 }
 
 - (void) keyBoardWillShow:(NSNotification*) note {
   CGRect rect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
   CGFloat ty = - rect.size.height;
   [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
-    self.view.transform = CGAffineTransformMakeTranslation(0, ty);
+    int deviceHeight =  [[UIScreen mainScreen] bounds].size.height;
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9 && deviceHeight <= 480) {
+//      [self.view setCenter:CGPointMake(rect.size.width/2, floor((rect.size.height - ty)/2))];
+//      CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
+//      CGFloat scale = [UIScreen mainScreen].scale;
+      CGAffineTransform affineMatrix = CGAffineTransformMakeTranslation(0, -ceil(ty/4));
+      CGAffineTransform affineMatrix1 = CGAffineTransformMakeTranslation(0, ceil(ty/2));
+      CGAffineTransform affineMatrix2 = CGAffineTransformTranslate(affineMatrix, 0, ceil(ty/4));
+      affineMatrix = CGAffineTransformScale(affineMatrix, 0.5, 0.5);
+      affineMatrix1 = CGAffineTransformScale(affineMatrix, 1, 1);
+      affineMatrix2 = CGAffineTransformScale(affineMatrix2, 0.5, 0.5);
+      //self.view.transform = affineMatrix;
+//      self.view.transform = affineMatrix2;
+    
+    } else {
+      self.view.transform = CGAffineTransformMakeTranslation(0, ty);
+    }
   }];
 }
 

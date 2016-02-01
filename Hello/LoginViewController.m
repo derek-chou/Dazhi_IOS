@@ -43,12 +43,15 @@
   [super viewDidAppear:animated];
   
   if ([FBSDKAccessToken currentAccessToken]) {
-    //jump to main page
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
-    CellPhoneViewController *view = (CellPhoneViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"CellPhoneInputView"];
-    view.hidesBottomBarWhenPushed = NO;
-    [self presentViewController:view animated:NO completion:nil];
+    [self jumpToMainPage];
   }
+}
+
+- (void)jumpToMainPage {
+  UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
+  CellPhoneViewController *view = (CellPhoneViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"CellPhoneInputView"];
+  view.hidesBottomBarWhenPushed = NO;
+  [self presentViewController:view animated:NO completion:nil];
 }
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
@@ -65,7 +68,6 @@
                     parameters:@{@"fields": @"id, name, link, gender, email, birthday, locale"}];
     [fbRequest startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-       if (!error) {
          //NSLog(@"user info : %@", result);
          NSString *type = @"FB";
          NSString *_id = [result objectForKey:@"id"];
@@ -75,23 +77,23 @@
          NSString *email = [result objectForKey:@"email"];
          NSString *birthday = ([result objectForKey:@"birthday"] == nil) ? @"" : [result objectForKey:@"birthday"];
          NSString *locale = [result objectForKey:@"locale"];
-         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-         manager.requestSerializer = [AFJSONRequestSerializer serializer];
-       
-         NSString *url = [Common getSetting:@"Server URL"];
-         NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "user"];
-         NSDictionary *params = @{@"type":type, @"id":_id,
-                                  @"name":name, @"link":link,
-                                  @"gender":gender, @"email":email,
-                                  @"birthday":birthday, @"locale":locale};
-         [manager POST:urlString parameters:params
-               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 NSLog(@"add user: %@", responseObject);
-               }
-               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 NSLog(@"add user error: %@", error);
-                 [Common alertTitle:@"error" Msg:@"加入系統失敗" View:self Back:false];
-               }];
+//         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//         manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//       
+//         NSString *url = [Common getSetting:@"Server URL"];
+//         NSString *urlString = [NSString stringWithFormat:@"%@%s", url, "user"];
+//         NSDictionary *params = @{@"type":type, @"id":_id,
+//                                  @"name":name, @"link":link,
+//                                  @"gender":gender, @"email":email,
+//                                  @"birthday":birthday, @"locale":locale};
+//         [manager POST:urlString parameters:params
+//               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                 NSLog(@"add user: %@", responseObject);
+//               }
+//               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                 NSLog(@"add user error: %@", error);
+//                 [Common alertTitle:@"error" Msg:@"加入系統失敗" View:self Back:false];
+//               }];
          [Common setSettingForKey:@"User Type" Value:type];
          [Common setSettingForKey:@"User ID" Value:_id];
          [Common setSettingForKey:@"User Name" Value:name];
@@ -100,9 +102,8 @@
          [Common setSettingForKey:@"User Email" Value:email];
          [Common setSettingForKey:@"User Birthday" Value:birthday];
          [Common setSettingForKey:@"User Locale" Value:locale];
-       } else {
-         NSLog(@"error: %@", error);
-       }
+       
+       [self jumpToMainPage];
      }];
   }
   

@@ -253,6 +253,7 @@
   }
   //畫圓框
   [cell.photoButton drawCircleButton:[Common getUserLevelColor:userLevel]];
+  [cell.photoButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
   
   //狀態圖示
   if (![order.cancelDT isEqualToString:@""])

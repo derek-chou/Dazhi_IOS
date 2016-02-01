@@ -11,6 +11,8 @@
 #import "ViewController.h"
 #import "UIButton+CustomBadge.h"
 #import "CustomBadge.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import "Common.h"
 
 @interface MainTabBarController ()<MainTabBarDelegate>
 
@@ -60,25 +62,57 @@
 }
 
 - (void)setMsgBadge:(NSString*)badge {
-  if ([badge isEqualToString:@""] || [badge isEqualToString:@"0"])
+  static int MsgLastCount = 0;
+  int currentBadge = [badge intValue];
+  
+  if (currentBadge == 0)
     [self.mainTabBar.MsgBadgeBtn setBadge:nil];
   else if ([badge length] > 2)
     [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"99+"];
   else
     [self.mainTabBar.MsgBadgeBtn setBadgeWithString:badge];
+  
+  if (currentBadge > MsgLastCount) {
+    if([[Common getSetting:@"Verb Notify"] isEqualToString:@"Yes"])
+      AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    if([[Common getSetting:@"Sound Notify"] isEqualToString:@"Yes"]) {
+      SystemSoundID alertSound;
+      NSURL *url = [NSURL URLWithString:@"/System/Library/Audio/UISounds/alarm.caf"];
+      AudioServicesCreateSystemSoundID((__bridge CFURLRef)(url), &alertSound);
+      
+      AudioServicesPlaySystemSound(alertSound);
+    }
+  }
+  
+  MsgLastCount = currentBadge;
 }
 
 - (void)setOrderBadge:(NSString*)badge {
+  static int OrderLastCount = 0;
+  int currentBadge = [badge intValue];
   /*
-  if ([badge isEqualToString:@""] || [badge isEqualToString:@"0"])
+  if (currentBadge == 0)
     [self.mainTabBar.OrderBadgeBtn setBadge:nil];
   else if ([badge length] > 3)
     [self.mainTabBar.MsgBadgeBtn setBadgeWithString:@"99+"];
   else
     [self.mainTabBar.OrderBadgeBtn setBadgeWithString:badge];
   */
-
   [self.mainTabBar.OrderBadgeBtn setBadge:nil];
+
+  if (currentBadge > OrderLastCount) {
+    if([[Common getSetting:@"Verb Notify"] isEqualToString:@"Yes"])
+      AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    if([[Common getSetting:@"Sound Notify"] isEqualToString:@"Yes"]) {
+      SystemSoundID alertSound;
+      NSURL *url = [NSURL URLWithString:@"/System/Library/Audio/UISounds/alarm.caf"];
+      AudioServicesCreateSystemSoundID((__bridge CFURLRef)(url), &alertSound);
+      
+      AudioServicesPlaySystemSound(alertSound);
+    }
+  }
+  
+  OrderLastCount = currentBadge;
 }
 
 @end

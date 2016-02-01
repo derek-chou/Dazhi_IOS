@@ -152,6 +152,8 @@
       [cell.photoBtn setImage:img forState:UIControlStateNormal];
       [weakCell setNeedsLayout];
     }
+    [cell.photoBtn.imageView setContentMode:UIViewContentModeScaleAspectFill];
+    
     User *user = [User getByType:reviewUserType AndID:reviewUserID];
     if (user == nil) {
       [Common loadUserByType:reviewUserType AndID:reviewUserID];
@@ -250,6 +252,7 @@
     if (user == nil)
       [Common loadUserByType:_personType AndID:_personID];
     [cell.photoButton drawCircleButton:[Common getUserLevelColor:[user.level intValue]]];
+    [cell.photoButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
 
     cell.scoreRating.value = [user.avgScore floatValue] / 2;
     cell.reviewCount.text = [NSString stringWithFormat:@"(%@)", user.scoreCount];

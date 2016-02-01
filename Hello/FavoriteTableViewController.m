@@ -61,7 +61,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
-  self.favoriteArray = [Favorite getAll];
+  self.favoriteArray = (NSMutableArray*)[Favorite getAll];
   [self.tableView reloadData];
   
   self.parentViewController.parentViewController.navigationItem.title = @"Hello";
@@ -149,21 +149,31 @@
   NSString *langResult = [Common convertLangCodeToString:lang];
   cell.langLabel.text = langResult;
 
-  NSArray *info = @[favorite.type, favorite.id];
-  [cell.favoriteButton setAccessibilityElements: info];
+  //NSArray *info = @[favorite.type, favorite.id];
+  //[cell.favoriteButton setAccessibilityElements: info];
+  NSString *infoString = [NSString stringWithFormat:@"%@$%@", favorite.type, favorite.id];
+  [cell.favoriteButton setAccessibilityLabel:infoString];
 
   cell.favoriteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
   cell.favoriteButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+//  cell.photoButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//  cell.photoButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+  [cell.photoButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
   
   return cell;
 }
 
 - (IBAction)onFavoriteClick:(id)sender {
   UIButton *btn = (UIButton*)sender;
-  NSArray *info = btn.accessibilityElements;
-  if (info == nil) {
+//  NSArray *info = btn.accessibilityElements;
+//  if (info == nil) {
+//    return;
+//  }
+  NSString *infoString = btn.accessibilityLabel;
+  if (infoString == nil) {
     return;
   }
+  NSArray *info = [infoString componentsSeparatedByString:@"$"];
   [Common changeFavoriteToView:self ByType:info[0] AndID:info[1] isFavorite:NO];
   
   NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[[sender superview] superview]];

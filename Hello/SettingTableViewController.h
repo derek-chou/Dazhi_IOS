@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingTableViewController : UITableViewController
+typedef enum {
+  VISITOR_MODE = 0,
+  GUIDE_MODE = 1
+} UserMode;
 
+@interface SettingTableViewController : UITableViewController
+@property (weak) IBOutlet UITableViewCell *versionCell;
+@property UserMode userMode;
+@property NSArray *visitorPages;
+@property NSArray *guidePages;
 @end
